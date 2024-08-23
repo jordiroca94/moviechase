@@ -18,9 +18,9 @@ const HomeHero = ()=> {
   
     const [movies, setMovies] = useState([])
     const [searchKey, setSearchKey] = useState("")
-    const [trailer, setMovie] = useState(null)
-    const [movie, setTrailer] = useState({title:"Loading Movies"})
-    const [playing, setPlaying] = useState(null)
+    // const [trailer, setMovie] = useState(null)
+    // const [movie, setTrailer] = useState({title:"Loading Movies"})
+    // const [playing, setPlaying] = useState(null)
   
     const fetchMovies = async(searchKey:string)=> {
       const type = searchKey ? "searchKey" : "discover"
