@@ -13,39 +13,32 @@ type MovieType = {
 const HomeHero = ()=> {
     const API_URL = "https://api.themoviedb.org/3"
     const API_KEY = "445f8d83ec44d06e98bde843d8da5fc7"
-    const IMAGE_PATH = "https://image.tmdb.org/t/p/original/"
     const URL_IMAGE= "https://image.tmdb.org/t/p/original/"
   
     const [movies, setMovies] = useState([])
-    const [searchKey, setSearchKey] = useState("")
-    // const [trailer, setMovie] = useState(null)
-    // const [movie, setTrailer] = useState({title:"Loading Movies"})
-    // const [playing, setPlaying] = useState(null)
   
-    const fetchMovies = async(searchKey:string)=> {
-      const type = searchKey ? "searchKey" : "discover"
-      const {data:{results},} = await axios.get(`${API_URL}/${type}/movie`,{
+    const fetchMovies = async()=> {
+      const {data:{results},} = await axios.get(`${API_URL}/discover/movie`,{
         params:{
           api_key:API_KEY,
-          query:searchKey,
         }
       })
       setMovies(results)
     }
   
     useEffect(()=>{
-      fetchMovies(searchKey)
+      fetchMovies()
     },[])
   
     console.log(movies,"Movies-->")
 
     return ( 
         <div className="flex flex-wrap gap-2">
-          {movies.map((item:MovieType)=> {
+          {movies.map((movie:MovieType)=> {
           return(
-            <div key={item.id}>
-              <img className="h-80" src={`${URL_IMAGE +item.poster_path}`} alt={item.title}/>
-              <h1>{item.title}</h1>
+            <div key={movie.id}>
+              <img className="h-80" src={`${URL_IMAGE +movie.poster_path}`} alt={movie.title}/>
+              <h1>{movie.title}</h1>
             </div>
           )
         })}</div>
