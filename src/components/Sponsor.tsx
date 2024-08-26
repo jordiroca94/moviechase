@@ -8,15 +8,23 @@ const Sponsor = () => {
     <div className="py-6 lg:py-12">
       <Grid>
         <div className="col-start-3 col-span-8">
-          <Image
-            className="object-cover max-h-80"
-            src={SponsorImage}
-            alt="Diverbook Sponsor"
-          />
-          <div className="flex justify-end mt-2 items-center gap-1">
-            <span>Sponsored</span>
-            <IoMdInformationCircleOutline />
-          </div>
+          <a href="https://diverbook.vercel.app/" target="_blank">
+            <Image
+              className="object-cover max-h-80 border border-white"
+              src={SponsorImage}
+              alt="Diverbook Sponsor"
+            />
+          </a>
+          <a
+            href="https://diverbook.vercel.app/"
+            target="_blank"
+            className="hover:underline"
+          >
+            <div className="flex justify-end mt-2 items-center gap-1">
+              <span className="text-sm">Sponsored</span>
+              <IoMdInformationCircleOutline />
+            </div>
+          </a>
         </div>
       </Grid>
     </div>
