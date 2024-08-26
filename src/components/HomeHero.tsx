@@ -33,15 +33,19 @@ const HomeHero = ()=> {
     console.log(movies,"Movies-->")
 
     return ( 
-        <div className="flex flex-wrap gap-2">
+      <div className=" bg-black">
+          <h1 className="text-white text-3xl p-4">Moviechase</h1>
+          <div className="grid grid-cols-12 gap-2">
           {movies.map((movie:MovieType)=> {
-          return(
-            <div key={movie.id}>
-              <img className="h-80" src={`${URL_IMAGE +movie.poster_path}`} alt={movie.title}/>
-              <h1>{movie.title}</h1>
+            return(
+            <div className="col-span-2" key={movie.id}>
+              <img className="" src={`${URL_IMAGE +movie.poster_path}`} alt={movie.title}/>
+              <h2 className="text-white py-2">{movie.title}</h2>
             </div>
           )
-        })}</div>
+        })}
+        </div>
+      </div>
     )
 }
 
