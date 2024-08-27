@@ -14,9 +14,9 @@ type MovieType = {
 };
 
 const HomeHero = () => {
-  const API_URL = "https://api.themoviedb.org/3";
-  const API_KEY = "445f8d83ec44d06e98bde843d8da5fc7";
-  const URL_IMAGE = "https://image.tmdb.org/t/p/original/";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [movies, setMovies] = useState([]);
 
