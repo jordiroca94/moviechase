@@ -5,9 +5,9 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const Sponsor = () => {
   return (
-    <div className="py-6 lg:py-12">
+    <div className="pb-6 lg:pb-12">
       <Grid>
-        <div className="col-start-3 col-span-8">
+        <div className="col-span-4 sm:col-span-6 sm:col-start-2 lg:col-start-3 lg:col-span-8">
           <a href="https://diverbook.vercel.app/" target="_blank">
             <Image
               className="object-cover max-h-80 border border-white"

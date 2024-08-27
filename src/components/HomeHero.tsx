@@ -5,6 +5,7 @@ import axios from "axios";
 import Grid from "./ui/Grid";
 import Navbar from "./Navbar";
 import Sponsor from "./Sponsor";
+import Container from "./ui/Container";
 
 type MovieType = {
   id: string;
@@ -40,21 +41,24 @@ const HomeHero = () => {
   return (
     <div>
       <Navbar />
-      <Sponsor />
-      <Grid>
-        {movies.map((movie: MovieType) => {
-          return (
-            <div className="col-span-2" key={movie.id}>
-              <img
-                className=""
-                src={`${URL_IMAGE + movie.poster_path}`}
-                alt={movie.title}
-              />
-              <h2 className="py-2">{movie.title}</h2>
-            </div>
-          );
-        })}
-      </Grid>
+      <Container>
+        <Sponsor />
+        <Grid>
+          <h2 className="col-span-full text-3xl">Movies</h2>
+          {movies.map((movie: MovieType) => {
+            return (
+              <div className="col-span-2" key={movie.id}>
+                <img
+                  className=""
+                  src={`${URL_IMAGE + movie.poster_path}`}
+                  alt={movie.title}
+                />
+                <h2 className="py-2">{movie.title}</h2>
+              </div>
+            );
+          })}
+        </Grid>
+      </Container>
     </div>
   );
 };
