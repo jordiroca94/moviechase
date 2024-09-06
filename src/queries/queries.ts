@@ -38,6 +38,17 @@ export const getUpcomingMovies = async () => {
   return results;
 };
 
+export const getPlayingMovies = async () => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/movie/now_playing`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return results;
+};
+
 // SHOWS
 
 export const getPopularShows = async () => {

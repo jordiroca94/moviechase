@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Sponsor from "./Sponsor";
 import Container from "./ui/Container";
 import {
+  getPlayingMovies,
   getPopularMovies,
   getTopRatedMovies,
   getUpcomingMovies,
@@ -26,6 +27,7 @@ const Movies = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedPopularMovies] = useState([]);
   const [upcomingMovies, setUpcomingPopularMovies] = useState([]);
+  const [playingMovies, setPlayingPopularMovies] = useState([]);
 
   const fetchPopularMovies = async () => {
     const res = await getPopularMovies();
@@ -42,10 +44,16 @@ const Movies = () => {
     setUpcomingPopularMovies(res);
   };
 
+  const fetchPlayingMovies = async () => {
+    const res = await getPlayingMovies();
+    setPlayingPopularMovies(res);
+  };
+
   useEffect(() => {
     fetchPopularMovies();
     fetchTopRatedMovies();
     fetchUpcomingMovies();
+    fetchPlayingMovies();
   }, []);
 
   return (
@@ -79,6 +87,19 @@ const Movies = () => {
       <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">Coming soon</h2>
       <Slider {...settings}>
         {upcomingMovies.map((movie: MovieType) => {
+          return (
+            <Card
+              key={movie.id}
+              id={movie.id}
+              poster_path={movie.poster_path}
+              title={movie.title}
+            />
+          );
+        })}
+      </Slider>
+      <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">In cinemas</h2>
+      <Slider {...settings}>
+        {playingMovies.map((movie: MovieType) => {
           return (
             <Card
               key={movie.id}
