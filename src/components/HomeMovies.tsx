@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Grid from "./ui/Grid";
 import Container from "./ui/Container";
-import { discoverMovies } from "@/queries/queries";
+import { getPopularMovies } from "@/queries/queries";
 import Card from "./Card";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { settings } from "@/utils/slider";
 
 type MovieType = {
   id: string;
@@ -14,12 +17,10 @@ type MovieType = {
 };
 
 const HomeMovies = () => {
-  const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
-
   const [movies, setMovies] = useState([]);
 
   const fetchMovies = async () => {
-    const res = await discoverMovies();
+    const res = await getPopularMovies();
     setMovies(res);
   };
 
@@ -29,9 +30,9 @@ const HomeMovies = () => {
 
   return (
     <Container>
-      <Grid>
-        <h2 className="col-span-full text-3xl">Movies</h2>
-        {movies.slice(0, 6).map((movie: MovieType) => {
+      <h2 className="text-3xl pb-3 lg:pb-6">Movies</h2>
+      <Slider {...settings}>
+        {movies.map((movie: MovieType) => {
           return (
             <Card
               key={movie.id}
@@ -41,7 +42,7 @@ const HomeMovies = () => {
             />
           );
         })}
-      </Grid>
+      </Slider>
     </Container>
   );
 };

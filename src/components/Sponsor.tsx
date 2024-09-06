@@ -2,10 +2,11 @@ import Image from "next/image";
 import SponsorImage from "../../public/images/diverbook.png";
 import Grid from "./ui/Grid";
 import { IoMdInformationCircleOutline } from "react-icons/io";
+import Container from "./ui/Container";
 
 const Sponsor = () => {
   return (
-    <div className="pt-6 lg:pt-12">
+    <Container className="pt-6 lg:pt-12">
       <Grid>
         <div className="col-span-4 sm:col-span-6 sm:col-start-2 lg:col-start-3 lg:col-span-8">
           <a href="https://diverbook.vercel.app/" target="_blank">
@@ -27,7 +28,7 @@ const Sponsor = () => {
           </a>
         </div>
       </Grid>
-    </div>
+    </Container>
   );
 };
 

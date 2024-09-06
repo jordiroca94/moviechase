@@ -6,7 +6,10 @@ import Grid from "./ui/Grid";
 import Navbar from "./Navbar";
 import Sponsor from "./Sponsor";
 import Container from "./ui/Container";
-import { discoverShows } from "@/queries/queries";
+import { getPopularShows } from "@/queries/queries";
+import Slider from "react-slick";
+import { settings } from "@/utils/slider";
+import Card from "./Card";
 
 type MovieType = {
   id: string;
@@ -16,12 +19,10 @@ type MovieType = {
 };
 
 const HomeShows = () => {
-  const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
-
   const [shows, setShows] = useState([]);
 
   const fetchShows = async () => {
-    const res = await discoverShows();
+    const res = await getPopularShows();
     setShows(res);
   };
 
@@ -31,21 +32,19 @@ const HomeShows = () => {
 
   return (
     <Container className="pb-12 lg:pb-12">
-      <Grid>
-        <h2 className="col-span-full text-3xl">Shows</h2>
-        {shows.slice(0, 6).map((show: MovieType) => {
+      <h2 className="text-3xl pb-3 lg:pb-6">TV shows</h2>
+      <Slider {...settings}>
+        {shows.map((movie: MovieType) => {
           return (
-            <div className="col-span-2" key={show.id}>
-              <img
-                className=""
-                src={`${URL_IMAGE + show.poster_path}`}
-                alt={show.title}
-              />
-              <h2 className="py-2">{show.title}</h2>
-            </div>
+            <Card
+              key={movie.id}
+              id={movie.id}
+              poster_path={movie.poster_path}
+              title={movie.title}
+            />
           );
         })}
-      </Grid>
+      </Slider>
     </Container>
   );
 };
