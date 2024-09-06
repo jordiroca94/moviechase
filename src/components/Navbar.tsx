@@ -2,8 +2,8 @@ import Link from "next/link";
 
 const Navbar = () => {
   const links = [
-    { label: "Movies", link: "/" },
-    { label: "TV shows", link: "/" },
+    { label: "Movies", link: "/movies" },
+    { label: "TV shows", link: "/shows" },
     { label: "Contact", link: "/" },
   ];
   return (
