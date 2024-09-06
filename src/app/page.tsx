@@ -1,10 +1,15 @@
-import HomeHero from "@/components/HomeHero"
+import HomeMovies from "@/components/HomeMovies";
+import HomeShows from "@/components/HomeShows";
+import Navbar from "@/components/Navbar";
+import Sponsor from "@/components/Sponsor";
 
 export default function Home() {
-
   return (
     <main>
-      <HomeHero/>
+      <Navbar />
+      <Sponsor />
+      <HomeMovies />
+      <HomeShows />
     </main>
   );
 }
