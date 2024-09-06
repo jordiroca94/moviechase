@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Grid from "./ui/Grid";
-import Navbar from "./Navbar";
-import Sponsor from "./Sponsor";
 import Container from "./ui/Container";
 import { discoverMovies } from "@/queries/queries";
+import Card from "./Card";
 
 type MovieType = {
   id: string;
@@ -35,14 +33,12 @@ const HomeMovies = () => {
         <h2 className="col-span-full text-3xl">Movies</h2>
         {movies.slice(0, 6).map((movie: MovieType) => {
           return (
-            <div className="col-span-2" key={movie.id}>
-              <img
-                className=""
-                src={`${URL_IMAGE + movie.poster_path}`}
-                alt={movie.title}
-              />
-              <h2 className="py-2">{movie.title}</h2>
-            </div>
+            <Card
+              key={movie.id}
+              id={movie.id}
+              poster_path={movie.poster_path}
+              title={movie.title}
+            />
           );
         })}
       </Grid>
