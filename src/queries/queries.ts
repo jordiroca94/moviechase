@@ -61,3 +61,36 @@ export const getPopularShows = async () => {
   });
   return results;
 };
+
+export const getTopRatedShows = async () => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/tv/top_rated`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return results;
+};
+
+export const getAiringTodayShows = async () => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/tv/airing_today`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return results;
+};
+
+export const getAiringShows = async () => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/tv/on_the_air`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return results;
+};
