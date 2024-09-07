@@ -28,8 +28,6 @@ const HomeMovies = () => {
     fetchMovies();
   }, []);
 
-  console.log(movies, "movies-->");
-
   return (
     <Container>
       <h2 className="text-3xl pb-3 lg:pb-6">Movies</h2>

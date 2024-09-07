@@ -46,8 +46,6 @@ const Shows = () => {
     fetchAiringShows();
   }, []);
 
-  console.log(airingTodayShows, "SHOWS-->");
-
   return (
     <Container>
       <h2 className="text-3xl pb-3 lg:pb-6">Popular</h2>
