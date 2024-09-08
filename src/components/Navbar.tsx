@@ -4,7 +4,6 @@ const Navbar = () => {
   const links = [
     { label: "Movies", link: "/movies" },
     { label: "TV shows", link: "/shows" },
-    { label: "Contact", link: "/" },
   ];
   return (
     <div className="flex items-center justify-between py-4 px-4 lg:px-8">

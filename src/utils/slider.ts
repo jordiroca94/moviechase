@@ -3,13 +3,13 @@ export const settings = {
   infinite: false,
   speed: 500,
   slidesToShow: 6,
-  slidesToScroll: 1,
+  slidesToScroll: 6,
   responsive: [
     {
       breakpoint: 1280,
       settings: {
         slidesToShow: 4,
-        slidesToScroll: 1,
+        slidesToScroll: 4,
         infinite: true,
         arrows: false,
       },
@@ -18,7 +18,7 @@ export const settings = {
       breakpoint: 640,
       settings: {
         slidesToShow: 2,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         arrows: false,
       },
     },
