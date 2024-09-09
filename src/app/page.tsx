@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import HomeMovies from "@/components/HomeMovies";
 import HomeShows from "@/components/HomeShows";
 import Navbar from "@/components/Navbar";
@@ -10,6 +11,7 @@ export default function Home() {
       <Sponsor />
       <HomeMovies />
       <HomeShows />
+      <Footer />
     </main>
   );
 }

@@ -74,9 +74,7 @@ const Shows = () => {
           );
         })}
       </Slider>
-      <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">
-        Showing airing today
-      </h2>
+      <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">Featured today</h2>
       <Slider {...settings}>
         {airingTodayShows.map((show: MovieType) => {
           if (!show.poster_path) return null;

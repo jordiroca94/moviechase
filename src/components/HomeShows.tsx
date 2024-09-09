@@ -32,7 +32,7 @@ const HomeShows = () => {
 
   return (
     <Container className="pb-12 lg:pb-12">
-      <h2 className="text-3xl pb-3 lg:pb-6">TV shows</h2>
+      <h2 className="text-3xl pb-3 lg:pb-6">Most popular shows</h2>
       <Slider {...settings}>
         {shows.map((movie: MovieType) => {
           return (
