@@ -1,10 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Grid from "./ui/Grid";
-import Navbar from "./Navbar";
-import Sponsor from "./Sponsor";
 import Container from "./ui/Container";
 import {
   getPlayingMovies,

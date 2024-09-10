@@ -1,10 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Grid from "./ui/Grid";
-import Navbar from "./Navbar";
-import Sponsor from "./Sponsor";
 import Container from "./ui/Container";
 import { getPopularShows } from "@/queries/queries";
 import Slider from "react-slick";
@@ -35,6 +31,7 @@ const HomeShows = () => {
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular shows</h2>
       <Slider {...settings}>
         {shows.map((movie: MovieType) => {
+          if (!movie.poster_path) return null;
           return (
             <Card
               key={movie.id}

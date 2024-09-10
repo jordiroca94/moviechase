@@ -5,7 +5,7 @@ const Footer = () => {
   const year: number = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col justify-center items-center py-10 gap-4 ">
+    <div className="flex flex-col justify-center items-center py-10 gap-4">
       <div className="flex gap-6">
         <a
           aria-label="Linkedin"
@@ -16,13 +16,15 @@ const Footer = () => {
         </a>
         <a
           aria-label="Github"
-          href="https://github.com/jordiroca94/Diverbook"
+          href="https://github.com/jordiroca94/moviechase"
           target="_blank"
         >
           <FaGithub className="size-8 hover:text-primary hover:bg-white hover:border-white hover:border rounded-full transform duration-300 hover:text-black" />
         </a>
       </div>
-      <div className="text-base">&copy; {year} By Jordi Roca</div>
+      <div className="text-base">
+        &copy; {year} By <a href="https://jordirocasoler.com/">Jordi Roca</a>
+      </div>
     </div>
   );
 };

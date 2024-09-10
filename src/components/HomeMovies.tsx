@@ -33,6 +33,7 @@ const HomeMovies = () => {
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular Movies</h2>
       <Slider {...settings}>
         {movies.map((movie: MovieType) => {
+          if (!movie.poster_path) return null;
           return (
             <Card
               key={movie.id}
