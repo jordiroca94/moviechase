@@ -1,12 +1,12 @@
 import Footer from "@/components/Footer";
 import Movies from "@/components/Movies";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import React from "react";
 
 const page = async () => {
   return (
     <main>
-      <Navbar />
+      <Header />
       <Movies />
       <Footer />
     </main>

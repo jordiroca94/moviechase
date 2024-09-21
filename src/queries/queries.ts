@@ -94,3 +94,15 @@ export const getAiringShows = async () => {
   });
   return results;
 };
+
+// SEARCH
+export const getSearch = async (query: string) => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/search/multi?query=${query}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return results;
+};
