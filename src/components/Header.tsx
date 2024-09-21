@@ -22,6 +22,8 @@ const Header = () => {
     fetchSearch();
   }, [query]);
 
+  console.log(searchResult, "result");
+
   return (
     <header className="md:block hidden">
       <div className="flex items-center justify-between py-4 px-4 lg:px-8 bg-primary">
@@ -40,8 +42,8 @@ const Header = () => {
             <input
               type="text"
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search..."
-              className="bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-black pr-10"
+              placeholder="Search for a movie, tv show, person..."
+              className="bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-black pr-10 min-w-[400px]"
             />
             <CiSearch className="absolute text-black top-1.5 right-2 size-7" />
           </div>

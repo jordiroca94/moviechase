@@ -96,7 +96,7 @@ const Tmdb = () => {
         <svg className="neon" x={50} y={50}>
           <motion.path
             d={`M 0 0 h ${dimensions.width} v ${dimensions.height} h -${dimensions.width} v -${dimensions.height}`}
-            stroke="lime"
+            stroke="#90cea1"
             strokeWidth="3"
             animate={{
               pathLength: [0, 0.75],

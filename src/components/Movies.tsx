@@ -11,13 +11,7 @@ import {
 import Slider from "react-slick";
 import { settings } from "@/utils/slider";
 import Card from "./Card";
-
-type MovieType = {
-  id: string;
-  title: string;
-  image: string;
-  poster_path: string;
-};
+import { MovieType } from "@/types/common";
 
 const Movies = () => {
   const [popularMovies, setPopularMovies] = useState([]);

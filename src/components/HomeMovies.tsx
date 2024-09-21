@@ -8,13 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { settings } from "@/utils/slider";
-
-type MovieType = {
-  id: string;
-  title: string;
-  image: string;
-  poster_path: string;
-};
+import { MovieType } from "@/types/common";
 
 const HomeMovies = () => {
   const [movies, setMovies] = useState([]);

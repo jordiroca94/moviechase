@@ -11,7 +11,7 @@ import {
 import Slider from "react-slick";
 import { settings } from "@/utils/slider";
 import Card from "./Card";
-import { MovieType } from "@/types/common";
+import { MovieType, ShowType } from "@/types/common";
 
 const Shows = () => {
   const [popularShows, setPopularShows] = useState([]);
@@ -50,40 +50,40 @@ const Shows = () => {
     <Container>
       <h2 className="text-3xl pb-3 lg:pb-6">Popular</h2>
       <Slider {...settings}>
-        {popularShows.map((show: MovieType) => {
+        {popularShows.map((show: ShowType) => {
           return (
             <Card
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
-              title={show.title}
+              title={show.name}
             />
           );
         })}
       </Slider>
       <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">Top rated</h2>
       <Slider {...settings}>
-        {topRatedShows.map((show: MovieType) => {
+        {topRatedShows.map((show: ShowType) => {
           return (
             <Card
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
-              title={show.title}
+              title={show.name}
             />
           );
         })}
       </Slider>
       <h2 className="text-3xl pb-3 lg:pb-6 pt-10 lg:pt-16">Featured today</h2>
       <Slider {...settings}>
-        {airingTodayShows.map((show: MovieType) => {
+        {airingTodayShows.map((show: ShowType) => {
           if (!show.poster_path) return null;
           return (
             <Card
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
-              title={show.title}
+              title={show.name}
             />
           );
         })}
@@ -92,13 +92,13 @@ const Shows = () => {
         In the next 7 days
       </h2>
       <Slider {...settings}>
-        {airingShows.map((show: MovieType) => {
+        {airingShows.map((show: ShowType) => {
           return (
             <Card
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
-              title={show.title}
+              title={show.name}
             />
           );
         })}
