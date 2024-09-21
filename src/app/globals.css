@@ -12,3 +12,9 @@
 .slick-slide > div {
   margin: 0 10px;
 }
+
+/* TMDB animation */
+
+.neon {
+  filter: url(#neon);
+}
