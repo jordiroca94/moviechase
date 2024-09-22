@@ -27,10 +27,6 @@ const Header = () => {
   }, [query]);
 
   console.log(searchResult, "result");
-  //  name
-  //  first_air_date
-  // overview
-  // foto poster_path
 
   return (
     <header className="md:block hidden">
@@ -41,7 +37,7 @@ const Header = () => {
         <div className="flex items-center gap-8">
           <nav className="flex gap-4">
             {links.map((item) => (
-              <Link className="text-base" key={item.label} href={item.link}>
+              <Link key={item.label} className="text-base" href={item.link}>
                 {item.label}
               </Link>
             ))}
@@ -66,7 +62,10 @@ const Header = () => {
                 (item.media_type === "tv" && item.poster_path)
               ) {
                 return (
-                  <div className="flex gap-4 pb-4 border-b border-secondary/50">
+                  <div
+                    key={item.id}
+                    className="flex gap-4 pb-4 border-b border-secondary/50"
+                  >
                     <img
                       className="h-28 aspect-[2/3]"
                       src={`${URL_IMAGE + item.poster_path}`}
@@ -92,7 +91,10 @@ const Header = () => {
                 const knownFor = JSON.stringify(item.known_for);
                 const knownForParsed = JSON.parse(knownFor);
                 return (
-                  <div className="flex gap-4 pb-4 border-b border-secondary/50">
+                  <div
+                    key={item.id}
+                    className="flex gap-4 pb-4 border-b border-secondary/50"
+                  >
                     {item.profile_path ? (
                       <img
                         className="h-28 aspect-[2/3]"
@@ -116,7 +118,7 @@ const Header = () => {
                       <span className="flex text-sm text-lightGray">
                         {knownForParsed.map((item: any, index: number) => {
                           return (
-                            <div>
+                            <div key={item.id}>
                               {item.title}
                               {knownForParsed.length - 1 !== index && ","}
                             </div>
