@@ -1,17 +1,22 @@
 "use client";
 
 import { getSearch } from "@/queries/queries";
-import { div } from "framer-motion/client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
+import { RxCross1 } from "react-icons/rx";
+import { div } from "framer-motion/client";
+
 const Header = () => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [searchResult, setSearchResult] = useState([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const divRef = useRef<HTMLDivElement | null>(null);
+
   const links = [
     { label: "Movies", link: "/movies" },
     { label: "TV shows", link: "/shows" },
@@ -23,10 +28,29 @@ const Header = () => {
   };
 
   useEffect(() => {
-    fetchSearch();
+    if (query.length) {
+      fetchSearch();
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
   }, [query]);
 
-  console.log(searchResult, "result");
+  const handleClickOutside = (event: MouseEvent) => {
+    if (divRef.current && !divRef.current.contains(event.target as Node)) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  console.log(searchResult, "eresul");
 
   return (
     <header className="md:block hidden">
@@ -45,18 +69,28 @@ const Header = () => {
           <div className="relative">
             <input
               type="text"
+              onFocus={() => query.length && setOpen(true)}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for a movie, tv show, person..."
               className="bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-black pr-10 min-w-[400px]"
             />
-            <CiSearch className="absolute text-black top-1.5 right-2 size-7" />
+            <CiSearch className="absolute text-black top-2 right-2 size-6" />
           </div>
         </div>
       </div>
-      {query && (
+      {open && (
         <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
-          <div className="bg-primary border-secondary border text-white p-6 rounded-md mt-10 w-3/5 flex flex-col gap-4">
-            {searchResult.map((item: any) => {
+          <div
+            ref={divRef}
+            className="bg-primary border-secondary border text-white p-6 rounded-md mt-10 w-3/5 flex flex-col gap-4 relative"
+          >
+            <button
+              className="absolute top-4 right-4"
+              onClick={() => setOpen(false)}
+            >
+              <RxCross1 />
+            </button>
+            {searchResult.map((item: any, index) => {
               if (
                 (item.media_type === "movie" && item.poster_path) ||
                 (item.media_type === "tv" && item.poster_path)
@@ -64,12 +98,16 @@ const Header = () => {
                 return (
                   <div
                     key={item.id}
-                    className="flex gap-4 pb-4 border-b border-secondary/50"
+                    className={`flex gap-4 pb-4 ${
+                      searchResult.length - 1 == index
+                        ? ""
+                        : "border-b border-secondary/50"
+                    }`}
                   >
                     <img
                       className="h-28 aspect-[2/3]"
                       src={`${URL_IMAGE + item.poster_path}`}
-                      alt={item.title}
+                      alt={item.media_type === "movie" ? item.title : item.name}
                     />
                     <div>
                       <h5 className="text-lg">{item.name}</h5>
@@ -93,34 +131,44 @@ const Header = () => {
                 return (
                   <div
                     key={item.id}
-                    className="flex gap-4 pb-4 border-b border-secondary/50"
+                    className={`flex gap-4 pb-4 ${
+                      searchResult.length - 1 == index
+                        ? ""
+                        : "border-b border-secondary/50"
+                    }`}
                   >
                     {item.profile_path ? (
                       <img
                         className="h-28 aspect-[2/3]"
                         src={`${URL_IMAGE + item.profile_path}`}
-                        alt={item.title}
+                        alt={item.name}
                       />
                     ) : (
                       <Image
                         className="h-28 w-[75px]"
                         src={PersonPlaceholder}
-                        alt={item.title}
+                        alt={item.name}
                       />
                     )}
 
                     <div>
                       <h5 className="text-xl pb-2">{item.name}</h5>
                       <h6 className="text-sm text-lightGray">
-                        {" "}
-                        {item.gender === 1 ? "Actress" : "Actor"}
+                        {item.gender === 1 &&
+                          item.known_for_department === "Acting" &&
+                          "Actress"}
+                        {item.gender === 2 &&
+                          item.known_for_department === "Acting" &&
+                          "Actor"}
+                        {item.known_for_department === "Directing" &&
+                          "Director"}
                       </h6>
                       <span className="flex text-sm text-lightGray">
                         {knownForParsed.map((item: any, index: number) => {
                           return (
                             <div key={item.id}>
                               {item.title}
-                              {knownForParsed.length - 1 !== index && ","}
+                              {knownForParsed.length - 1 !== index && ",\u00A0"}
                             </div>
                           );
                         })}
@@ -130,6 +178,9 @@ const Header = () => {
                 );
               }
             })}
+            {searchResult.length === 0 && (
+              <div>No results found for "{query}"</div>
+            )}
           </div>
         </div>
       )}
