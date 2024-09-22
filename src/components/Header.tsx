@@ -7,7 +7,6 @@ import { CiSearch } from "react-icons/ci";
 import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
-import { div } from "framer-motion/client";
 
 const Header = () => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -49,8 +48,6 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  console.log(searchResult, "eresul");
 
   return (
     <header className="md:block hidden">
@@ -168,7 +165,9 @@ const Header = () => {
                           return (
                             <div key={item.id}>
                               {item.title}
-                              {knownForParsed.length - 1 !== index && ",\u00A0"}
+                              {knownForParsed.length - 1 !== index && (
+                                <span>&#44;&nbsp;</span>
+                              )}
                             </div>
                           );
                         })}
@@ -179,7 +178,7 @@ const Header = () => {
               }
             })}
             {searchResult.length === 0 && (
-              <div>No results found for "{query}"</div>
+              <div>No results found for &quot;{query}&quot;</div>
             )}
           </div>
         </div>
