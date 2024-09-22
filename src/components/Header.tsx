@@ -7,6 +7,8 @@ import { CiSearch } from "react-icons/ci";
 import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
+import { IoSearchSharp } from "react-icons/io5";
+import { div } from "framer-motion/client";
 
 const Header = () => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -14,6 +16,7 @@ const Header = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [query, setQuery] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [openMobile, setOpenMobile] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
 
   const links = [
@@ -50,12 +53,12 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="md:block hidden">
+    <header>
       <div className="flex items-center justify-between py-4 px-4 lg:px-8 bg-primary">
         <Link href="/">
-          <h1 className="text-3xl">Moviechase</h1>
+          <h1 className="text-xl md:text-3xl">Moviechase</h1>
         </Link>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4">
           <nav className="flex gap-4">
             {links.map((item) => (
               <Link key={item.label} className="text-base" href={item.link}>
@@ -63,7 +66,7 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-          <div className="relative">
+          <div className="relative md:block hidden">
             <input
               type="text"
               onFocus={() => query.length && setOpen(true)}
@@ -73,13 +76,34 @@ const Header = () => {
             />
             <CiSearch className="absolute text-black top-2 right-2 size-6" />
           </div>
+          <button onClick={() => setOpenMobile(true)} className="md:hidden">
+            <IoSearchSharp className="size-5" />
+          </button>
         </div>
       </div>
+      {openMobile && (
+        <div className="absolute top-0 inset-x-0 py-4 px-4 lg:px-8 bg-primary flex justify-between">
+          <div className="relative">
+            <input
+              autoFocus
+              type="text"
+              onFocus={() => query.length && setOpen(true)}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for a movie, tv show, person..."
+              className="bg-transparent border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-white pr-10 min-w-[300px]"
+            />
+            <CiSearch className="absolute text-white top-2 right-2 size-6" />
+          </div>
+          <button onClick={() => setOpenMobile(false)}>
+            <RxCross1 />
+          </button>
+        </div>
+      )}
       {open && (
         <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
           <div
             ref={divRef}
-            className="bg-primary border-secondary border text-white p-6 rounded-md mt-10 w-3/5 flex flex-col gap-4 relative"
+            className="bg-primary md:border-secondary md:border text-white p-6 md:rounded-md md:mt-10 w-full lg:w-3/5 flex flex-col gap-4 relative"
           >
             <button
               className="absolute top-4 right-4"
