@@ -20,8 +20,6 @@ const HomeShows = () => {
     fetchShows();
   }, []);
 
-  console.log(shows, "shows");
-
   return (
     <Container className="pb-12 lg:pb-12">
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular shows</h2>

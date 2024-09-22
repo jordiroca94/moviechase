@@ -13,6 +13,7 @@ const config: Config = {
         current: "currentColor",
         black: "#000000",
         white: "#ffffff",
+        lightGray: "#D3D3D3",
         primary: "#0d253f",
         secondary: "#90cea1",
       },

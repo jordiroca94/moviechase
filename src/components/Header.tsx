@@ -1,12 +1,16 @@
 "use client";
 
 import { getSearch } from "@/queries/queries";
+import { div } from "framer-motion/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-
+import PersonPlaceholder from "../../public/images/personPlaceholder.png";
+import Image from "next/image";
 const Header = () => {
-  const [searchResult, setSearchResult] = useState("");
+  const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
+
+  const [searchResult, setSearchResult] = useState([]);
   const [query, setQuery] = useState("");
   const links = [
     { label: "Movies", link: "/movies" },
@@ -23,6 +27,10 @@ const Header = () => {
   }, [query]);
 
   console.log(searchResult, "result");
+  //  name
+  //  first_air_date
+  // overview
+  // foto poster_path
 
   return (
     <header className="md:block hidden">
@@ -49,6 +57,80 @@ const Header = () => {
           </div>
         </div>
       </div>
+      {query && (
+        <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
+          <div className="bg-primary border-secondary border text-white p-6 rounded-md mt-10 w-3/5 flex flex-col gap-4">
+            {searchResult.map((item: any) => {
+              if (
+                (item.media_type === "movie" && item.poster_path) ||
+                (item.media_type === "tv" && item.poster_path)
+              ) {
+                return (
+                  <div className="flex gap-4 pb-4 border-b border-secondary/50">
+                    <img
+                      className="h-28 aspect-[2/3]"
+                      src={`${URL_IMAGE + item.poster_path}`}
+                      alt={item.title}
+                    />
+                    <div>
+                      <h5 className="text-lg">{item.name}</h5>
+                      <h5 className="text-lg">{item.title}</h5>
+                      {item.media_type === "tv" && (
+                        <p className="text-sm text-lightGray">TV show</p>
+                      )}
+                      {item.media_type === "movie" && (
+                        <p className="text-sm text-lightGray">Movie</p>
+                      )}
+                      <p className="text-sm text-lightGray line-clamp-3">
+                        {item.overview}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+              if (item.media_type === "person") {
+                const knownFor = JSON.stringify(item.known_for);
+                const knownForParsed = JSON.parse(knownFor);
+                return (
+                  <div className="flex gap-4 pb-4 border-b border-secondary/50">
+                    {item.profile_path ? (
+                      <img
+                        className="h-28 aspect-[2/3]"
+                        src={`${URL_IMAGE + item.profile_path}`}
+                        alt={item.title}
+                      />
+                    ) : (
+                      <Image
+                        className="h-28 w-[75px]"
+                        src={PersonPlaceholder}
+                        alt={item.title}
+                      />
+                    )}
+
+                    <div>
+                      <h5 className="text-xl pb-2">{item.name}</h5>
+                      <h6 className="text-sm text-lightGray">
+                        {" "}
+                        {item.gender === 1 ? "Actress" : "Actor"}
+                      </h6>
+                      <span className="flex text-sm text-lightGray">
+                        {knownForParsed.map((item: any, index: number) => {
+                          return (
+                            <div>
+                              {item.title}
+                              {knownForParsed.length - 1 !== index && ","}
+                            </div>
+                          );
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+      )}
     </header>
   );
 };
