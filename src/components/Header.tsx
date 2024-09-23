@@ -106,7 +106,7 @@ const Header = () => {
             className="bg-primary md:border-secondary md:border text-white p-6 md:rounded-md md:mt-10 w-full lg:w-3/5 flex flex-col gap-4 relative"
           >
             <button
-              className="absolute top-4 right-4"
+              className="absolute top-4 right-4 hidden md:block"
               onClick={() => setOpen(false)}
             >
               <RxCross1 />
