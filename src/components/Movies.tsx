@@ -12,6 +12,8 @@ import Slider from "react-slick";
 import { settings } from "@/utils/slider";
 import Card from "./Card";
 import { MovieType } from "@/types/common";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Movies = () => {
   const [popularMovies, setPopularMovies] = useState([]);

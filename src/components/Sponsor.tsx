@@ -16,16 +16,16 @@ const Sponsor = () => {
               alt="Diverbook Sponsor"
             />
           </a>
-          <a
-            href="https://diverbook.vercel.app/"
-            target="_blank"
-            className="hover:underline"
-          >
-            <div className="flex justify-end mt-2 items-center gap-1">
+          <div className="flex justify-end mt-2 items-center">
+            <a
+              href="https://diverbook.vercel.app/"
+              target="_blank"
+              className="hover:underline flex gap-1"
+            >
               <span className="text-sm">Sponsored</span>
               <IoMdInformationCircleOutline />
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </Grid>
     </Container>

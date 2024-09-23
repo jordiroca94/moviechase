@@ -8,7 +8,6 @@ import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
 import { IoSearchSharp } from "react-icons/io5";
-import { div } from "framer-motion/client";
 
 const Header = () => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
