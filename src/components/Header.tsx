@@ -54,7 +54,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="flex items-center justify-between py-4 px-4 lg:px-8 bg-primary">
+      <div className="flex items-center justify-between py-5 md:py-4  px-4 lg:px-8 bg-primary">
         <Link href="/">
           <h1 className="text-xl md:text-3xl">Moviechase</h1>
         </Link>
@@ -72,7 +72,7 @@ const Header = () => {
               onFocus={() => query.length && setOpen(true)}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for a movie, tv show, person..."
-              className="bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-black pr-10 min-w-[400px]"
+              className="bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-1 focus:ring-secondary text-black pr-10 min-w-[400px]"
             />
             <CiSearch className="absolute text-black top-2 right-2 size-6" />
           </div>
@@ -90,7 +90,7 @@ const Header = () => {
               onFocus={() => query.length && setOpen(true)}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search for a movie, tv show, person..."
-              className="bg-transparent border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary text-white pr-10 min-w-[300px]"
+              className="bg-transparent border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-1 focus:ring-secondary text-white pr-10 min-w-[300px]"
             />
             <CiSearch className="absolute text-white top-2 right-2 size-6" />
           </div>
