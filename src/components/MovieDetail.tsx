@@ -15,14 +15,20 @@ import Slider from "react-slick";
 import { imagesSettings } from "@/utils/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {
+  CreditsType,
+  ImageType,
+  MovieDetailType,
+  VideoType,
+} from "@/types/common";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
-  const [movie, setMovie] = useState<any>();
-  const [videos, setVideos] = useState<any>();
-  const [images, setImages] = useState<any>();
-  const [credits, setCredits] = useState<any>();
+  const [movie, setMovie] = useState<MovieDetailType>();
+  const [videos, setVideos] = useState<VideoType[]>([]);
+  const [images, setImages] = useState<ImageType>();
+  const [credits, setCredits] = useState<CreditsType>();
   const [moreVideos, setMoreVideos] = useState(2);
   const fetchMovies = async () => {
     const res = await getMovie(id);
@@ -51,12 +57,12 @@ const MovieDetail = ({ id }: { id: number }) => {
     fetchCredits();
   }, []);
   if (movie && videos && images) {
-    const director =
-      credits.crew &&
-      credits.crew.filter((person: any) => person.job === "Director");
-    const writer =
-      credits.crew &&
-      credits.crew.filter((person: any) => person.department === "Writing");
+    const director = credits?.crew.filter(
+      (person) => person.job === "Director"
+    );
+    const writer = credits?.crew.filter(
+      (person) => person.department === "Writing"
+    );
     return (
       <Container>
         <div className="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12">
@@ -129,7 +135,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             </Link>
           </div>
           <div className="col-span-full flex py-6 gap-4">
-            {movie.genres.map((item: any) => (
+            {movie.genres.map((item) => (
               <div
                 className="rounded-full border border-secondary/50 w-min px-5 py-1 hover:bg-secondary hover:text-primary whitespace-nowrap"
                 key={item.id}
@@ -141,16 +147,20 @@ const MovieDetail = ({ id }: { id: number }) => {
           <div className="col-span-8 border-b border-lightGray pb-3">
             {movie.overview}
           </div>
-          <div className="col-span-8 border-b border-lightGray py-3">
-            <div className="flex gap-2">
-              <p className="font-bold">Director</p>
-              <Link href={`/person/${director[0].id}`}>{director[0].name}</Link>
+          {director && (
+            <div className="col-span-8 border-b border-lightGray py-3">
+              <div className="flex gap-2">
+                <p className="font-bold">Director</p>
+                <Link href={`/person/${director[0].id}`}>
+                  {director[0].name}
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
           <div className="col-span-8 border-b border-lightGray py-3">
             <div className="flex gap-2">
               <p className="font-bold">Writter</p>
-              {writer.map((person: any) => (
+              {writer?.map((person) => (
                 <Link key={person.id} href={`/person/${person.id}`}>
                   {person.name}
                 </Link>
@@ -161,7 +171,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             <p className="font-bold pt-3">Cast</p>
           </div>
           <div className="col-span-8 border-b border-lightGray py-3 grid grid-cols-8 gap-3">
-            {credits.cast.slice(0, 8).map((person: any) => (
+            {credits?.cast.slice(0, 8).map((person) => (
               <Link
                 key={person.id}
                 className="col-span-2"
@@ -186,7 +196,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             id="movie-videos"
             className="col-span-full grid grid-cols-12 gap-4 lg:gap-10"
           >
-            {videos.slice(0, moreVideos).map((video: any) => (
+            {videos.slice(0, moreVideos).map((video) => (
               <iframe
                 key={video.id}
                 className="col-span-6 aspect-video"
@@ -214,7 +224,7 @@ const MovieDetail = ({ id }: { id: number }) => {
           Images
         </h2>
         <Slider {...imagesSettings}>
-          {images.backdrops.map((image: any) => {
+          {images.backdrops.map((image) => {
             return (
               <img
                 key={image.file_path}
