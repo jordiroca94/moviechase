@@ -202,19 +202,20 @@ const MovieDetail = ({ id }: { id: number }) => {
           <h2 className="text-2xl col-span-full pt-4">Videos</h2>
           <div
             id="movie-videos"
-            className="col-span-full grid grid-cols-12 gap-10"
+            className="col-span-full grid grid-cols-12 gap-4 lg:gap-10"
           >
             {videos.slice(0, moreVideos).map((video) => (
-              <iframe
-                key={video.id}
-                className="col-span-12 sm:col-span-6 aspect-video"
-                width="100%"
-                height="100%"
-                src={`https://www.youtube.com/embed/${video.key}`}
-                title={video.name}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <div className="col-span-12 sm:col-span-6 aspect-video">
+                <iframe
+                  key={video.id}
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${video.key}`}
+                  title={video.name}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             ))}
             {moreVideos < videos.length && (
               <div className="col-span-full flex justify-center">

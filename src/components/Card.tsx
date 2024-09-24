@@ -9,7 +9,7 @@ const Card = ({
   return (
     <a href={`/movies/${id}`}>
       <img
-        className="transform scale-100 transition duration-300 ease-in-out hover:scale-110"
+        className="transform scale-100 transition duration-300 ease-in-out sm:hover:scale-110"
         src={`${URL_IMAGE + poster_path}`}
         alt={title}
       />
