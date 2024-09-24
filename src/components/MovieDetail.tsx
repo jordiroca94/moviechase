@@ -161,6 +161,19 @@ const MovieDetail = ({ id }: { id: number }) => {
           <div className="col-span-8 border-b border-lightGray pb-3">
             {movie.overview}
           </div>
+          <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4">
+            <div className="flex items-center gap-2">
+              <TbStarFilled className="text-secondary size-4" />
+              <div className="flex gap-1">
+                <div className="font-bold">{movie.vote_average.toFixed(1)}</div>
+                <div className="text-lightGray">/ 10</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaArrowTrendUp className="text-secondary size-4" />
+              <div>{movie.popularity}</div>
+            </div>
+          </div>
           {director && (
             <div className="col-span-8 border-b border-lightGray py-3">
               <div className="flex gap-2">
@@ -174,11 +187,13 @@ const MovieDetail = ({ id }: { id: number }) => {
           <div className="col-span-8 border-b border-lightGray py-3">
             <div className="flex gap-2">
               <p className="font-bold">Writter</p>
-              {writer?.slice(0, 3).map((person) => (
-                <Link key={person.id} href={`/person/${person.id}`}>
-                  {person.name}
-                </Link>
-              ))}
+              <div>
+                {writer?.slice(0, 3).map((person) => (
+                  <span key={person.id}>
+                    <Link href={`/person/${person.id}`}>{person.name} </Link>
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
           <div className="col-span-8">
