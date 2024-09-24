@@ -49,6 +49,42 @@ export const getPlayingMovies = async () => {
   return results;
 };
 
+export const getMovie = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/movie/${id}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
+export const getMovieVideos = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/movie/${id}/videos`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data.results;
+};
+
+export const getMovieImages = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/movie/${id}/images`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
+export const getMovieCredits = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/movie/${id}/credits`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
 // SHOWS
 
 export const getPopularShows = async () => {

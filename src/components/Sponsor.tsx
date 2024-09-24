@@ -6,7 +6,7 @@ import Container from "./ui/Container";
 
 const Sponsor = () => {
   return (
-    <Container className="pt-6 lg:pt-12">
+    <Container className="pt-10 lg:pt-16">
       <Grid>
         <div className="col-span-4 sm:col-span-6 sm:col-start-2 lg:col-start-3 lg:col-span-8">
           <a href="https://diverbook.vercel.app/" target="_blank">

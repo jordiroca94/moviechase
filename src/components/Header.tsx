@@ -55,7 +55,7 @@ const Header = () => {
     <header>
       <div className="flex items-center justify-between py-5 md:py-4  px-4 lg:px-8 bg-primary">
         <Link href="/">
-          <h1 className="text-xl md:text-3xl">Moviechase</h1>
+          <h5 className="text-xl md:text-3xl">Moviechase</h5>
         </Link>
         <div className="flex items-center gap-4">
           <nav className="flex gap-4">
