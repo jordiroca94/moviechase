@@ -108,14 +108,20 @@ const MovieDetail = ({ id }: { id: number }) => {
             alt={movie.title}
           />
           <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${videos[0].key}`}
-              title={videos[0].name}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {videos.length > 0 ? (
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${videos[0].key}`}
+                title={videos[0].name}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <div className="flex justify-center items-center h-full bg-darkGray mx-2">
+                VIDEO NOT AVAILABLE
+              </div>
+            )}
           </div>
           <div className="flex lg:flex-col col-span-full lg:col-span-2 gap-2">
             <Link
@@ -199,35 +205,42 @@ const MovieDetail = ({ id }: { id: number }) => {
               </Link>
             ))}
           </div>
-          <h2 className="text-2xl col-span-full pt-4">Videos</h2>
-          <div
-            id="movie-videos"
-            className="col-span-full grid grid-cols-12 gap-4 lg:gap-10"
-          >
-            {videos.slice(0, moreVideos).map((video) => (
-              <div className="col-span-12 sm:col-span-6 aspect-video">
-                <iframe
+          <h2 id="movie-videos" className="text-2xl col-span-full pt-4">
+            Videos
+          </h2>
+          {videos.length > 0 ? (
+            <div className="col-span-full grid grid-cols-12 gap-4 lg:gap-10">
+              {videos.slice(0, moreVideos).map((video) => (
+                <div
                   key={video.id}
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${video.key}`}
-                  title={video.name}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ))}
-            {moreVideos < videos.length && (
-              <div className="col-span-full flex justify-center">
-                <button
-                  onClick={() => setMoreVideos(moreVideos + 2)}
-                  className="hover:underline"
+                  className="col-span-12 sm:col-span-6 aspect-video"
                 >
-                  See More
-                </button>
-              </div>
-            )}
-          </div>
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${video.key}`}
+                    title={video.name}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              ))}
+              {moreVideos < videos.length && (
+                <div className="col-span-full flex justify-center">
+                  <button
+                    onClick={() => setMoreVideos(moreVideos + 2)}
+                    className="hover:underline"
+                  >
+                    See More
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="col-span-full py-16 flex justify-center">
+              THERE ARE NO VIDEOS AVAILABLE
+            </div>
+          )}
         </div>
         <h2 id="movie-images" className="text-2xl col-span-full pt-10 pb-4">
           Images
