@@ -23,7 +23,7 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [videos, setVideos] = useState<any>();
   const [images, setImages] = useState<any>();
   const [credits, setCredits] = useState<any>();
-  const [moreVideos, setMoreVideos] = useState<any>(4);
+  const [moreVideos, setMoreVideos] = useState(2);
   const fetchMovies = async () => {
     const res = await getMovie(id);
     setMovie(res);
@@ -51,13 +51,12 @@ const MovieDetail = ({ id }: { id: number }) => {
     fetchCredits();
   }, []);
   if (movie && videos && images) {
-    const director = credits.crew.filter(
-      (person: any) => person.job === "Director"
-    );
-    const writer = credits.crew.filter(
-      (person: any) => person.department === "Writing"
-    );
-    console.log(images, "-->");
+    const director =
+      credits.crew &&
+      credits.crew.filter((person: any) => person.job === "Director");
+    const writer =
+      credits.crew &&
+      credits.crew.filter((person: any) => person.department === "Writing");
     return (
       <Container>
         <div className="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12">
@@ -168,11 +167,13 @@ const MovieDetail = ({ id }: { id: number }) => {
                 className="col-span-2"
                 href={`/person/${person.id}`}
               >
-                <img
-                  className="size-72 object-fit "
-                  src={`${URL_IMAGE + person.profile_path}`}
-                  alt={movie.title}
-                />
+                {person.profile_path && (
+                  <img
+                    className="size-72 object-cover object-top"
+                    src={`${URL_IMAGE + person.profile_path}`}
+                    alt={movie.title}
+                  />
+                )}
                 <div className="font-bold pt-3">{person.name}</div>
                 <div className="text-lightGray font-light pb-3">
                   {person.character}

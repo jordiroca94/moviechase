@@ -116,7 +116,10 @@ const Header = () => {
                 (item.media_type === "tv" && item.poster_path)
               ) {
                 return (
-                  <div
+                  <Link
+                    href={`/${
+                      item.media_type === "movie" ? "movies" : "shows"
+                    }/${item.id}`}
                     key={item.id}
                     className={`flex gap-4 pb-4 ${
                       searchResult.length - 1 == index
@@ -142,7 +145,7 @@ const Header = () => {
                         {item.overview}
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 );
               }
               if (item.media_type === "person") {

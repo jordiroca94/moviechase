@@ -4,8 +4,12 @@ const Card = ({ id, poster_path, title }: MovieType) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
   return (
     <a href={`/movies/${id}`}>
-      <img src={`${URL_IMAGE + poster_path}`} alt={title} />
-      <h2 className="py-2">{title}</h2>
+      <img
+        className="transform scale-100 transition duration-300 ease-in-out hover:scale-110"
+        src={`${URL_IMAGE + poster_path}`}
+        alt={title}
+      />
+      <h2 className="pt-6 pb-2">{title}</h2>
     </a>
   );
 };
