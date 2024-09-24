@@ -21,6 +21,8 @@ import {
   MovieDetailType,
   VideoType,
 } from "@/types/common";
+import { MdOutlineVideoLibrary } from "react-icons/md";
+import { FaRegImages } from "react-icons/fa6";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -65,8 +67,8 @@ const MovieDetail = ({ id }: { id: number }) => {
     );
     return (
       <Container>
-        <div className="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12">
-          <div className="col-span-full flex justify-between">
+        <div className="grid grid-cols-8 lg:grid-cols-12">
+          <div className="col-span-8 sm:col-span-full flex justify-between">
             <div className="flex flex-col">
               <h1 className="text-5xl">{movie.title}</h1>
               <div className="text-lightGray text-sm py-3">
@@ -76,7 +78,7 @@ const MovieDetail = ({ id }: { id: number }) => {
                 <p>{dayjs(movie.release_date).format("YYYY")}</p>
               </div>
             </div>
-            <div className="flex gap-8">
+            <div className="hidden lg:flex gap-8">
               <div className="flex flex-col justify-center items-center gap-2">
                 <div className="uppercase text-lightGray">Rating</div>
                 <div className="flex items-center gap-2">
@@ -101,11 +103,11 @@ const MovieDetail = ({ id }: { id: number }) => {
             </div>
           </div>
           <img
-            className="col-span-3"
+            className="hidden sm:block sm:col-span-2 lg:col-span-3"
             src={`${URL_IMAGE + movie.poster_path}`}
             alt={movie.title}
           />
-          <div className="col-span-7">
+          <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
             <iframe
               width="100%"
               height="100%"
@@ -115,23 +117,29 @@ const MovieDetail = ({ id }: { id: number }) => {
               allowFullScreen
             ></iframe>
           </div>
-          <div className="flex flex-col col-span-2 gap-2">
+          <div className="flex lg:flex-col col-span-full lg:col-span-2 gap-2">
             <Link
               href="#movie-videos"
-              className="h-1/2 bg-darkGray flex justify-center items-center hover:bg-mediumGray"
+              className="w-1/2 lg:w-auto lg:h-1/2 bg-darkGray flex justify-center items-center hover:bg-mediumGray"
             >
-              {videos.length} VIDEOS
+              <div className="py-3 flex lg:flex-col items-center gap-4 text-sm lg:text-base">
+                <MdOutlineVideoLibrary className="text-secondary size-6" />
+                <div> {videos.length} VIDEOS</div>
+              </div>
             </Link>
             <Link
               href="#movie-images"
-              className="h-1/2 bg-darkGray flex justify-center items-center hover:bg-mediumGray"
+              className="w-1/2 lg:w-auto lg:h-1/2 bg-darkGray flex justify-center items-center hover:bg-mediumGray"
             >
-              {images.backdrops.length
-                ? images.backdrops.length
-                : images.posters.length
-                ? images.posters.length
-                : images.logos.length && images.logos.length}{" "}
-              PHOTOS
+              <div className="py-3 flex lg:flex-col items-center gap-4 text-sm lg:text-base">
+                <FaRegImages className="text-secondary size-6" />
+                {images.backdrops.length
+                  ? images.backdrops.length
+                  : images.posters.length
+                  ? images.posters.length
+                  : images.logos.length && images.logos.length}{" "}
+                PHOTOS
+              </div>
             </Link>
           </div>
           <div className="col-span-full flex py-6 gap-4">
@@ -160,7 +168,7 @@ const MovieDetail = ({ id }: { id: number }) => {
           <div className="col-span-8 border-b border-lightGray py-3">
             <div className="flex gap-2">
               <p className="font-bold">Writter</p>
-              {writer?.map((person) => (
+              {writer?.slice(0, 3).map((person) => (
                 <Link key={person.id} href={`/person/${person.id}`}>
                   {person.name}
                 </Link>
@@ -174,12 +182,12 @@ const MovieDetail = ({ id }: { id: number }) => {
             {credits?.cast.slice(0, 8).map((person) => (
               <Link
                 key={person.id}
-                className="col-span-2"
+                className="col-span-4 lg:col-span-2"
                 href={`/person/${person.id}`}
               >
                 {person.profile_path && (
                   <img
-                    className="size-72 object-cover object-top"
+                    className="size-72 object-cover object-top sm:object-center lg:object-top"
                     src={`${URL_IMAGE + person.profile_path}`}
                     alt={movie.title}
                   />
@@ -194,12 +202,12 @@ const MovieDetail = ({ id }: { id: number }) => {
           <h2 className="text-2xl col-span-full pt-4">Videos</h2>
           <div
             id="movie-videos"
-            className="col-span-full grid grid-cols-12 gap-4 lg:gap-10"
+            className="col-span-full grid grid-cols-12 gap-10"
           >
             {videos.slice(0, moreVideos).map((video) => (
               <iframe
                 key={video.id}
-                className="col-span-6 aspect-video"
+                className="col-span-12 sm:col-span-6 aspect-video"
                 width="100%"
                 height="100%"
                 src={`https://www.youtube.com/embed/${video.key}`}
