@@ -8,12 +8,13 @@ import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
 import { IoSearchSharp } from "react-icons/io5";
+import { MovieType, PersonType, ShowType } from "@/types/common";
 
 const Header = () => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [searchResult, setSearchResult] = useState([]);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
@@ -110,99 +111,111 @@ const Header = () => {
             >
               <RxCross1 />
             </button>
-            {searchResult.map((item: any, index) => {
-              if (
-                (item.media_type === "movie" && item.poster_path) ||
-                (item.media_type === "tv" && item.poster_path)
-              ) {
-                return (
-                  <Link
-                    href={`/${
-                      item.media_type === "movie" ? "movies" : "shows"
-                    }/${item.id}`}
-                    key={item.id}
-                    className={`flex gap-4 pb-4 ${
-                      searchResult.length - 1 == index
-                        ? ""
-                        : "border-b border-secondary/50"
-                    }`}
-                  >
-                    <img
-                      className="h-28 aspect-[2/3]"
-                      src={`${URL_IMAGE + item.poster_path}`}
-                      alt={item.media_type === "movie" ? item.title : item.name}
-                    />
-                    <div>
-                      <h5 className="text-lg">{item.name}</h5>
-                      <h5 className="text-lg">{item.title}</h5>
-                      {item.media_type === "tv" && (
-                        <p className="text-sm text-lightGray">TV show</p>
-                      )}
-                      {item.media_type === "movie" && (
-                        <p className="text-sm text-lightGray">Movie</p>
-                      )}
-                      <p className="text-sm text-lightGray line-clamp-3">
-                        {item.overview}
-                      </p>
-                    </div>
-                  </Link>
-                );
-              }
-              if (item.media_type === "person") {
-                const knownFor = JSON.stringify(item.known_for);
-                const knownForParsed = JSON.parse(knownFor);
-                return (
-                  <div
-                    key={item.id}
-                    className={`flex gap-4 pb-4 ${
-                      searchResult.length - 1 == index
-                        ? ""
-                        : "border-b border-secondary/50"
-                    }`}
-                  >
-                    {item.profile_path ? (
+            {searchResult.map(
+              (item: MovieType | ShowType | PersonType, index) => {
+                if (
+                  (item.media_type === "movie" && item.poster_path) ||
+                  (item.media_type === "tv" && item.poster_path)
+                ) {
+                  return (
+                    <Link
+                      href={`/${
+                        item.media_type === "movie" ? "movies" : "shows"
+                      }/${item.id}`}
+                      key={item.id}
+                      className={`flex gap-4 pb-4 ${
+                        searchResult.length - 1 == index
+                          ? ""
+                          : "border-b border-secondary/50"
+                      }`}
+                    >
                       <img
                         className="h-28 aspect-[2/3]"
-                        src={`${URL_IMAGE + item.profile_path}`}
-                        alt={item.name}
+                        src={`${URL_IMAGE + item.poster_path}`}
+                        alt={
+                          item.media_type === "movie" ? item.title : item.name
+                        }
                       />
-                    ) : (
-                      <Image
-                        className="h-28 w-[75px]"
-                        src={PersonPlaceholder}
-                        alt={item.name}
-                      />
-                    )}
+                      <div>
+                        {item.media_type === "tv" && (
+                          <>
+                            <h5 className="text-lg">{item.name}</h5>
+                            <p className="text-sm text-lightGray">TV show</p>
+                          </>
+                        )}
+                        {item.media_type === "movie" && (
+                          <>
+                            <h5 className="text-lg">{item.title}</h5>
+                            <p className="text-sm text-lightGray">Movie</p>
+                          </>
+                        )}
+                        <p className="text-sm text-lightGray line-clamp-3">
+                          {item.overview}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                }
+                if (item.media_type === "person") {
+                  return (
+                    <div
+                      key={item.id}
+                      className={`flex gap-4 pb-4 ${
+                        searchResult.length - 1 == index
+                          ? ""
+                          : "border-b border-secondary/50"
+                      }`}
+                    >
+                      {item.profile_path ? (
+                        <img
+                          className="h-28 aspect-[2/3]"
+                          src={`${URL_IMAGE + item.profile_path}`}
+                          alt={item.name}
+                        />
+                      ) : (
+                        <Image
+                          className="h-28 w-[75px]"
+                          src={PersonPlaceholder}
+                          alt={item.name}
+                        />
+                      )}
 
-                    <div>
-                      <h5 className="text-xl pb-2">{item.name}</h5>
-                      <h6 className="text-sm text-lightGray">
-                        {item.gender === 1 &&
-                          item.known_for_department === "Acting" &&
-                          "Actress"}
-                        {item.gender === 2 &&
-                          item.known_for_department === "Acting" &&
-                          "Actor"}
-                        {item.known_for_department === "Directing" &&
-                          "Director"}
-                      </h6>
-                      <span className="flex text-sm text-lightGray">
-                        {knownForParsed.map((item: any, index: number) => {
-                          return (
-                            <div key={item.id}>
-                              {item.title}
-                              {knownForParsed.length - 1 !== index && (
-                                <span>&#44;&nbsp;</span>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </span>
+                      <div>
+                        <h5 className="text-xl pb-2">{item.name}</h5>
+                        <h6 className="text-sm text-lightGray">
+                          {item.gender === 1 &&
+                            item.known_for_department === "Acting" &&
+                            "Actress"}
+                          {item.gender === 2 &&
+                            item.known_for_department === "Acting" &&
+                            "Actor"}
+                          {item.known_for_department === "Directing" &&
+                            "Director"}
+                        </h6>
+                        <span className="flex text-sm text-lightGray">
+                          <div>
+                            {item.known_for.map(
+                              (el: MovieType | ShowType, index: number) => {
+                                return (
+                                  <span key={el.id}>
+                                    {el.media_type === "movie"
+                                      ? el.title
+                                      : el.name}
+                                    {item.known_for.length - 1 !== index && (
+                                      <span>&#44;&nbsp;</span>
+                                    )}
+                                  </span>
+                                );
+                              }
+                            )}
+                          </div>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               }
-            })}
+            )}
             {searchResult.length === 0 && (
               <div>No results found for &quot;{query}&quot;</div>
             )}

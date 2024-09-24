@@ -1,6 +1,10 @@
 import { MovieType } from "@/types/common";
 
-const Card = ({ id, poster_path, title }: MovieType) => {
+const Card = ({
+  id,
+  poster_path,
+  title,
+}: Pick<MovieType, "id" | "poster_path" | "title">) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
   return (
     <a href={`/movies/${id}`}>
