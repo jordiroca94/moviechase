@@ -8,7 +8,7 @@ export const settings = {
     {
       breakpoint: 1280,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 4.5,
         slidesToScroll: 4,
         infinite: true,
         arrows: false,
@@ -17,7 +17,7 @@ export const settings = {
     {
       breakpoint: 640,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 2.5,
         slidesToScroll: 2,
         infinite: true,
         arrows: false,
@@ -26,10 +26,10 @@ export const settings = {
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 1.5,
         slidesToScroll: 1,
-        infinite: true,
         arrows: false,
+        infinite: true,
       },
     },
   ],
@@ -45,6 +45,7 @@ export const imagesSettings = {
     {
       breakpoint: 1280,
       settings: {
+        centerMode: true,
         slidesToShow: 3,
         slidesToScroll: 3,
         infinite: true,
@@ -54,6 +55,7 @@ export const imagesSettings = {
     {
       breakpoint: 640,
       settings: {
+        centerMode: true,
         slidesToShow: 2,
         slidesToScroll: 2,
         infinite: true,
@@ -63,6 +65,7 @@ export const imagesSettings = {
     {
       breakpoint: 480,
       settings: {
+        centerMode: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,

@@ -6,6 +6,7 @@ import {
   getMovieCredits,
   getMovieImages,
   getMovieVideos,
+  getPopularMovies,
 } from "@/queries/queries";
 import dayjs from "dayjs";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -19,11 +20,14 @@ import {
   CreditsType,
   ImageType,
   MovieDetailType,
+  MovieType,
   VideoType,
 } from "@/types/common";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegImages } from "react-icons/fa6";
 import formatTime from "@/utils/formatTime";
+import PersonPlaceholder from "../../public/images/personPlaceholder.png";
+import Image from "next/image";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -33,6 +37,8 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
   const [moreVideos, setMoreVideos] = useState(2);
+  const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
+
   const fetchMovies = async () => {
     const res = await getMovie(id);
     setMovie(res);
@@ -53,11 +59,17 @@ const MovieDetail = ({ id }: { id: number }) => {
     setCredits(res);
   };
 
+  const fetchPopularMovies = async () => {
+    const res = await getPopularMovies();
+    setPopularMovies(res);
+  };
+
   useEffect(() => {
     fetchMovies();
     fetchVideos();
     fetchImages();
     fetchCredits();
+    fetchPopularMovies();
   }, []);
   if (movie && videos && images) {
     const trailer = videos.filter(
@@ -155,7 +167,7 @@ const MovieDetail = ({ id }: { id: number }) => {
               </div>
             </Link>
           </div>
-          <div className="col-span-full flex py-6 gap-4">
+          <div className="col-span-full flex py-6 gap-4 max-sm:w-full max-sm:overflow-hidden max-sm:overflow-x-scroll">
             {movie.genres.map((item) => (
               <div
                 className="rounded-full border border-secondary/50 w-min px-5 py-1 hover:bg-secondary hover:text-primary whitespace-nowrap"
@@ -169,10 +181,39 @@ const MovieDetail = ({ id }: { id: number }) => {
             <div className="col-span-8 border-b border-lightGray pb-3">
               {movie.overview}
             </div>
-            <div className="hidden sm:block col-span-4 row-span-5 relative">
-              <p className="sticky top-10 pl-4">FIXED STUFF WIP </p>
+            <div className="hidden sm:block justify-center col-span-4 row-span-6 lg:row-span-5 relative">
+              <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
+                <h3 className="text-2xl pb-4">Most popular</h3>
+                <div className="flex flex-col gap-4">
+                  {popularMovies.slice(0, 4)?.map((item) => {
+                    if (item.id == id) return;
+                    return (
+                      <Link
+                        href={`/movies/${item.id}`}
+                        className="flex items-center gap-4"
+                        key={item.id}
+                      >
+                        <img
+                          className="sm:size-24 lg:size-32 rounded-full object-cover"
+                          src={`${URL_IMAGE + item.backdrop_path}`}
+                          alt={item.title}
+                        />
+                        <div className="flex flex-col gap-2">
+                          <p>{item.title}</p>
+                          <div className="flex items-center gap-2">
+                            <TbStarFilled className="text-secondary size-4" />
+                            <div className="font-bold">
+                              {item.vote_average.toFixed(1)}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4">
+            <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4 border-b border-lightGray pb-3">
               <div className="flex items-center gap-2">
                 <TbStarFilled className="text-secondary size-4" />
                 <div className="flex gap-1">
@@ -199,18 +240,22 @@ const MovieDetail = ({ id }: { id: number }) => {
             )}
             <div className="col-span-8 border-b border-lightGray py-3">
               <div className="flex gap-2">
-                <p className="font-bold">Writter</p>
-                <div>
-                  {writer?.slice(0, 3).map((person) => (
-                    <span key={person.id}>
-                      <Link href={`/person/${person.id}`}>{person.name} </Link>
-                    </span>
-                  ))}
+                <p className="font-bold">Writer</p>
+                <div className="flex gap-3">
+                  <div>
+                    {writer?.slice(0, 2).map((person) => (
+                      <span key={person.id}>
+                        <Link href={`/person/${person.id}`}>
+                          {person.name}{" "}
+                        </Link>
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             <div className="col-span-8">
-              <p className="font-bold pt-3">Cast</p>
+              <p className="font-bold text-2xl pt-3">Cast</p>
             </div>
             <div className="col-span-8 border-b border-lightGray py-3 grid grid-cols-8 gap-3">
               {credits?.cast.slice(0, 8).map((person) => (
@@ -219,10 +264,16 @@ const MovieDetail = ({ id }: { id: number }) => {
                   className="col-span-4 lg:col-span-2"
                   href={`/person/${person.id}`}
                 >
-                  {person.profile_path && (
+                  {person.profile_path ? (
                     <img
                       className="size-72 object-cover object-top sm:object-center lg:object-top"
                       src={`${URL_IMAGE + person.profile_path}`}
+                      alt={movie.title}
+                    />
+                  ) : (
+                    <Image
+                      className="size-72 object-cover object-top sm:object-center lg:object-top"
+                      src={PersonPlaceholder}
                       alt={movie.title}
                     />
                   )}
@@ -234,7 +285,7 @@ const MovieDetail = ({ id }: { id: number }) => {
               ))}
             </div>
           </div>
-          <h2 id="movie-videos" className="text-2xl col-span-full pt-4">
+          <h2 id="movie-videos" className="text-2xl col-span-full py-10">
             Videos
           </h2>
           {videos.length > 0 ? (
@@ -271,7 +322,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             </div>
           )}
         </div>
-        <h2 id="movie-images" className="text-2xl col-span-full pt-10 pb-4">
+        <h2 id="movie-images" className="text-2xl col-span-full py-10">
           Images
         </h2>
         <Slider {...imagesSettings}>

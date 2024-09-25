@@ -11,7 +11,7 @@ import { settings } from "@/utils/slider";
 import { MovieType } from "@/types/common";
 
 const HomeMovies = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<MovieType[]>([]);
 
   const fetchMovies = async () => {
     const res = await getPopularMovies();
@@ -26,7 +26,7 @@ const HomeMovies = () => {
     <Container>
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular movies</h2>
       <Slider {...settings}>
-        {movies.map((movie: MovieType) => {
+        {movies.map((movie) => {
           if (!movie.poster_path) return null;
           return (
             <Card
