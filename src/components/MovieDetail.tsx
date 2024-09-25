@@ -23,6 +23,7 @@ import {
 } from "@/types/common";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegImages } from "react-icons/fa6";
+import formatTime from "@/utils/formatTime";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -59,6 +60,9 @@ const MovieDetail = ({ id }: { id: number }) => {
     fetchCredits();
   }, []);
   if (movie && videos && images) {
+    const trailer = videos.filter(
+      (video) => video.type === "Trailer" && video.name.includes("Trailer")
+    );
     const director = credits?.crew.filter(
       (person) => person.job === "Director"
     );
@@ -75,7 +79,10 @@ const MovieDetail = ({ id }: { id: number }) => {
                 <p className="text-lightGray">
                   Original title: {movie.original_title}
                 </p>
-                <p>{dayjs(movie.release_date).format("YYYY")}</p>
+                <div className="flex gap-2">
+                  <p>{dayjs(movie.release_date).format("YYYY")}</p> -
+                  <p>{formatTime(movie.runtime)}</p>
+                </div>
               </div>
             </div>
             <div className="hidden lg:flex gap-8">
@@ -112,14 +119,14 @@ const MovieDetail = ({ id }: { id: number }) => {
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${videos[0].key}`}
-                title={videos[0].name}
+                src={`https://www.youtube.com/embed/${trailer[0].key}`}
+                title={trailer[0].name}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
             ) : (
               <div className="flex justify-center items-center h-full bg-darkGray mx-2">
-                VIDEO NOT AVAILABLE
+                TRAILER NOT AVAILABLE
               </div>
             )}
           </div>
@@ -158,67 +165,74 @@ const MovieDetail = ({ id }: { id: number }) => {
               </div>
             ))}
           </div>
-          <div className="col-span-8 border-b border-lightGray pb-3">
-            {movie.overview}
-          </div>
-          <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4">
-            <div className="flex items-center gap-2">
-              <TbStarFilled className="text-secondary size-4" />
-              <div className="flex gap-1">
-                <div className="font-bold">{movie.vote_average.toFixed(1)}</div>
-                <div className="text-lightGray">/ 10</div>
+          <div className="col-span-full grid grid-cols-8 sm:grid-cols-12 ">
+            <div className="col-span-8 border-b border-lightGray pb-3">
+              {movie.overview}
+            </div>
+            <div className="hidden sm:block col-span-4 row-span-5 relative">
+              <p className="sticky top-10 pl-4">FIXED STUFF WIP </p>
+            </div>
+            <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4">
+              <div className="flex items-center gap-2">
+                <TbStarFilled className="text-secondary size-4" />
+                <div className="flex gap-1">
+                  <div className="font-bold">
+                    {movie.vote_average.toFixed(1)}
+                  </div>
+                  <div className="text-lightGray">/ 10</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <FaArrowTrendUp className="text-secondary size-4" />
+                <div>{movie.popularity}</div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <FaArrowTrendUp className="text-secondary size-4" />
-              <div>{movie.popularity}</div>
-            </div>
-          </div>
-          {director && (
+            {director && (
+              <div className="col-span-8 border-b border-lightGray py-3">
+                <div className="flex gap-2">
+                  <p className="font-bold">Director</p>
+                  <Link href={`/person/${director[0].id}`}>
+                    {director[0].name}
+                  </Link>
+                </div>
+              </div>
+            )}
             <div className="col-span-8 border-b border-lightGray py-3">
               <div className="flex gap-2">
-                <p className="font-bold">Director</p>
-                <Link href={`/person/${director[0].id}`}>
-                  {director[0].name}
-                </Link>
-              </div>
-            </div>
-          )}
-          <div className="col-span-8 border-b border-lightGray py-3">
-            <div className="flex gap-2">
-              <p className="font-bold">Writter</p>
-              <div>
-                {writer?.slice(0, 3).map((person) => (
-                  <span key={person.id}>
-                    <Link href={`/person/${person.id}`}>{person.name} </Link>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="col-span-8">
-            <p className="font-bold pt-3">Cast</p>
-          </div>
-          <div className="col-span-8 border-b border-lightGray py-3 grid grid-cols-8 gap-3">
-            {credits?.cast.slice(0, 8).map((person) => (
-              <Link
-                key={person.id}
-                className="col-span-4 lg:col-span-2"
-                href={`/person/${person.id}`}
-              >
-                {person.profile_path && (
-                  <img
-                    className="size-72 object-cover object-top sm:object-center lg:object-top"
-                    src={`${URL_IMAGE + person.profile_path}`}
-                    alt={movie.title}
-                  />
-                )}
-                <div className="font-bold pt-3">{person.name}</div>
-                <div className="text-lightGray font-light pb-3">
-                  {person.character}
+                <p className="font-bold">Writter</p>
+                <div>
+                  {writer?.slice(0, 3).map((person) => (
+                    <span key={person.id}>
+                      <Link href={`/person/${person.id}`}>{person.name} </Link>
+                    </span>
+                  ))}
                 </div>
-              </Link>
-            ))}
+              </div>
+            </div>
+            <div className="col-span-8">
+              <p className="font-bold pt-3">Cast</p>
+            </div>
+            <div className="col-span-8 border-b border-lightGray py-3 grid grid-cols-8 gap-3">
+              {credits?.cast.slice(0, 8).map((person) => (
+                <Link
+                  key={person.id}
+                  className="col-span-4 lg:col-span-2"
+                  href={`/person/${person.id}`}
+                >
+                  {person.profile_path && (
+                    <img
+                      className="size-72 object-cover object-top sm:object-center lg:object-top"
+                      src={`${URL_IMAGE + person.profile_path}`}
+                      alt={movie.title}
+                    />
+                  )}
+                  <div className="font-bold pt-3">{person.name}</div>
+                  <div className="text-lightGray font-light pb-3">
+                    {person.character}
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
           <h2 id="movie-videos" className="text-2xl col-span-full pt-4">
             Videos
