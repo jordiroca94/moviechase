@@ -28,6 +28,7 @@ import { FaRegImages } from "react-icons/fa6";
 import formatTime from "@/utils/formatTime";
 import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
+import RateStar from "./ui/RateStar";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -100,15 +101,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             <div className="hidden lg:flex gap-8">
               <div className="flex flex-col justify-center items-center gap-2">
                 <div className="uppercase text-lightGray">Rating</div>
-                <div className="flex items-center gap-2">
-                  <TbStarFilled className="text-secondary size-4" />
-                  <div className="flex gap-1">
-                    <div className="font-bold">
-                      {movie.vote_average.toFixed(1)}
-                    </div>
-                    <div className="text-lightGray">/ 10</div>
-                  </div>
-                </div>
+                <RateStar averageRate={movie.vote_average} outOfTen />
               </div>
               <div className="flex flex-col justify-center items-center gap-2">
                 <div className="uppercase text-lightGray">Popularity</div>
@@ -200,12 +193,7 @@ const MovieDetail = ({ id }: { id: number }) => {
                         />
                         <div className="flex flex-col gap-2">
                           <p>{item.title}</p>
-                          <div className="flex items-center gap-2">
-                            <TbStarFilled className="text-secondary size-4" />
-                            <div className="font-bold">
-                              {item.vote_average.toFixed(1)}
-                            </div>
-                          </div>
+                          <RateStar averageRate={movie.vote_average} />
                         </div>
                       </Link>
                     );
@@ -214,15 +202,7 @@ const MovieDetail = ({ id }: { id: number }) => {
               </div>
             </div>
             <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4 border-b border-lightGray pb-3">
-              <div className="flex items-center gap-2">
-                <TbStarFilled className="text-secondary size-4" />
-                <div className="flex gap-1">
-                  <div className="font-bold">
-                    {movie.vote_average.toFixed(1)}
-                  </div>
-                  <div className="text-lightGray">/ 10</div>
-                </div>
-              </div>
+              <RateStar averageRate={movie.vote_average} outOfTen />
               <div className="flex items-center gap-2">
                 <FaArrowTrendUp className="text-secondary size-4" />
                 <div>{movie.popularity}</div>
