@@ -31,6 +31,7 @@ const SearchBar = ({ mobile, query, setOpen, setQuery }: Props) => {
     <div className={`relative ${!mobile && "md:block hidden"} `}>
       <input
         type="text"
+        autoFocus={mobile ? true : false}
         onFocus={() => query.length && setOpen(true)}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for a movie, tv show, person..."

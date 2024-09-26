@@ -45,7 +45,7 @@ const Header = () => {
           setQuery={setQuery}
         />
       )}
-      {open && <Search query={query} setOpen={setOpen} />}
+      <Search query={query} open={open} setOpen={setOpen} />
     </header>
   );
 };
