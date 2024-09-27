@@ -2,10 +2,10 @@
 import { getShow } from "@/queries/queries";
 import { useEffect, useState } from "react";
 import Container from "./ui/Container";
+import { ShowDetailType } from "@/types/common";
 
 const ShowDetail = ({ id }: { id: number }) => {
-  const [show, setShow] = useState<any>();
-  console.log(id);
+  const [show, setShow] = useState<ShowDetailType>();
 
   const fetchShows = async () => {
     const res = await getShow(id);
@@ -15,6 +15,8 @@ const ShowDetail = ({ id }: { id: number }) => {
   useEffect(() => {
     fetchShows();
   }, []);
+
+  console.log(show, "show");
 
   return <Container>{id}</Container>;
 };
