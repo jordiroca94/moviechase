@@ -30,6 +30,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Trailer from "./Trailer";
 import Videos from "./Videos";
+import Cast from "./Cast";
 
 const ShowDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -197,35 +198,36 @@ const ShowDetail = ({ id }: { id: number }) => {
                 </div>
               </div>
             )}
+            <Cast credits={credits!} imageAlt={show.name} />
             <div className="col-span-8">
-              <p className="font-bold text-2xl pt-3">Cast</p>
-            </div>
-            <div className="col-span-8 border-b border-lightGray py-3 grid grid-cols-8 gap-3">
-              {credits?.cast.slice(0, 8).map((person) => (
-                <Link
-                  key={person.id}
-                  className="col-span-4 lg:col-span-2"
-                  href={`/person/${person.id}`}
-                >
-                  {person.profile_path ? (
-                    <img
-                      className="size-72 object-cover object-top sm:object-center lg:object-top"
-                      src={`${URL_IMAGE + person.profile_path}`}
-                      alt={show.name}
-                    />
-                  ) : (
-                    <Image
-                      className="size-72 object-cover object-top sm:object-center lg:object-top"
-                      src={PersonPlaceholder}
-                      alt={show.name}
-                    />
-                  )}
-                  <div className="font-bold pt-3">{person.name}</div>
-                  <div className="text-lightGray font-light pb-3">
-                    {person.character}
-                  </div>
-                </Link>
-              ))}
+              <p className="w-full font-bold text-2xl pt-3">Cast</p>
+              <div className="w-full border-b border-lightGray py-3 grid grid-cols-8 gap-3">
+                {credits?.cast.slice(0, 8).map((person) => (
+                  <Link
+                    key={person.id}
+                    className="col-span-4 lg:col-span-2"
+                    href={`/person/${person.id}`}
+                  >
+                    {person.profile_path ? (
+                      <img
+                        className="size-72 object-cover object-top sm:object-center lg:object-top"
+                        src={`${URL_IMAGE + person.profile_path}`}
+                        alt={show.name}
+                      />
+                    ) : (
+                      <Image
+                        className="size-72 object-cover object-top sm:object-center lg:object-top"
+                        src={PersonPlaceholder}
+                        alt={show.name}
+                      />
+                    )}
+                    <div className="font-bold pt-3">{person.name}</div>
+                    <div className="text-lightGray font-light pb-3">
+                      {person.character}
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           <Videos videos={videos} />
