@@ -24,14 +24,15 @@ const HomeShows = () => {
     <Container className="pb-12 lg:pb-12">
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular shows</h2>
       <Slider {...settings}>
-        {shows.map((movie: ShowType) => {
-          if (!movie.poster_path) return null;
+        {shows.map((show: ShowType) => {
+          if (!show.poster_path) return null;
           return (
             <Card
-              key={movie.id}
-              id={movie.id}
-              poster_path={movie.poster_path}
-              title={movie.name}
+              type="show"
+              key={show.id}
+              id={show.id}
+              poster_path={show.poster_path}
+              title={show.name}
             />
           );
         })}

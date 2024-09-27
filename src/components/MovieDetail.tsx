@@ -10,7 +10,6 @@ import {
 } from "@/queries/queries";
 import dayjs from "dayjs";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { TbStarFilled } from "react-icons/tb";
 import Link from "next/link";
 import Slider from "react-slick";
 import { imagesSettings } from "@/utils/slider";

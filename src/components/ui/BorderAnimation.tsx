@@ -20,7 +20,7 @@ const BorderAnimation = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       ref={divRef}
-      className="flex justify-center items-center h-[300px] m-[80px]"
+      className="flex justify-center items-center h-[300px] m-[30px] sm:m-[80px]"
     >
       <motion.svg
         className="absolute"

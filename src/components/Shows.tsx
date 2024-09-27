@@ -55,6 +55,7 @@ const Shows = () => {
         {popularShows.map((show: ShowType) => {
           return (
             <Card
+              type="show"
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
@@ -68,6 +69,7 @@ const Shows = () => {
         {topRatedShows.map((show: ShowType) => {
           return (
             <Card
+              type="show"
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
@@ -82,6 +84,7 @@ const Shows = () => {
           if (!show.poster_path) return null;
           return (
             <Card
+              type="show"
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
@@ -97,6 +100,7 @@ const Shows = () => {
         {airingShows.map((show: ShowType) => {
           return (
             <Card
+              type="show"
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}

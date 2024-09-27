@@ -30,6 +30,7 @@ const HomeMovies = () => {
           if (!movie.poster_path) return null;
           return (
             <Card
+              type="movie"
               key={movie.id}
               id={movie.id}
               poster_path={movie.poster_path}

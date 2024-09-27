@@ -131,6 +131,15 @@ export const getAiringShows = async () => {
   return results;
 };
 
+export const getShow = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/tv/${id}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
 // SEARCH
 export const getSearch = async (query: string) => {
   const {
