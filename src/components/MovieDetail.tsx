@@ -6,31 +6,27 @@ import {
   getMovieCredits,
   getMovieImages,
   getMovieVideos,
-  getPopularMovies,
 } from "@/queries/queries";
 import dayjs from "dayjs";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import Link from "next/link";
-import Slider from "react-slick";
-import { imagesSettings } from "@/utils/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
   CreditsType,
   ImageType,
   MovieDetailType,
-  MovieType,
   VideoType,
 } from "@/types/common";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegImages } from "react-icons/fa6";
 import formatTime from "@/utils/formatTime";
-import PersonPlaceholder from "../../public/images/personPlaceholder.png";
-import Image from "next/image";
 import RateStar from "./ui/RateStar";
 import Trailer from "./Trailer";
 import Videos from "./Videos";
 import Cast from "./Cast";
+import StickySection from "./StickySection";
+import Images from "./Images";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -39,7 +35,6 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
-  const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
 
   const fetchMovie = async () => {
     const res = await getMovie(id);
@@ -61,22 +56,13 @@ const MovieDetail = ({ id }: { id: number }) => {
     setCredits(res);
   };
 
-  const fetchPopularMovies = async () => {
-    const res = await getPopularMovies();
-    setPopularMovies(res);
-  };
-
   useEffect(() => {
     fetchMovie();
     fetchVideos();
     fetchImages();
     fetchCredits();
-    fetchPopularMovies();
   }, []);
   if (movie && videos && images) {
-    const trailer = videos.filter(
-      (video) => video.type === "Trailer" && video.name.includes("Trailer")
-    );
     const director = credits?.crew.filter(
       (person) => person.job === "Director"
     );
@@ -164,33 +150,7 @@ const MovieDetail = ({ id }: { id: number }) => {
             <div className="col-span-8 border-b border-lightGray pb-3">
               {movie.overview}
             </div>
-            <div className="hidden sm:block justify-center col-span-4 row-span-6 lg:row-span-5 relative">
-              <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
-                <h3 className="text-2xl pb-4">Most popular</h3>
-                <div className="flex flex-col gap-4">
-                  {popularMovies.slice(0, 4)?.map((item) => {
-                    if (item.id == id) return;
-                    return (
-                      <Link
-                        href={`/movies/${item.id}`}
-                        className="flex items-center gap-4"
-                        key={item.id}
-                      >
-                        <img
-                          className="sm:size-24 lg:size-32 rounded-full object-cover"
-                          src={`${URL_IMAGE + item.backdrop_path}`}
-                          alt={item.title}
-                        />
-                        <div className="flex flex-col gap-2">
-                          <p>{item.title}</p>
-                          <RateStar averageRate={movie.vote_average} />
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            <StickySection id={id} />
             <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4 border-b border-lightGray pb-3">
               <RateStar averageRate={movie.vote_average} outOfTen />
               <div className="flex items-center gap-2">
@@ -228,20 +188,7 @@ const MovieDetail = ({ id }: { id: number }) => {
           </div>
           <Videos videos={videos} />
         </div>
-        <h2 id="movie-images" className="text-2xl col-span-full py-10">
-          Images
-        </h2>
-        <Slider {...imagesSettings}>
-          {images.backdrops.map((image) => {
-            return (
-              <img
-                key={image.file_path}
-                src={`${URL_IMAGE + image.file_path}`}
-                alt={movie.title}
-              />
-            );
-          })}
-        </Slider>
+        <Images id="movie-images" images={images} alt={movie.title} />
       </Container>
     );
   }

@@ -1,6 +1,5 @@
 "use client";
 import {
-  getPopularShows,
   getShow,
   getShowCredits,
   getShowImages,
@@ -11,7 +10,6 @@ import Container from "./ui/Container";
 import {
   CreditsType,
   ImageType,
-  MovieType,
   ShowDetailType,
   VideoType,
 } from "@/types/common";
@@ -22,15 +20,13 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import Link from "next/link";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegImages } from "react-icons/fa";
-import Image from "next/image";
-import PersonPlaceholder from "../../public/images/personPlaceholder.png";
-import Slider from "react-slick";
-import { imagesSettings } from "@/utils/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Trailer from "./Trailer";
 import Videos from "./Videos";
 import Cast from "./Cast";
+import StickySection from "./StickySection";
+import Images from "./Images";
 
 const ShowDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -39,8 +35,6 @@ const ShowDetail = ({ id }: { id: number }) => {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
-
-  const [popularShows, setPopularShows] = useState<MovieType[]>([]);
 
   const fetchShow = async () => {
     const res = await getShow(id);
@@ -61,17 +55,11 @@ const ShowDetail = ({ id }: { id: number }) => {
     setCredits(res);
   };
 
-  const fetchPopularShows = async () => {
-    const res = await getPopularShows();
-    setPopularShows(res);
-  };
-
   useEffect(() => {
     fetchShow();
     fetchVideos();
     fetchImages();
     fetchCredits();
-    fetchPopularShows();
   }, []);
 
   if (show && videos && images) {
@@ -154,33 +142,7 @@ const ShowDetail = ({ id }: { id: number }) => {
             <div className="col-span-8 border-b border-lightGray pb-3">
               {show.overview}
             </div>
-            <div className="hidden sm:block justify-center col-span-4 row-span-6 lg:row-span-5 relative">
-              <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
-                <h3 className="text-2xl pb-4">Most popular</h3>
-                <div className="flex flex-col gap-4">
-                  {popularShows.slice(0, 4)?.map((item) => {
-                    if (item.id == id) return;
-                    return (
-                      <Link
-                        href={`/shows/${item.id}`}
-                        className="flex items-center gap-4"
-                        key={item.id}
-                      >
-                        <img
-                          className="sm:size-24 lg:size-32 rounded-full object-cover"
-                          src={`${URL_IMAGE + item.backdrop_path}`}
-                          alt={item.title}
-                        />
-                        <div className="flex flex-col gap-2">
-                          <p>{item.title}</p>
-                          <RateStar averageRate={show.vote_average} />
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            <StickySection id={id} />
             <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4 border-b border-lightGray pb-3">
               <RateStar averageRate={show.vote_average} outOfTen />
               <div className="flex items-center gap-2">
@@ -199,53 +161,10 @@ const ShowDetail = ({ id }: { id: number }) => {
               </div>
             )}
             <Cast credits={credits!} imageAlt={show.name} />
-            <div className="col-span-8">
-              <p className="w-full font-bold text-2xl pt-3">Cast</p>
-              <div className="w-full border-b border-lightGray py-3 grid grid-cols-8 gap-3">
-                {credits?.cast.slice(0, 8).map((person) => (
-                  <Link
-                    key={person.id}
-                    className="col-span-4 lg:col-span-2"
-                    href={`/person/${person.id}`}
-                  >
-                    {person.profile_path ? (
-                      <img
-                        className="size-72 object-cover object-top sm:object-center lg:object-top"
-                        src={`${URL_IMAGE + person.profile_path}`}
-                        alt={show.name}
-                      />
-                    ) : (
-                      <Image
-                        className="size-72 object-cover object-top sm:object-center lg:object-top"
-                        src={PersonPlaceholder}
-                        alt={show.name}
-                      />
-                    )}
-                    <div className="font-bold pt-3">{person.name}</div>
-                    <div className="text-lightGray font-light pb-3">
-                      {person.character}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
           </div>
           <Videos videos={videos} />
         </div>
-        <h2 id="movie-images" className="text-2xl col-span-full py-10">
-          Images
-        </h2>
-        <Slider {...imagesSettings}>
-          {images.backdrops.map((image) => {
-            return (
-              <img
-                key={image.file_path}
-                src={`${URL_IMAGE + image.file_path}`}
-                alt={show.name}
-              />
-            );
-          })}
-        </Slider>
+        <Images id="show-images" images={images} alt={show.name} />
       </Container>
     );
   }
