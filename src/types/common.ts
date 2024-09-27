@@ -102,6 +102,7 @@ export type ShowDetailType = {
   homepage: string;
   in_production: boolean;
   languages: string[];
+  last_air_date: string;
   last_episode_to_air: EpisodeType;
   networks: {
     id: number;
@@ -135,6 +136,7 @@ export type ShowDetailType = {
   type: string;
 } & Pick<
   ShowType,
+  | "name"
   | "id"
   | "adult"
   | "backdrop_path"

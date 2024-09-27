@@ -140,6 +140,33 @@ export const getShow = async (id: number) => {
   return data;
 };
 
+export const getShowVideos = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/tv/${id}/videos`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data.results;
+};
+
+export const getShowImages = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/tv/${id}/images`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
+export const getShowCredits = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/tv/${id}/credits`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
 // SEARCH
 export const getSearch = async (query: string) => {
   const {

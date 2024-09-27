@@ -5,7 +5,7 @@ import Container from "./ui/Container";
 
 const Tmdb = () => {
   return (
-    <Container>
+    <Container className="py-0">
       <a
         target="_blank"
         href="https://developer.themoviedb.org/reference/intro/getting-started"

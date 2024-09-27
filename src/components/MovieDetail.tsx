@@ -39,7 +39,7 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [moreVideos, setMoreVideos] = useState(2);
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
 
-  const fetchMovies = async () => {
+  const fetchMovie = async () => {
     const res = await getMovie(id);
     setMovie(res);
   };
@@ -65,7 +65,7 @@ const MovieDetail = ({ id }: { id: number }) => {
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovie();
     fetchVideos();
     fetchImages();
     fetchCredits();
