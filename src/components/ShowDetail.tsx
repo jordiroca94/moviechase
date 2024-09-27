@@ -28,6 +28,8 @@ import Slider from "react-slick";
 import { imagesSettings } from "@/utils/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Trailer from "./Trailer";
+import Videos from "./Videos";
 
 const ShowDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -36,7 +38,6 @@ const ShowDetail = ({ id }: { id: number }) => {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
-  const [moreVideos, setMoreVideos] = useState(2);
 
   const [popularShows, setPopularShows] = useState<MovieType[]>([]);
 
@@ -72,11 +73,7 @@ const ShowDetail = ({ id }: { id: number }) => {
     fetchPopularShows();
   }, []);
 
-  console.log(show, "show");
   if (show && videos && images) {
-    const trailer = videos.filter(
-      (video) => video.type === "Trailer" && video.name.includes("Trailer")
-    );
     return (
       <Container>
         <div className="grid grid-cols-8 lg:grid-cols-12">
@@ -112,22 +109,11 @@ const ShowDetail = ({ id }: { id: number }) => {
             src={`${URL_IMAGE + show.poster_path}`}
             alt={show.name}
           />
-          <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
-            {videos.length > 0 ? (
-              <iframe
-                width="100%"
-                height="100%"
-                src={`https://www.youtube.com/embed/${trailer[0].key}`}
-                title={trailer[0].name}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <div className="flex justify-center items-center h-full bg-darkGray mx-2">
-                TRAILER NOT AVAILABLE
-              </div>
-            )}
-          </div>
+          <Trailer
+            videos={videos}
+            backupImage={show.backdrop_path}
+            imageAlt={show.name}
+          />
           <div className="flex lg:flex-col col-span-full lg:col-span-2 gap-2">
             <Link
               href="#show-videos"
@@ -201,14 +187,16 @@ const ShowDetail = ({ id }: { id: number }) => {
                 <div>{show.popularity}</div>
               </div>
             </div>
-            <div className="col-span-8 border-b border-lightGray py-3">
-              <div className="flex gap-2">
-                <p className="font-bold">Director</p>
-                <Link href={`/person/${show.created_by[0].id}`}>
-                  {show.created_by[0].name}
-                </Link>
+            {show.created_by[0]?.id && (
+              <div className="col-span-8 border-b border-lightGray py-3">
+                <div className="flex gap-2">
+                  <p className="font-bold">Director</p>
+                  <Link href={`/person/${show.created_by[0].id}`}>
+                    {show.created_by[0].name}
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
             <div className="col-span-8">
               <p className="font-bold text-2xl pt-3">Cast</p>
             </div>
@@ -240,42 +228,7 @@ const ShowDetail = ({ id }: { id: number }) => {
               ))}
             </div>
           </div>
-          <h2 id="movie-videos" className="text-2xl col-span-full py-10">
-            Videos
-          </h2>
-          {videos.length > 0 ? (
-            <div className="col-span-full grid grid-cols-12 gap-4 lg:gap-10">
-              {videos.slice(0, moreVideos).map((video) => (
-                <div
-                  key={video.id}
-                  className="col-span-12 sm:col-span-6 aspect-video"
-                >
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                    title={video.name}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              ))}
-              {moreVideos < videos.length && (
-                <div className="col-span-full flex justify-center">
-                  <button
-                    onClick={() => setMoreVideos(moreVideos + 2)}
-                    className="hover:underline"
-                  >
-                    See More
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="col-span-full py-16 flex justify-center">
-              THERE ARE NO VIDEOS AVAILABLE
-            </div>
-          )}
+          <Videos videos={videos} />
         </div>
         <h2 id="movie-images" className="text-2xl col-span-full py-10">
           Images

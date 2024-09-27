@@ -28,6 +28,8 @@ import formatTime from "@/utils/formatTime";
 import PersonPlaceholder from "../../public/images/personPlaceholder.png";
 import Image from "next/image";
 import RateStar from "./ui/RateStar";
+import Trailer from "./Trailer";
+import Videos from "./Videos";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -36,7 +38,6 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
-  const [moreVideos, setMoreVideos] = useState(2);
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
 
   const fetchMovie = async () => {
@@ -118,22 +119,11 @@ const MovieDetail = ({ id }: { id: number }) => {
             src={`${URL_IMAGE + movie.poster_path}`}
             alt={movie.title}
           />
-          <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
-            {videos.length > 0 ? (
-              <iframe
-                width="100%"
-                height="100%"
-                src={`https://www.youtube.com/embed/${trailer[0].key}`}
-                title={trailer[0].name}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <div className="flex justify-center items-center h-full bg-darkGray mx-2">
-                TRAILER NOT AVAILABLE
-              </div>
-            )}
-          </div>
+          <Trailer
+            videos={videos}
+            backupImage={movie.backdrop_path}
+            imageAlt={movie.title}
+          />
           <div className="flex lg:flex-col col-span-full lg:col-span-2 gap-2">
             <Link
               href="#movie-videos"
@@ -264,42 +254,7 @@ const MovieDetail = ({ id }: { id: number }) => {
               ))}
             </div>
           </div>
-          <h2 id="movie-videos" className="text-2xl col-span-full py-10">
-            Videos
-          </h2>
-          {videos.length > 0 ? (
-            <div className="col-span-full grid grid-cols-12 gap-4 lg:gap-10">
-              {videos.slice(0, moreVideos).map((video) => (
-                <div
-                  key={video.id}
-                  className="col-span-12 sm:col-span-6 aspect-video"
-                >
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                    title={video.name}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              ))}
-              {moreVideos < videos.length && (
-                <div className="col-span-full flex justify-center">
-                  <button
-                    onClick={() => setMoreVideos(moreVideos + 2)}
-                    className="hover:underline"
-                  >
-                    See More
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="col-span-full py-16 flex justify-center">
-              THERE ARE NO VIDEOS AVAILABLE
-            </div>
-          )}
+          <Videos videos={videos} />
         </div>
         <h2 id="movie-images" className="text-2xl col-span-full py-10">
           Images
