@@ -73,7 +73,11 @@ const ShowDetail = ({ id }: { id: number }) => {
                 <div className="flex gap-2">
                   <p>{dayjs(show.first_air_date).format("YYYY")}</p> -{" "}
                   <p>{dayjs(show.last_air_date).format("YYYY")}</p>
-                  <p>{formatTime(show.episode_run_time[0])}</p>
+                  <p>{show.number_of_seasons} Seasons</p>
+                  <p>{show.number_of_episodes} Episodes</p>
+                  {show.episode_run_time[0] && (
+                    <p>{formatTime(show.episode_run_time[0])}</p>
+                  )}
                 </div>
               </div>
             </div>

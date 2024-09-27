@@ -10,7 +10,9 @@ const Trailer = ({ videos, backupImage, imageAlt }: Props) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const trailer = videos.filter(
-    (video) => video.type === "Trailer" && video.name.includes("Trailer")
+    (video) =>
+      video.type === "Trailer" &&
+      (video.name.includes("Trailer") || video.name.includes("Teaser"))
   );
   return (
     <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
