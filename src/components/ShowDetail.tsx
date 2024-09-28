@@ -146,7 +146,7 @@ const ShowDetail = ({ id }: { id: number }) => {
             <div className="col-span-8 border-b border-lightGray pb-3">
               {show.overview}
             </div>
-            <StickySection id={id} />
+            <StickySection type="show" id={id} />
             <div className="col-span-8 lg:hidden flex items-center pt-4 gap-4 border-b border-lightGray pb-3">
               <RateStar averageRate={show.vote_average} outOfTen />
               <div className="flex items-center gap-2">
