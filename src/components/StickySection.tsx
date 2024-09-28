@@ -1,7 +1,7 @@
 "use client";
 
 import { getPopularMovies, getPopularShows } from "@/queries/queries";
-import { MovieType } from "@/types/common";
+import { MovieType, ShowType } from "@/types/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import RateStar from "./ui/RateStar";
@@ -14,7 +14,7 @@ type Props = {
 const StickySection = ({ id, type }: Props) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
-  const [mostPopular, setMostPopular] = useState<MovieType[]>([]);
+  const [mostPopular, setMostPopular] = useState<MovieType[] | ShowType[]>([]);
 
   const fetchPopularShows = async () => {
     const res = await getPopularShows();
@@ -39,21 +39,21 @@ const StickySection = ({ id, type }: Props) => {
       <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
         <h3 className="text-2xl pb-4">Most popular</h3>
         <div className="flex flex-col gap-4">
-          {mostPopular.slice(0, 4)?.map((item) => {
+          {mostPopular.slice(0, 4)?.map((item: any) => {
             if (item.id == id) return;
             return (
               <Link
-                href={`/shows/${item.id}`}
+                href={`/${type === "movie" ? "movies" : "shows"}/${item.id}`}
                 className="flex items-center gap-4"
                 key={item.id}
               >
                 <img
                   className="sm:size-24 lg:size-32 rounded-full object-cover"
                   src={`${URL_IMAGE + item.backdrop_path}`}
-                  alt={item.title}
+                  alt={type === "movie" ? item.title : item.name}
                 />
                 <div className="flex flex-col gap-2">
-                  <p>{item.title}</p>
+                  <p>{type === "movie" ? item.title : item.name}</p>
                   <RateStar averageRate={item.vote_average} />
                 </div>
               </Link>
