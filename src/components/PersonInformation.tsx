@@ -22,11 +22,11 @@ const PersonInformation = ({ id }: { id: number }) => {
   if (person) {
     return (
       <div className="grid grid-cols-8 lg:grid-cols-12">
-        <div className="col-span-8 sm:col-span-full flex justify-between">
-          <div className="flex flex-col">
+        <div className="col-span-full flex justify-between">
+          <div className="flex flex-col w-full">
             <h1 className="text-5xl">{person.name}</h1>
-            <div className="text-lightGray text-sm py-3">
-              <div className="flex gap-2">
+            <div className="flex justify-between text-lightGray text-sm py-3">
+              <div className="flex items-center gap-2">
                 <p>{person.known_for_department}</p>{" "}
                 {person.deathday && (
                   <div className="flex gap-1">
@@ -35,9 +35,15 @@ const PersonInformation = ({ id }: { id: number }) => {
                   </div>
                 )}
               </div>
+              <div className="sm:hidden flex items-center gap-2">
+                <div className="border border-secondary rounded-full p-1">
+                  <FaArrowTrendUp className="text-secondary size-4" />
+                </div>
+                <div className="text-white">{person.popularity}</div>
+              </div>
             </div>
           </div>
-          <div className="flex gap-8">
+          <div className="hidden sm:flex gap-8">
             <div className="flex flex-col justify-center items-center gap-2">
               <div className="uppercase text-lightGray">Popularity</div>
               <div className="flex items-center gap-2">

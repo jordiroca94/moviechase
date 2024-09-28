@@ -273,8 +273,8 @@ export type PersonCastType = {
   release_date: string;
   title: string;
   video: string;
-  vote_average: string;
-  vote_count: string;
+  vote_average: number;
+  vote_count: number;
 } & Pick<
   CastType,
   "adult" | "character" | "credit_id" | "id" | "order" | "popularity"
