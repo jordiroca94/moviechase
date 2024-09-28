@@ -19,6 +19,7 @@ import RateStar from "./ui/RateStar";
 import { FaSortAlphaUp } from "react-icons/fa";
 import { FaSortNumericUpAlt } from "react-icons/fa";
 import { FaSortNumericUp } from "react-icons/fa";
+import Loader from "./ui/Loader";
 
 const PersonDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -178,6 +179,8 @@ const PersonDetail = ({ id }: { id: number }) => {
         </Grid>
       </Container>
     );
+  } else {
+    return <Loader className="h-screen" big />;
   }
 };
 

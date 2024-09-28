@@ -27,6 +27,7 @@ import Videos from "./Videos";
 import Cast from "./Cast";
 import StickySection from "./StickySection";
 import Images from "./Images";
+import Loader from "./ui/Loader";
 
 const ShowDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -171,6 +172,8 @@ const ShowDetail = ({ id }: { id: number }) => {
         <Images id="show-images" images={images} alt={show.name} />
       </Container>
     );
+  } else {
+    return <Loader className="h-screen" big />;
   }
 };
 

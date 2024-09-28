@@ -27,6 +27,8 @@ import Videos from "./Videos";
 import Cast from "./Cast";
 import StickySection from "./StickySection";
 import Images from "./Images";
+import { div } from "framer-motion/client";
+import Loader from "./ui/Loader";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -191,6 +193,8 @@ const MovieDetail = ({ id }: { id: number }) => {
         <Images id="movie-images" images={images} alt={movie.title} />
       </Container>
     );
+  } else {
+    return <Loader className="h-screen" big />;
   }
 };
 
