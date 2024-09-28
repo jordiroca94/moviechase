@@ -151,6 +151,25 @@ export type ShowDetailType = {
   | "vote_count"
 >;
 
+export type PersonDetailType = {
+  also_known_as: string[];
+  biography: string;
+  birthday: string;
+  deathday: string | null;
+  gender: number;
+  homepage: string | null;
+  imdb_id: string;
+  place_of_birth: string;
+} & Pick<
+  PersonType,
+  | "adult"
+  | "id"
+  | "known_for_department"
+  | "name"
+  | "popularity"
+  | "profile_path"
+>;
+
 type EpisodeType = {
   air_date: string;
   episode_number: number;
@@ -232,4 +251,26 @@ export type CrewType = {
   | "original_name"
   | "popularity"
   | "profile_path"
+>;
+
+export type PersonCreditsType = {
+  cast: PersonCastType[];
+  id: number;
+};
+
+export type PersonCastType = {
+  backdrop_path: string;
+  genre_ids: number[];
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: string;
+  vote_average: string;
+  vote_count: string;
+} & Pick<
+  CastType,
+  "adult" | "character" | "credit_id" | "id" | "order" | "popularity"
 >;

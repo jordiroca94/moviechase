@@ -106,7 +106,8 @@ const Search = ({ query, open, setOpen }: Props) => {
               }
               if (item.media_type === "person") {
                 return (
-                  <div
+                  <Link
+                    href={`/people/${item.id}`}
                     key={item.id}
                     className={`flex gap-4 pb-4 ${
                       searchResult.length - 1 == index
@@ -158,7 +159,7 @@ const Search = ({ query, open, setOpen }: Props) => {
                         </div>
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 );
               }
             }

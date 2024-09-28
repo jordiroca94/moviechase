@@ -19,7 +19,7 @@ const Cast = ({ credits, imageAlt }: Props) => {
           <Link
             key={person.id}
             className="col-span-4 lg:col-span-2"
-            href={`/person/${person.id}`}
+            href={`/people/${person.id}`}
           >
             {person.profile_path ? (
               <img

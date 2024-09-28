@@ -162,7 +162,7 @@ const MovieDetail = ({ id }: { id: number }) => {
               <div className="col-span-8 border-b border-lightGray py-3">
                 <div className="flex gap-2">
                   <p className="font-bold">Director</p>
-                  <Link href={`/person/${director[0].id}`}>
+                  <Link href={`/people/${director[0].id}`}>
                     {director[0].name}
                   </Link>
                 </div>
@@ -175,7 +175,7 @@ const MovieDetail = ({ id }: { id: number }) => {
                   <div>
                     {writer?.slice(0, 2).map((person) => (
                       <span key={person.id}>
-                        <Link href={`/person/${person.id}`}>
+                        <Link href={`/people/${person.id}`}>
                           {person.name}{" "}
                         </Link>
                       </span>

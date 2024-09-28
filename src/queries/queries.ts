@@ -178,3 +178,32 @@ export const getSearch = async (query: string) => {
   });
   return results;
 };
+
+// PEOPLE
+
+export const getPerson = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/person/${id}`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
+export const getPersonImages = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/person/${id}/images`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};
+
+export const getPersonCredits = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/person/${id}/movie_credits`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};

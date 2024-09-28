@@ -158,7 +158,7 @@ const ShowDetail = ({ id }: { id: number }) => {
               <div className="col-span-8 border-b border-lightGray py-3">
                 <div className="flex gap-2">
                   <p className="font-bold">Director</p>
-                  <Link href={`/person/${show.created_by[0].id}`}>
+                  <Link href={`/people/${show.created_by[0].id}`}>
                     {show.created_by[0].name}
                   </Link>
                 </div>
