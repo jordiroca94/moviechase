@@ -216,6 +216,11 @@ export type ImageAssetType = {
   width: number;
 };
 
+export type PersonImagesType = {
+  id: string;
+  profiles: ImageAssetType[];
+};
+
 export type CreditsType = {
   cast: CastType[];
   crew: CrewType[];
