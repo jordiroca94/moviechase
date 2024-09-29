@@ -4,6 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 // MOVIES
+const randomPage = Math.floor(Math.random() * 5) + 1;
 
 export const getPopularMovies = async () => {
   const {
@@ -11,6 +12,7 @@ export const getPopularMovies = async () => {
   } = await axios.get(`${API_URL}/movie/popular`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -33,6 +35,7 @@ export const getUpcomingMovies = async () => {
   } = await axios.get(`${API_URL}/movie/upcoming`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -44,6 +47,7 @@ export const getPlayingMovies = async () => {
   } = await axios.get(`${API_URL}/movie/now_playing`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -93,6 +97,7 @@ export const getPopularShows = async () => {
   } = await axios.get(`${API_URL}/tv/popular`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -115,6 +120,7 @@ export const getAiringTodayShows = async () => {
   } = await axios.get(`${API_URL}/tv/airing_today`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -126,6 +132,7 @@ export const getAiringShows = async () => {
   } = await axios.get(`${API_URL}/tv/on_the_air`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
