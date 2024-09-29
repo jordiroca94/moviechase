@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loader from "./ui/Loader";
 import Filmography from "./Filmography";
+import Television from "./Television";
 
 const PersonDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -31,6 +32,7 @@ const PersonDetail = ({ id }: { id: number }) => {
       <Container>
         <PersonInformation id={id} />
         <Filmography id={id} />
+        <Television id={id} />
         <Grid>
           {images.profiles.length > 3 && (
             <div className="col-span-full">

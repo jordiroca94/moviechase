@@ -207,3 +207,12 @@ export const getPersonCredits = async (id: number) => {
   });
   return data;
 };
+
+export const getPersonTVCredits = async (id: number) => {
+  const { data } = await axios.get(`${API_URL}/person/${id}/tv_credits`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data;
+};

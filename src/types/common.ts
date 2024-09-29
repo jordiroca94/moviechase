@@ -279,3 +279,25 @@ export type PersonCastType = {
   CastType,
   "adult" | "character" | "credit_id" | "id" | "order" | "popularity"
 >;
+
+export type PersonTVCreditsType = {
+  cast: PersonTVCastType[];
+  id: number;
+};
+
+export type PersonTVCastType = {
+  backdrop_path: string;
+  genre_ids: number[];
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  first_air_date: string;
+  name: string;
+  video: string;
+  vote_average: number;
+  vote_count: number;
+} & Pick<
+  CastType,
+  "adult" | "character" | "credit_id" | "id" | "order" | "popularity"
+>;
