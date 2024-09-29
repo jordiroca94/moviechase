@@ -9,6 +9,7 @@ const PersonInformation = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [person, setPerson] = useState<PersonDetailType>();
+  const [readMore, setReadMore] = useState(false);
 
   const fetchPerson = async () => {
     const res = await getPerson(id);
@@ -59,7 +60,21 @@ const PersonInformation = ({ id }: { id: number }) => {
           <img src={`${URL_IMAGE + person.profile_path}`} alt={person.name} />
         </div>
         <div className="col-span-8 sm:col-span-6 lg:col-span-9 sm:pl-10 py-3 sm:py-6 flex flex-col justify-between">
-          <div className="text-justify">{person.biography}</div>
+          <div
+            className={`${
+              !readMore && "line-clamp-[15]"
+            } text-justify lg:line-clamp-none`}
+          >
+            {person.biography}
+          </div>
+          <div className={`${readMore && "hidden"} lg:hidden`}>
+            <button
+              onClick={() => setReadMore(true)}
+              className="hover:underline font-bold"
+            >
+              Read more
+            </button>
+          </div>
           <div>
             <div className="flex gap-2 mt-4">
               <p className="font-bold">Born:</p>

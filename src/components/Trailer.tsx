@@ -11,9 +11,10 @@ const Trailer = ({ videos, backupImage, imageAlt }: Props) => {
 
   const trailer = videos.filter(
     (video) =>
-      video.type === "Trailer" &&
+      (video.type === "Trailer" || video.type === "Teaser") &&
       (video.name.includes("Trailer") || video.name.includes("Teaser"))
   );
+  console.log(videos, "videos-->");
   return (
     <div className="col-span-8 sm:col-span-6 lg:col-span-7 aspect-video sm:aspect-auto">
       {videos.length > 0 && trailer[0] ? (
