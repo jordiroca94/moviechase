@@ -135,12 +135,13 @@ const ShowDetail = ({ id }: { id: number }) => {
           </div>
           <div className="col-span-full flex py-6 gap-4 max-sm:w-full max-sm:overflow-hidden max-sm:overflow-x-scroll">
             {show.genres.map((item) => (
-              <div
+              <Link
+                href={`/shows/genres/${item.id}`}
                 className="rounded-full border border-secondary/50 w-min px-5 py-1 hover:bg-secondary hover:text-primary whitespace-nowrap"
                 key={item.id}
               >
                 {item.name}
-              </div>
+              </Link>
             ))}
           </div>
           <div className="col-span-full grid grid-cols-8 sm:grid-cols-12 ">

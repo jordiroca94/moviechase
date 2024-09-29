@@ -6,6 +6,19 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 // MOVIES
 const randomPage = Math.floor(Math.random() * 5) + 1;
 
+export const getMovies = async (id: number) => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/discover/movie`, {
+    params: {
+      api_key: API_KEY,
+      with_genres: id,
+      page: randomPage,
+    },
+  });
+  return results;
+};
+
 export const getPopularMovies = async () => {
   const {
     data: { results },
@@ -24,6 +37,7 @@ export const getTopRatedMovies = async () => {
   } = await axios.get(`${API_URL}/movie/top_rated`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -89,7 +103,31 @@ export const getMovieCredits = async (id: number) => {
   return data;
 };
 
+export const getMovieGenre = async () => {
+  const {
+    data: { genres },
+  } = await axios.get(`${API_URL}/genre/movie/list`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return genres;
+};
+
 // SHOWS
+
+export const getShows = async (id: number) => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/discover/tv`, {
+    params: {
+      api_key: API_KEY,
+      with_genres: id,
+      page: randomPage,
+    },
+  });
+  return results;
+};
 
 export const getPopularShows = async () => {
   const {
@@ -109,6 +147,7 @@ export const getTopRatedShows = async () => {
   } = await axios.get(`${API_URL}/tv/top_rated`, {
     params: {
       api_key: API_KEY,
+      page: randomPage,
     },
   });
   return results;
@@ -172,6 +211,17 @@ export const getShowCredits = async (id: number) => {
     },
   });
   return data;
+};
+
+export const getShowGenre = async () => {
+  const {
+    data: { genres },
+  } = await axios.get(`${API_URL}/genre/tv/list`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return genres;
 };
 
 // SEARCH
