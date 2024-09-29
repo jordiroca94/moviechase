@@ -20,6 +20,12 @@ const PersonInformation = ({ id }: { id: number }) => {
     fetchPerson();
   }, []);
 
+  const countWords = (str: string) => {
+    return str
+      .trim()
+      .split(/\s+/)
+      .filter((word) => word.length > 0).length;
+  };
   if (person) {
     return (
       <div className="grid grid-cols-8 lg:grid-cols-12">
@@ -63,18 +69,22 @@ const PersonInformation = ({ id }: { id: number }) => {
           <div
             className={`${
               !readMore && "line-clamp-[15]"
-            } text-justify lg:line-clamp-none`}
+            } text-justify sm:line-clamp-none`}
           >
             {person.biography}
           </div>
-          <div className={`${readMore && "hidden"} lg:hidden`}>
-            <button
-              onClick={() => setReadMore(true)}
-              className="hover:underline font-bold"
-            >
-              Read more
-            </button>
-          </div>
+
+          {person.biography.length > 0 &&
+            countWords(person.biography) > 100 && (
+              <div className={`${readMore && "hidden"} sm:hidden`}>
+                <button
+                  onClick={() => setReadMore(true)}
+                  className="hover:underline font-bold"
+                >
+                  Read more
+                </button>
+              </div>
+            )}
           <div>
             <div className="flex gap-2 mt-4">
               <p className="font-bold">Born:</p>
