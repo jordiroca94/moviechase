@@ -1,6 +1,6 @@
 "use client";
 
-import { getPopularMovies, getPopularShows } from "@/queries/queries";
+import { getTopRatedMovies, getTopRatedShows } from "@/queries/queries";
 import { MovieType, ShowType } from "@/types/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -14,16 +14,16 @@ type Props = {
 const StickySection = ({ id, type }: Props) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
-  const [mostPopular, setMostPopular] = useState<MovieType[] | ShowType[]>([]);
+  const [items, setItems] = useState<MovieType[] | ShowType[]>([]);
 
   const fetchPopularShows = async () => {
-    const res = await getPopularShows();
-    setMostPopular(res);
+    const res = await getTopRatedShows();
+    setItems(res);
   };
 
   const fetchPopularMovies = async () => {
-    const res = await getPopularMovies();
-    setMostPopular(res);
+    const res = await getTopRatedMovies();
+    setItems(res);
   };
 
   useEffect(() => {
@@ -37,9 +37,9 @@ const StickySection = ({ id, type }: Props) => {
   return (
     <div className="hidden sm:block justify-center col-span-4 row-span-5 lg:row-span-4 relative">
       <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
-        <h3 className="text-2xl pb-4">Most popular</h3>
+        <h3 className="text-2xl pb-4">Top rated</h3>
         <div className="flex flex-col gap-4">
-          {mostPopular.slice(0, 4)?.map((item) => {
+          {items.slice(0, 4)?.map((item) => {
             if (item.id == id) return;
             return (
               <Link

@@ -37,7 +37,7 @@ const Filmography = ({ id }: { id: number }) => {
 
   return (
     <div className="col-span-full">
-      <h2 className="text-2xl py-6">Filmography</h2>
+      <h2 className="text-2xl py-6">Films</h2>
       <div className="grid grid-cols-12 gap-4 border-b border-white pb-4 mb-4">
         <span className="col-span-2 sm:col-span-1">
           <button
