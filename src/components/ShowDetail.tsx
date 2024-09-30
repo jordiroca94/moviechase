@@ -28,6 +28,7 @@ import Cast from "./Cast";
 import StickySection from "./StickySection";
 import Images from "./Images";
 import Loader from "./ui/Loader";
+import H1Title from "./ui/H1Title";
 
 const ShowDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -69,7 +70,7 @@ const ShowDetail = ({ id }: { id: number }) => {
         <div className="grid grid-cols-8 lg:grid-cols-12">
           <div className="col-span-8 sm:col-span-full flex justify-between">
             <div className="flex flex-col">
-              <h1 className="text-5xl">{show.name}</h1>
+              <H1Title>{show.name}</H1Title>
               <div className="text-lightGray text-sm py-3">
                 <div className="flex gap-2">
                   <p>{dayjs(show.first_air_date).format("YYYY")}</p> -{" "}

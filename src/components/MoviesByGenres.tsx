@@ -8,6 +8,7 @@ import Grid from "./ui/Grid";
 import dayjs from "dayjs";
 import Link from "next/link";
 import RateStar from "./ui/RateStar";
+import H1Title from "./ui/H1Title";
 
 const MoviesByGenres = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -41,7 +42,7 @@ const MoviesByGenres = ({ id }: { id: number }) => {
     const genre = genresList.filter((genre) => genre.id == id);
     return (
       <Container>
-        <h1 className="text-5xl pb-6">{genre[0].name}</h1>
+        <H1Title className="pb-6">{genre[0].name}</H1Title>
         <Grid className="gap-8">
           {movies.map((item) => (
             <>
@@ -62,7 +63,7 @@ const MoviesByGenres = ({ id }: { id: number }) => {
                 >
                   <div className="flex justify-between">
                     <p className="text-lg font-semibold">{item.title}</p>
-                    <RateStar averageRate={item.vote_average} outOfTen />
+                    <RateStar averageRate={item.vote_average} />
                   </div>
                   <p>{dayjs(item.release_date).format("YYYY")}</p>
                   <p className="line-clamp-4 lg:line-clamp-2 2xl:line-clamp-none">

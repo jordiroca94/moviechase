@@ -4,6 +4,7 @@ import { getAge, getDeathDate } from "@/utils/getAge";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaArrowTrendUp } from "react-icons/fa6";
+import H1Title from "./ui/H1Title";
 
 const PersonInformation = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -31,7 +32,7 @@ const PersonInformation = ({ id }: { id: number }) => {
       <div className="grid grid-cols-8 lg:grid-cols-12">
         <div className="col-span-full flex justify-between">
           <div className="flex flex-col w-full">
-            <h1 className="text-5xl">{person.name}</h1>
+            <H1Title>{person.name}</H1Title>
             <div className="flex justify-between text-lightGray text-sm py-3">
               <div className="flex items-center gap-2">
                 <p>{person.known_for_department}</p>{" "}

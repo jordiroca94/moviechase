@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Moviechase",
-  description: "Discover movies",
+  description:
+    "Moviechase is a source for movie, TV and celebrity content. Find ratings for the newest movie and TV shows.",
 };
 
 export default function RootLayout({
