@@ -23,12 +23,16 @@ const Search = ({ query, open, setOpen }: Props) => {
   };
 
   useEffect(() => {
-    if (query.length) {
+    if (!query.length) {
+      setOpen(false);
+      return;
+    }
+
+    const debounceTimeout = setTimeout(() => {
       fetchSearch();
       setOpen(true);
-    } else {
-      setOpen(false);
-    }
+    }, 300);
+    return () => clearTimeout(debounceTimeout);
   }, [query]);
 
   const handleClickOutside = (event: MouseEvent) => {
