@@ -15,9 +15,15 @@ const ShowsByGenre = ({ id }: { id: number }) => {
   const [shows, setShows] = useState<ShowType[]>([]);
   const [genresList, setGenresList] =
     useState<{ id: number; name: string }[]>();
+  const [page, setPage] = useState(1);
+
   const fetchShow = async () => {
-    const res = await getShows(id);
-    setShows(res);
+    const newShows = await getShows(id, page);
+    const allShows = [...shows, ...newShows];
+    const removeDuplicates = allShows.filter(
+      (show, index, self) => index === self.findIndex((m) => m.id === show.id)
+    );
+    setShows(removeDuplicates);
   };
 
   const fetchGenres = async () => {
@@ -28,7 +34,7 @@ const ShowsByGenre = ({ id }: { id: number }) => {
   useEffect(() => {
     fetchShow();
     fetchGenres();
-  }, []);
+  }, [page]);
 
   if (shows && genresList) {
     const genre = genresList.filter((genre) => genre.id == id);
@@ -84,6 +90,14 @@ const ShowsByGenre = ({ id }: { id: number }) => {
               </div>
             </>
           ))}
+          <div className="col-span-full flex justify-center">
+            <button
+              onClick={() => setPage(page + 1)}
+              className="hover:underline hover:text-secondary"
+            >
+              See More
+            </button>
+          </div>
         </Grid>
       </Container>
     );

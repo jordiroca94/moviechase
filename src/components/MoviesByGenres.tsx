@@ -13,11 +13,18 @@ const MoviesByGenres = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [movies, setMovies] = useState<MovieType[]>([]);
+  const [page, setPage] = useState(1);
   const [genresList, setGenresList] =
     useState<{ id: number; name: string }[]>();
-  const fetchMovie = async () => {
-    const res = await getMovies(id);
-    setMovies(res);
+
+  const fetchMovies = async () => {
+    const newMovies = await getMovies(id, page);
+    const allMovies = [...movies, ...newMovies];
+    const removeDuplicates = allMovies.filter(
+      (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
+    );
+
+    setMovies(removeDuplicates);
   };
 
   const fetchGenres = async () => {
@@ -26,9 +33,9 @@ const MoviesByGenres = ({ id }: { id: number }) => {
   };
 
   useEffect(() => {
-    fetchMovie();
+    fetchMovies();
     fetchGenres();
-  }, []);
+  }, [page]);
 
   if (movies && genresList) {
     const genre = genresList.filter((genre) => genre.id == id);
@@ -83,6 +90,14 @@ const MoviesByGenres = ({ id }: { id: number }) => {
               </div>
             </>
           ))}
+          <div className="col-span-full flex justify-center">
+            <button
+              onClick={() => setPage(page + 1)}
+              className="hover:underline hover:text-secondary"
+            >
+              See More
+            </button>
+          </div>
         </Grid>
       </Container>
     );

@@ -79,7 +79,7 @@ const PersonInformation = ({ id }: { id: number }) => {
               <div className={`${readMore && "hidden"} sm:hidden`}>
                 <button
                   onClick={() => setReadMore(true)}
-                  className="hover:underline font-bold"
+                  className="hover:underline hover:text-secondary font-bold"
                 >
                   Read more
                 </button>

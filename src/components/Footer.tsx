@@ -10,7 +10,10 @@ const Footer = () => {
       <Socials />
       <div className="text-base">
         &copy; {year} By{" "}
-        <a className="hover:underline" href="https://jordirocasoler.com/">
+        <a
+          className="hover:underline hover:text-secondary"
+          href="https://jordirocasoler.com/"
+        >
           Jordi Roca
         </a>
       </div>

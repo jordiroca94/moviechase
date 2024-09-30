@@ -6,14 +6,14 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 // MOVIES
 const randomPage = Math.floor(Math.random() * 5) + 1;
 
-export const getMovies = async (id: number) => {
+export const getMovies = async (id: number, page: number) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/discover/movie`, {
     params: {
       api_key: API_KEY,
       with_genres: id,
-      page: randomPage,
+      page: page,
     },
   });
   return results;
@@ -128,14 +128,14 @@ export const getRelatedMovies = async (id: number) => {
 
 // SHOWS
 
-export const getShows = async (id: number) => {
+export const getShows = async (id: number, page: number) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/discover/tv`, {
     params: {
       api_key: API_KEY,
       with_genres: id,
-      page: randomPage,
+      page: page,
     },
   });
   return results;

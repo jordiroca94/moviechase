@@ -20,7 +20,7 @@ const Sponsor = () => {
             <a
               href="https://diverbook.vercel.app/"
               target="_blank"
-              className="hover:underline flex gap-1"
+              className="hover:underline hover:text-secondary flex gap-1"
             >
               <span className="text-sm">Sponsored</span>
               <IoMdInformationCircleOutline />

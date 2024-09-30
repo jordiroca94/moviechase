@@ -47,7 +47,7 @@ const Cast = ({ credits, imageAlt }: Props) => {
           <div className="col-span-full flex justify-center mb-3">
             <button
               onClick={() => setMorePersons(morePersons + 4)}
-              className="hover:underline"
+              className="hover:underline hover:text-secondary"
             >
               See More
             </button>

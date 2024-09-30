@@ -32,7 +32,7 @@ const Videos = ({ videos }: { videos: VideoType[] }) => {
               <div className="col-span-full flex justify-center">
                 <button
                   onClick={() => setMoreVideos(moreVideos + 2)}
-                  className="hover:underline"
+                  className="hover:underline hover:text-secondary"
                 >
                   See More
                 </button>
