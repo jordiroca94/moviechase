@@ -114,6 +114,18 @@ export const getMovieGenre = async () => {
   return genres;
 };
 
+export const getRelatedMovies = async (id: number) => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/movie/${id}/similar`, {
+    params: {
+      api_key: API_KEY,
+      page: randomPage,
+    },
+  });
+  return results;
+};
+
 // SHOWS
 
 export const getShows = async (id: number) => {
@@ -222,6 +234,18 @@ export const getShowGenre = async () => {
     },
   });
   return genres;
+};
+
+export const getRelatedtShows = async (id: number) => {
+  const {
+    data: { results },
+  } = await axios.get(`${API_URL}/tv/${id}/similar`, {
+    params: {
+      api_key: API_KEY,
+      page: randomPage,
+    },
+  });
+  return results;
 };
 
 // SEARCH

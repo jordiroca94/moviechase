@@ -1,6 +1,6 @@
 "use client";
 
-import { getTopRatedMovies, getTopRatedShows } from "@/queries/queries";
+import { getRelatedMovies, getRelatedtShows } from "@/queries/queries";
 import { MovieType, ShowType } from "@/types/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,28 +16,30 @@ const StickySection = ({ id, type }: Props) => {
 
   const [items, setItems] = useState<MovieType[] | ShowType[]>([]);
 
-  const fetchPopularShows = async () => {
-    const res = await getTopRatedShows();
+  const fetchRelatedShows = async () => {
+    const res = await getRelatedtShows(id);
     setItems(res);
   };
 
-  const fetchPopularMovies = async () => {
-    const res = await getTopRatedMovies();
+  const fetchRelatedMovies = async () => {
+    const res = await getRelatedMovies(id);
     setItems(res);
   };
 
   useEffect(() => {
     if (type === "movie") {
-      fetchPopularMovies();
+      fetchRelatedMovies();
     } else {
-      fetchPopularShows();
+      fetchRelatedShows();
     }
   }, []);
 
   return (
     <div className="hidden sm:block justify-center col-span-4 row-span-5 lg:row-span-4 relative">
       <div className="sticky pl-10 lg:pl-6 top-16 flex flex-col items-center">
-        <h3 className="text-2xl pb-4">Top rated</h3>
+        <h3 className="text-2xl pb-4">
+          Related {type === "movie" ? "movies" : "shows"}
+        </h3>
         <div className="flex flex-col gap-4">
           {items.slice(0, 4)?.map((item) => {
             if (item.id == id) return;
