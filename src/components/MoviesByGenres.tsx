@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import RateStar from "./ui/RateStar";
 import H1Title from "./ui/H1Title";
+import Loader from "./ui/Loader";
 
 const MoviesByGenres = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -102,6 +103,8 @@ const MoviesByGenres = ({ id }: { id: number }) => {
         </Grid>
       </Container>
     );
+  } else {
+    return <Loader className="h-screen" big />;
   }
 };
 

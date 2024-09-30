@@ -27,7 +27,6 @@ import Videos from "./Videos";
 import Cast from "./Cast";
 import StickySection from "./StickySection";
 import Images from "./Images";
-import { div } from "framer-motion/client";
 import Loader from "./ui/Loader";
 import H1Title from "./ui/H1Title";
 
