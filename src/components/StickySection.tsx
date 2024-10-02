@@ -41,8 +41,7 @@ const StickySection = ({ id, type }: Props) => {
           Related {type === "movie" ? "movies" : "shows"}
         </h3>
         <div className="flex flex-col gap-4">
-          {items.slice(0, 4)?.map((item) => {
-            if (item.id == id) return;
+          {items.slice(0, 3)?.map((item) => {
             return (
               <Link
                 href={`/${type === "movie" ? "movies" : "shows"}/${item.id}`}

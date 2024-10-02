@@ -29,6 +29,7 @@ import StickySection from "./StickySection";
 import Images from "./Images";
 import Loader from "./ui/Loader";
 import H1Title from "./ui/H1Title";
+import Related from "./Related";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -192,6 +193,7 @@ const MovieDetail = ({ id }: { id: number }) => {
           <Videos videos={videos} />
         </div>
         <Images id="movie-images" images={images} alt={movie.title} />
+        <Related type="movie" id={id} />
       </Container>
     );
   } else {
