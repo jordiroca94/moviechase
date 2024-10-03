@@ -27,6 +27,7 @@ const PersonInformation = ({ id }: { id: number }) => {
       .split(/\s+/)
       .filter((word) => word.length > 0).length;
   };
+
   if (person) {
     return (
       <div className="grid grid-cols-8 lg:grid-cols-12">
@@ -88,12 +89,16 @@ const PersonInformation = ({ id }: { id: number }) => {
             )}
           <div>
             <div className="flex gap-2 mt-4">
-              <p className="font-bold">Born:</p>
+              {person.birthday ||
+                (person.place_of_birth && <p className="font-bold">Born:</p>)}
               <span>
-                {dayjs(person.birthday).format("MMMM D, YYYY")}{" "}
-                <span className="text-lightGray">
-                  ({person.place_of_birth})
-                </span>
+                {person.birthday &&
+                  dayjs(person.birthday).format("MMMM D, YYYY")}{" "}
+                {person.place_of_birth && (
+                  <span className="text-lightGray">
+                    ({person.place_of_birth})
+                  </span>
+                )}
               </span>
             </div>
             {person.deathday && (
