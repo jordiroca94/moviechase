@@ -18,6 +18,7 @@ const config: Config = {
         lightGray: "#D3D3D3",
         primary: "#0d253f",
         secondary: "#90cea1",
+        red: "#ff0000",
       },
     },
   },

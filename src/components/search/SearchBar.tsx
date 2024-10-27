@@ -36,7 +36,7 @@ const SearchBar = ({ mobile, query, setOpen, setQuery }: Props) => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for a movie, tv show, person..."
         className={`bg-white border border-gray-300 rounded-lg px-4 py-1.5 focus:outline-none focus:ring-1 focus:ring-secondary text-black pr-10 ${
-          mobile ? "min-w-[300px]" : "min-w-[400px]"
+          mobile ? "min-w-[300px]" : "min-w-[370px]"
         } `}
       />
       <CiSearch className="absolute text-black top-2 right-2 size-6" />
