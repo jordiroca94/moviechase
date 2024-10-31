@@ -26,6 +26,9 @@ const config: Config = {
       padding: {
         header: "74px",
       },
+      height: {
+        header: "74px",
+      },
     },
   },
   plugins: [],

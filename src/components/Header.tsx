@@ -16,22 +16,23 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   const links = [
     { label: "Movies", link: "/movies" },
     { label: "TV shows", link: "/shows" },
   ];
 
+  console.log("mobilemenu", mobileMenu);
+
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
-    // @ts-ignore
     setToken(savedToken);
   }, []);
 
   return (
     <header className="absolute top-0 w-full">
-      <div className="flex items-center justify-between py-5 md:py-4  px-4 lg:px-8 bg-primary">
+      <div className="flex items-center justify-between py-5 md:py-4 px-4 lg:px-8 bg-primary h-header">
         <Link href="/">
           <h5 className="text-xl lg:text-3xl">Moviechase</h5>
         </Link>

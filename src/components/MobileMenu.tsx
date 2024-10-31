@@ -7,8 +7,8 @@ type Props = {
 
 const MobileMenu = ({ links }: Props) => {
   return (
-    <div className="bg-primary w-full">
-      <nav className="flex flex-col items-center gap-4 pb-4 border-b border-secondary">
+    <div className="bg-primary w-full absolute top-0 mt-header z-50">
+      <nav className="flex flex-col items-center gap-4 pb-4 pt-2 border-b border-secondary">
         {links.map((item) => (
           <Link
             key={item.label}
