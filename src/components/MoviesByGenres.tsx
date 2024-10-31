@@ -43,7 +43,7 @@ const MoviesByGenres = ({ id }: { id: number }) => {
     const genre = genresList.filter((genre) => genre.id == id);
     return (
       <Container>
-        <H1Title className="pb-6">{genre[0].name}</H1Title>
+        <H1Title className="pb-6 mt-header">{genre[0].name}</H1Title>
         <Grid className="gap-8">
           {movies.map((item) => (
             <>

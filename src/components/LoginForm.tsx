@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { RxCross1 } from "react-icons/rx";
+import React, { useRef, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,28 +8,14 @@ import { UserLoginType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import Loader from "./ui/Loader";
+import Link from "next/link";
 
-type Props = {
-  setLoginModal: (e: boolean) => void;
-  setRegisterModal: (e: boolean) => void;
-};
-
-const LoginForm = ({ setLoginModal, setRegisterModal }: Props) => {
-  const loginModalRef = useRef<HTMLDivElement | null>(null);
+const LoginForm = () => {
   const refForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      loginModalRef.current &&
-      !loginModalRef.current.contains(event.target as Node)
-    ) {
-      setLoginModal(false);
-    }
-  };
 
   const loginSchema = z.object({
     email: z.string().email({ message: "An email is required" }),
@@ -75,26 +60,9 @@ const LoginForm = ({ setLoginModal, setRegisterModal }: Props) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
-      <div
-        ref={loginModalRef}
-        className="bg-primary sm:border-secondary md:border text-white p-6 md:rounded-md sm:mt-12 w-full sm:w-2/5 flex flex-col gap-4 relative min-w-96"
-      >
-        <button
-          className="absolute top-4 right-4"
-          onClick={() => setLoginModal(false)}
-        >
-          <RxCross1 />
-        </button>
+    <div className="bg-transparent text-black flex justify-center items-start mt-header">
+      <div className="bg-primary sm:border-secondary sm:border text-white p-6 sm:rounded-md sm:mt-32 w-full sm:max-w-[600px] flex flex-col gap-4 relative">
         <form
           ref={refForm}
           onSubmit={handleSubmit(handleLogin)}
@@ -150,15 +118,12 @@ const LoginForm = ({ setLoginModal, setRegisterModal }: Props) => {
           </button>
           <div className="text-sm mt-3 text-right">
             Do not have an account?{" "}
-            <button
+            <Link
+              href="/register"
               className="hover:underline hover:text-secondary"
-              onClick={() => {
-                setLoginModal(false);
-                setRegisterModal(true);
-              }}
             >
               Register
-            </button>
+            </Link>
           </div>
         </form>
       </div>

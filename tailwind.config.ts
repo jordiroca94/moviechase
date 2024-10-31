@@ -20,6 +20,9 @@ const config: Config = {
         secondary: "#90cea1",
         red: "#ff0000",
       },
+      margin: {
+        header: "74px",
+      },
     },
   },
   plugins: [],

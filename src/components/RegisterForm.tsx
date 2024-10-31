@@ -1,35 +1,19 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { RxCross1 } from "react-icons/rx";
+import React, { useRef, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
-import { useRouter } from "next/navigation";
 import Loader from "./ui/Loader";
+import Link from "next/link";
 
-type Props = {
-  setLoginModal: (e: boolean) => void;
-  setRegisterModal: (e: boolean) => void;
-};
-
-const RegisterForm = ({ setLoginModal, setRegisterModal }: Props) => {
-  const registerModalRef = useRef<HTMLDivElement | null>(null);
+const RegisterForm = () => {
   const refRegisterForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      registerModalRef.current &&
-      !registerModalRef.current.contains(event.target as Node)
-    ) {
-      setRegisterModal(false);
-    }
-  };
 
   const registerSchema = z.object({
     first_name: z.string().min(1, { message: "Insert your name" }),
@@ -78,62 +62,51 @@ const RegisterForm = ({ setLoginModal, setRegisterModal }: Props) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
-      <div
-        ref={registerModalRef}
-        className="bg-primary sm:border-secondary md:border text-white p-6 md:rounded-md sm:mt-12 w-full sm:w-2/5 flex flex-col gap-4 relative min-w-96"
-      >
-        <button
-          className="absolute top-4 right-4"
-          onClick={() => setRegisterModal(false)}
-        >
-          <RxCross1 />
-        </button>
+    <div className="bg-transparent text-black flex justify-center items-start mt-header">
+      <div className="bg-primary sm:border-secondary sm:border text-white p-6 sm:rounded-md sm:mt-32 w-full sm:max-w-[600px] flex flex-col gap-4">
         <form
           ref={refRegisterForm}
           onSubmit={handleSubmit(handleRegister)}
           className="flex flex-col gap-3"
         >
           <h3 className="text-2xl font-semibold">Create an account</h3>
-          <label htmlFor="first_name" className="font-medium mb-2">
-            Name
-          </label>
-          <input
-            className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
-            id="first_name"
-            type="first_name"
-            placeholder="Name"
-            {...register("first_name")}
-          />
-          {errors.first_name?.message && (
-            <p aria-describedby="email" className="text-red pt-1">
-              {errors.first_name?.message}
-            </p>
-          )}
-          <label htmlFor="last_name" className="font-medium mb-2">
-            Surname
-          </label>
-          <input
-            className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
-            id="last_name"
-            type="last_name"
-            placeholder="Surname"
-            {...register("last_name")}
-          />
-          {errors.last_name?.message && (
-            <p aria-describedby="email" className="text-red pt-1">
-              {errors.last_name?.message}
-            </p>
-          )}
+          <div className="flex flex-col sm:flex-row w-full gap-6">
+            <div className="flex flex-col sm:w-1/2">
+              <label htmlFor="first_name" className="font-medium mb-2">
+                Name
+              </label>
+              <input
+                className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
+                id="first_name"
+                type="first_name"
+                placeholder="Name"
+                {...register("first_name")}
+              />
+              {errors.first_name?.message && (
+                <p aria-describedby="email" className="text-red pt-1">
+                  {errors.first_name?.message}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col sm:w-1/2">
+              <label htmlFor="last_name" className="font-medium mb-2">
+                Surname
+              </label>
+              <input
+                className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
+                id="last_name"
+                type="last_name"
+                placeholder="Surname"
+                {...register("last_name")}
+              />
+              {errors.last_name?.message && (
+                <p aria-describedby="email" className="text-red pt-1">
+                  {errors.last_name?.message}
+                </p>
+              )}
+            </div>
+          </div>
           <label htmlFor="email" className="font-medium mb-2">
             Email
           </label>
@@ -183,15 +156,12 @@ const RegisterForm = ({ setLoginModal, setRegisterModal }: Props) => {
           </button>
           <div className="text-sm mt-3 text-right">
             Already have an account?{" "}
-            <button
+            <Link
+              href="/login"
               className="hover:underline hover:text-secondary"
-              onClick={() => {
-                setRegisterModal(false);
-                setLoginModal(true);
-              }}
             >
               Login
-            </button>
+            </Link>
           </div>
         </form>
       </div>

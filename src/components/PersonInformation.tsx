@@ -30,7 +30,7 @@ const PersonInformation = ({ id }: { id: number }) => {
 
   if (person) {
     return (
-      <div className="grid grid-cols-8 lg:grid-cols-12">
+      <div className="grid grid-cols-8 lg:grid-cols-12 mt-header">
         <div className="col-span-full flex justify-between">
           <div className="flex flex-col w-full">
             <H1Title>{person.name}</H1Title>

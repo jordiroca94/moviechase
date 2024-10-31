@@ -1,12 +1,10 @@
-import { BsLinkedin } from "react-icons/bs";
-import { FaGithub } from "react-icons/fa";
 import Socials from "./Socials";
 
 const Footer = () => {
   const year: number = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col justify-center items-center py-10 gap-4">
+    <footer className="flex flex-col justify-center items-center py-10 gap-4 bg-primary">
       <Socials />
       <div className="text-base">
         &copy; {year} By{" "}

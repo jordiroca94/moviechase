@@ -6,7 +6,7 @@ const VideoHero = () => {
   const [controls, setControls] = useState(false);
 
   return (
-    <div className="h-[90vh] relative">
+    <div className="h-[90vh] relative mt-header">
       <div
         onClick={() => setControls(true)}
         className={`h-full w-full inset-0 ${controls ? "hidden" : "absolute"}`}

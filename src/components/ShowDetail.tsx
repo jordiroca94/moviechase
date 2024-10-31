@@ -68,7 +68,7 @@ const ShowDetail = ({ id }: { id: number }) => {
   if (show && videos && images) {
     return (
       <Container>
-        <div className="grid grid-cols-8 lg:grid-cols-12">
+        <div className="grid grid-cols-8 lg:grid-cols-12 mt-header">
           <div className="col-span-8 sm:col-span-full flex justify-between">
             <div className="flex flex-col">
               <H1Title>{show.name}</H1Title>

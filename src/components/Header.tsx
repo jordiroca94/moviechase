@@ -6,10 +6,8 @@ import { IoSearchSharp } from "react-icons/io5";
 import SearchBar from "./search/SearchBar";
 import Search from "./search/Search";
 import SearchMobile from "./search/SearchMobile";
-import LoginForm from "./LoginForm";
 import Image from "next/image";
 import PersonPlaceholder from "../../public/images/profilePlaceholder.png";
-import RegisterForm from "./RegisterForm";
 import BurgerButton from "./ui/BurgerButton";
 import MobileMenu from "./MobileMenu";
 
@@ -17,8 +15,6 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
-  const [loginModal, setLoginModal] = useState(false);
-  const [registerModal, setRegisterModal] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [token, setToken] = useState(null);
 
@@ -34,7 +30,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header>
+    <header className="absolute top-0 w-full">
       <div className="flex items-center justify-between py-5 md:py-4  px-4 lg:px-8 bg-primary">
         <Link href="/">
           <h5 className="text-xl lg:text-3xl">Moviechase</h5>
@@ -64,18 +60,18 @@ const Header = () => {
             </Link>
           ) : (
             <>
-              <button
+              <Link
+                href="/register"
                 className="hidden sm:block bg-secondary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-primary"
-                onClick={() => setRegisterModal(true)}
               >
                 Register
-              </button>
-              <button
+              </Link>
+              <Link
+                href="/login"
                 className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary"
-                onClick={() => setLoginModal(true)}
               >
                 Login
-              </button>
+              </Link>
             </>
           )}
           <button onClick={() => setOpenMobile(true)} className="md:hidden">
@@ -85,18 +81,6 @@ const Header = () => {
         </div>
       </div>
       {mobileMenu && <MobileMenu links={links} setMobileMenu={setMobileMenu} />}
-      {loginModal && (
-        <LoginForm
-          setLoginModal={setLoginModal}
-          setRegisterModal={setRegisterModal}
-        />
-      )}
-      {registerModal && (
-        <RegisterForm
-          setLoginModal={setLoginModal}
-          setRegisterModal={setRegisterModal}
-        />
-      )}
       {openMobile && (
         <SearchMobile
           query={query}
