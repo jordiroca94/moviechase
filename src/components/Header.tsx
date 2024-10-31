@@ -80,7 +80,7 @@ const Header = () => {
           <BurgerButton mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
         </div>
       </div>
-      {mobileMenu && <MobileMenu links={links} setMobileMenu={setMobileMenu} />}
+      {mobileMenu && <MobileMenu links={links} />}
       {openMobile && (
         <SearchMobile
           query={query}

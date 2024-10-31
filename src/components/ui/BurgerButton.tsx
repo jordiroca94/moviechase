@@ -15,7 +15,7 @@ const BurgerButton: FC<Props> = ({
   return (
     <div
       className={`${className} flex lg:hidden h-[22px] w-[22px] flex-col justify-center`}
-      onClick={() => setMobileMenu(true)}
+      onClick={() => setMobileMenu(!mobileMenu)}
     >
       <div
         className={`h-px w-full flex-none bg-white transition-all ease-in-out ${

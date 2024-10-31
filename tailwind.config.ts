@@ -23,6 +23,9 @@ const config: Config = {
       margin: {
         header: "74px",
       },
+      padding: {
+        header: "74px",
+      },
     },
   },
   plugins: [],

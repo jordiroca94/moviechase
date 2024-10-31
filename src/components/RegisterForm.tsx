@@ -64,7 +64,7 @@ const RegisterForm = () => {
 
   return (
     <div className="bg-transparent text-black flex justify-center items-start mt-header">
-      <div className="bg-primary sm:border-secondary sm:border text-white p-6 sm:rounded-md sm:mt-32 w-full sm:max-w-[600px] flex flex-col gap-4">
+      <div className="sm:bg-primary sm:border-secondary sm:border text-white p-6 sm:rounded-md sm:mt-16 w-full sm:max-w-[600px] flex flex-col gap-4">
         <form
           ref={refRegisterForm}
           onSubmit={handleSubmit(handleRegister)}
