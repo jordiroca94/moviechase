@@ -81,6 +81,7 @@ const RegisterForm = () => {
                 id="first_name"
                 type="first_name"
                 placeholder="Name"
+                autoFocus
                 {...register("first_name")}
               />
               {errors.first_name?.message && (

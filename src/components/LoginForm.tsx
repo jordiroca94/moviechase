@@ -77,6 +77,7 @@ const LoginForm = () => {
             id="email"
             type="email"
             placeholder="Email"
+            autoFocus
             {...register("email")}
           />
           {errors.email?.message && (
