@@ -40,13 +40,16 @@ const RegisterForm = () => {
     setLoading(true);
     const { first_name, last_name, email, password } = values;
     try {
-      const res = await fetch("http://localhost:8081/api/v1/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ first_name, last_name, email, password }),
-      });
+      const res = await fetch(
+        "https://moviechase-api-production.up.railway.app/api/v1/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ first_name, last_name, email, password }),
+        }
+      );
 
       if (res.ok) {
         const data = await res.json();
