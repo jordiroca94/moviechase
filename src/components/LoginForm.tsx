@@ -17,6 +17,8 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
+
   const loginSchema = z.object({
     email: z.string().email({ message: "An email is required" }),
     password: z.string().min(1, { message: "Insert your password" }),
@@ -38,7 +40,7 @@ const LoginForm = () => {
     setLoading(true);
     const { email, password } = values;
     try {
-      const res = await fetch("http://localhost:8081/api/v1/login", {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 "use client";
 import { redirect, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "./ui/Container";
 
 const Profile = () => {
@@ -8,7 +8,10 @@ const Profile = () => {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-  if (!token) redirect("/");
+  useEffect(() => {
+    if (!token) redirect("/");
+  }, []);
+
   return (
     <Container>
       <div className="w-full flex flex-col justify-center mt-header">

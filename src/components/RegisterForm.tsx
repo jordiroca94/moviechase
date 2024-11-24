@@ -8,12 +8,16 @@ import { UserType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import Loader from "./ui/Loader";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const refRegisterForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
+  const router = useRouter();
 
   const registerSchema = z.object({
     first_name: z.string().min(1, { message: "Insert your name" }),
@@ -40,21 +44,18 @@ const RegisterForm = () => {
     setLoading(true);
     const { first_name, last_name, email, password } = values;
     try {
-      const res = await fetch(
-        "https://moviechase-api-production.up.railway.app/api/v1/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ first_name, last_name, email, password }),
-        }
-      );
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ first_name, last_name, email, password }),
+      });
 
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", JSON.stringify(data.token));
-        location.reload();
+        router.replace("/");
       } else {
         setError(true);
         setLoading(false);
