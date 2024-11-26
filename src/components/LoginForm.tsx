@@ -17,9 +17,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL
-    ? process.env.NEXT_PUBLIC_MOVIECHASE_API_URL
-    : process.env.PUBLIC_HOST;
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const loginSchema = z.object({
     email: z.string().email({ message: "An email is required" }),
