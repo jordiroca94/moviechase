@@ -16,7 +16,9 @@ const RegisterForm = () => {
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL
+    ? process.env.NEXT_PUBLIC_MOVIECHASE_API_URL
+    : process.env.PUBLIC_HOST;
   const router = useRouter();
 
   const registerSchema = z.object({
