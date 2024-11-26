@@ -51,6 +51,14 @@ const LoginForm = () => {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: data.email,
+            first_name: data.firstName,
+            last_name: data.lastName,
+          })
+        );
         return router.replace("/profile");
       } else {
         setError(true);

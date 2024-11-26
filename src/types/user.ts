@@ -6,3 +6,5 @@ export type UserType = {
 };
 
 export type UserLoginType = Pick<UserType, "email" | "password">;
+
+export type ProfileInfo = Pick<UserType, "email" | "first_name" | "last_name">;
