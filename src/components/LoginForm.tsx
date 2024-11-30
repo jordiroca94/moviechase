@@ -4,11 +4,12 @@ import React, { useRef, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserLoginType } from "@/types/user";
+import { DecodedTokenType, UserLoginType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import Loader from "./ui/Loader";
 import Link from "next/link";
+import { base64UrlDecode } from "@/utils/jwt";
 
 const LoginForm = () => {
   const refForm = useRef<HTMLFormElement>(null);
@@ -51,12 +52,16 @@ const LoginForm = () => {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", JSON.stringify(data.token));
+        const decodedToken: DecodedTokenType = JSON.parse(
+          base64UrlDecode(data.token)
+        );
         localStorage.setItem(
           "user",
           JSON.stringify({
-            email: data.email,
-            first_name: data.firstName,
-            last_name: data.lastName,
+            firstName: decodedToken.firstName,
+            lastName: decodedToken.lastName,
+            email: decodedToken.userEmail,
+            id: decodedToken.userID,
           })
         );
         return router.replace("/profile");

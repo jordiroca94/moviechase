@@ -5,17 +5,21 @@ import Container from "./ui/Container";
 import Image from "next/image";
 import PersonPlaceholder from "../../public/images/profilePlaceholder.png";
 import Grid from "./ui/Grid";
-import { ProfileInfo } from "@/types/user";
+import { UserType } from "@/types/user";
 
 const Profile = () => {
   const router = useRouter();
-  const [profileInfo, setProfileInfo] = useState<ProfileInfo>();
+  const [profileInfo, setProfileInfo] = useState<UserType>();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   useEffect(() => {
-    if (!token) redirect("/");
-    setProfileInfo(JSON.parse(localStorage.getItem("user") || "{}"));
+    if (!token) {
+      redirect("/");
+    } else {
+      const user = localStorage.getItem("user");
+      setProfileInfo(JSON.parse(user!));
+    }
   }, []);
 
   return (
@@ -41,11 +45,11 @@ const Profile = () => {
           <div className="hidden lg:block lg:col-span-2">
             <div className="flex text-lg capitalize">
               <span className="font-semibold">Name:&nbsp;</span>
-              <p>{profileInfo?.first_name}</p>
+              <p>{profileInfo?.firstName}</p>
             </div>
             <div className="flex text-lg capitalize">
               <span className="font-semibold">Surname:&nbsp;</span>
-              <p>{profileInfo?.last_name}</p>
+              <p>{profileInfo?.lastName}</p>
             </div>
             <div className="flex text-lg">
               <span className="font-semibold">Email:&nbsp;</span>
@@ -55,11 +59,11 @@ const Profile = () => {
           <div className="lg:hidden sm:col-span-8 col-span-4 w-full flex flex-col justify-center items-center">
             <div className="flex text-lg capitalize">
               <span className="font-semibold">Name:&nbsp;</span>
-              <p>{profileInfo?.first_name}</p>
+              <p>{profileInfo?.firstName}</p>
             </div>
             <div className="flex text-lg capitalize">
               <span className="font-semibold">Surname:&nbsp;</span>
-              <p>{profileInfo?.last_name}</p>
+              <p>{profileInfo?.lastName}</p>
             </div>
             <div className="flex text-lg">
               <span className="font-semibold">Email:&nbsp;</span>

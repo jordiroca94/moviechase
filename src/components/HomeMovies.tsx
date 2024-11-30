@@ -23,7 +23,7 @@ const HomeMovies = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className="mt-24 md:mt-0">
       <h2 className="text-3xl pb-3 lg:pb-6">Most popular movies</h2>
       <Slider {...settings}>
         {movies.map((movie) => {

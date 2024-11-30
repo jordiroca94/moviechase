@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserType } from "@/types/user";
+import { RegisterUserType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import Loader from "./ui/Loader";
 import Link from "next/link";
@@ -31,7 +31,7 @@ const RegisterForm = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<UserType>({
+  } = useForm<RegisterUserType>({
     defaultValues: {
       first_name: "",
       last_name: "",
@@ -41,7 +41,7 @@ const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const handleRegister = async (values: UserType) => {
+  const handleRegister = async (values: RegisterUserType) => {
     setLoading(true);
     const { first_name, last_name, email, password } = values;
     try {
@@ -54,17 +54,7 @@ const RegisterForm = () => {
       });
 
       if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            email: data.email,
-            first_name: data.firstName,
-            last_name: data.lastName,
-          })
-        );
-        router.replace("/");
+        router.replace("/login");
       } else {
         setError(true);
         setLoading(false);
