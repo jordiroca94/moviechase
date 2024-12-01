@@ -57,7 +57,7 @@ const Search = ({ query, open, setOpen }: Props) => {
       <div className="bg-transparent absolute text-black h-screen w-full z-50 flex justify-center items-start">
         <div
           ref={searchModalRef}
-          className="bg-primary md:border-secondary md:border text-white p-6 md:rounded-md md:mt-10 w-full lg:w-3/5 flex flex-col gap-4 relative mx-3 max-h-[80vh] overflow-auto"
+          className="bg-primary md:border-secondary md:border text-white p-6 md:rounded-md md:mt-10 w-full lg:w-3/5 flex flex-col gap-4 relative md:mx-3 md:max-h-[80vh] overflow-auto"
         >
           <button
             className="absolute top-4 right-4 hidden md:block"

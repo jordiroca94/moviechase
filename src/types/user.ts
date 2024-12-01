@@ -21,3 +21,8 @@ export type DecodedTokenType = {
 };
 
 export type UserLoginType = Pick<RegisterUserType, "email" | "password">;
+
+export type EditUserType = Pick<
+  RegisterUserType,
+  "first_name" | "last_name" | "email"
+>;

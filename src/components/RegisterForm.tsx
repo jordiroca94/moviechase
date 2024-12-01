@@ -82,7 +82,7 @@ const RegisterForm = () => {
               <input
                 className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
                 id="first_name"
-                type="first_name"
+                type="text"
                 placeholder="Name"
                 autoFocus
                 {...register("first_name")}
@@ -100,7 +100,7 @@ const RegisterForm = () => {
               <input
                 className="border border-secondary focus:ring-1 focus:ring-secondary py-2 px-6 rounded-md text-black"
                 id="last_name"
-                type="last_name"
+                type="text"
                 placeholder="Surname"
                 {...register("last_name")}
               />
