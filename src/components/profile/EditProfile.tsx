@@ -78,7 +78,14 @@ const EditProfile = () => {
       if (res.ok) {
         setLoading(false);
         setSuccess(true);
-        // TODO: Update the user in local storage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            firstName: first_name,
+            lastName: last_name,
+            email: email,
+          })
+        );
       } else {
         setError(true);
         setLoading(false);
