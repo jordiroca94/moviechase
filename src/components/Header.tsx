@@ -92,7 +92,7 @@ const Header = () => {
               </>
             )}
             <button onClick={() => setOpenMobile(true)} className="md:hidden">
-              <IoSearchSharp className="size-5" />
+              <IoSearchSharp className="size-7" />
             </button>
             <BurgerButton
               mobileMenu={mobileMenu}
