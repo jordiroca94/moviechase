@@ -8,9 +8,11 @@ import { UserType } from "@/types/user";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 import PersonPlaceholder from "../../../public/images/profilePlaceholder.png";
+import { useDeleteModal } from "@/context/DeleteUserModalContext";
 const Profile = () => {
   const router = useRouter();
   const [profileInfo, setProfileInfo] = useState<UserType>();
+  const { openModal } = useDeleteModal();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -25,8 +27,14 @@ const Profile = () => {
 
   return (
     <Container>
-      <div className="w-full flex flex-col justify-center mt-12 md:mt-8 ">
+      <div className="w-full flex flex-col justify-center mt-12 md:mt-8 relative ">
         <div className="w-full flex justify-end mr-10 gap-4">
+          <button
+            onClick={() => openModal()}
+            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex gap-2 items-center"
+          >
+            Delete
+          </button>
           <button
             onClick={() => {
               localStorage.removeItem("token");

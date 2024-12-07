@@ -65,7 +65,7 @@ const EditProfile = () => {
     const { first_name, last_name, email } = values;
     try {
       const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/update/user/${profileInfo?.id}`,
+        `${movieChaseApiUrl}/api/v1/user/update/${profileInfo?.id}`,
         {
           method: "POST",
           headers: {
