@@ -76,7 +76,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="bg-transparent text-black flex justify-center items-start mt-header">
+    <div className="bg-transparent text-black flex justify-start mt-header sm:mt-0 sm:justify-center items-center sm:h-screen">
       <div className="sm:bg-primary sm:border-secondary sm:border text-white p-6 sm:rounded-md sm:mt-16 w-full sm:max-w-[600px] flex flex-col gap-4">
         <form
           ref={refForm}
