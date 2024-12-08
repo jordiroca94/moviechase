@@ -9,6 +9,7 @@ import { EditUserType, UserType } from "@/types/user";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect } from "next/navigation";
+import H1Title from "../ui/H1Title";
 
 const EditProfile = () => {
   const editProfileForm = useRef<HTMLFormElement>(null);
@@ -103,7 +104,7 @@ const EditProfile = () => {
           ref={editProfileForm}
           onSubmit={handleSubmit(handleEditProfile)}
         >
-          <h1 className="text-2xl font-bold mb-5">Edit Profile</h1>
+          <H1Title>Edit Profile</H1Title>
           <div className="flex flex-col gap-4">
             <label htmlFor="first_name">First Name</label>
             <input

@@ -44,7 +44,7 @@ const DeleteUserModal = ({}: Props) => {
       deleteUserModal.current &&
       !deleteUserModal.current.contains(event.target as Node)
     ) {
-      () => closeModal();
+      closeModal();
     }
   };
 
