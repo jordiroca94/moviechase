@@ -1,4 +1,5 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
+
 export default function NotFound() {
   return (
     <main className="h-screen flex flex-col">

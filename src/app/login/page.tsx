@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import LoginForm from "@/components/LoginForm";
 
 export default function page() {

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import PersonPlaceholder from "../../public/images/personPlaceholder.png";
+import PersonPlaceholder from "../../../public/images/personPlaceholder.png";
 import { CreditsType } from "@/types/common";
 import Link from "next/link";
 import { useState } from "react";

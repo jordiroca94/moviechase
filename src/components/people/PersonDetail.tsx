@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-import Container from "./ui/Container";
+import Container from "../ui/Container";
 import { getPersonImages } from "@/queries/queries";
 import { PersonImagesType } from "@/types/common";
-import Grid from "./ui/Grid";
+import Grid from "../ui/Grid";
 import PersonInformation from "./PersonInformation";
 import Slider from "react-slick";
 import { imagesSettings } from "@/utils/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Loader from "./ui/Loader";
+import Loader from "../ui/Loader";
 import Filmography from "./Filmography";
 import Television from "./Television";
 

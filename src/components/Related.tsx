@@ -3,7 +3,7 @@ import { MovieType, ShowType } from "@/types/common";
 import { imagesSettings } from "@/utils/slider";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
-import Card from "./Card";
+import Card from "./ui/Card";
 
 type Props = {
   id: number;

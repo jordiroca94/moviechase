@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import Header from "../Header";
 import Profile from "./Profile";
-import Footer from "../Footer";
 import DeleteUserModal from "./DeleteUserModal";
 import { DeleteModalProvider } from "@/context/DeleteUserModalContext";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 const ProfilePageComponent = () => {
   return (

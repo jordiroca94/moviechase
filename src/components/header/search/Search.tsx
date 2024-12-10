@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import PersonPlaceholder from "../../../public/images/personPlaceholder.png";
+import PersonPlaceholder from "../../../../public/images/personPlaceholder.png";
 
 type Props = {
   query: string;

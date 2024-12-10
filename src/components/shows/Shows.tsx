@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Container from "./ui/Container";
 import {
   getAiringShows,
   getAiringTodayShows,
@@ -10,10 +9,11 @@ import {
 } from "@/queries/queries";
 import Slider from "react-slick";
 import { settings } from "@/utils/slider";
-import Card from "./Card";
 import { ShowType } from "@/types/common";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Container from "../ui/Container";
+import Card from "../ui/Card";
 
 const Shows = () => {
   const [popularShows, setPopularShows] = useState([]);

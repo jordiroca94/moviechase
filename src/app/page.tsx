@@ -1,7 +1,8 @@
-import Footer from "@/components/Footer";
-import HomeMovies from "@/components/HomeMovies";
-import HomeShows from "@/components/HomeShows";
-import Header from "@/components/Header";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
+import HomeMovies from "@/components/movies/HomeMovies";
+import HomeShows from "@/components/shows/HomeShows";
+
 import Tmdb from "@/components/Tmdb";
 import VideoHero from "@/components/VideoHero";
 

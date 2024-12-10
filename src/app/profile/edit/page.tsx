@@ -1,7 +1,7 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import React from "react";
 import EditProfile from "@/components/profile/EditProfile";
+import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 const page = async () => {
   return (

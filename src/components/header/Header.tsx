@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import SearchBar from "./search/SearchBar";
-import Search from "./search/Search";
-import SearchMobile from "./search/SearchMobile";
 import Image from "next/image";
-import PersonPlaceholder from "../../public/images/profilePlaceholder.png";
-import BurgerButton from "./ui/BurgerButton";
+import PersonPlaceholder from "../../../public/images/personPlaceholder.png";
+import BurgerButton from "../ui/BurgerButton";
 import MobileMenu from "./MobileMenu";
+import SearchMobile from "./search/SearchMobile";
+import Search from "./search/Search";
+import SearchBar from "./search/SearchBar";
 
 const Header = () => {
   const [query, setQuery] = useState("");

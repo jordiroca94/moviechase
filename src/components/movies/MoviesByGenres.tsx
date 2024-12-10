@@ -1,15 +1,15 @@
 "use client";
 
 import { getMovieGenre, getMovies } from "@/queries/queries";
-import Container from "./ui/Container";
 import { useEffect, useState } from "react";
 import { MovieType } from "@/types/common";
-import Grid from "./ui/Grid";
 import dayjs from "dayjs";
 import Link from "next/link";
-import RateStar from "./ui/RateStar";
-import H1Title from "./ui/H1Title";
-import Loader from "./ui/Loader";
+import Container from "../ui/Container";
+import H1Title from "../ui/H1Title";
+import Grid from "../ui/Grid";
+import RateStar from "../ui/RateStar";
+import Loader from "../ui/Loader";
 
 const MoviesByGenres = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;

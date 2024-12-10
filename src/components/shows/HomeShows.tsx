@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Container from "./ui/Container";
 import { getPopularShows } from "@/queries/queries";
 import Slider from "react-slick";
 import { settings } from "@/utils/slider";
-import Card from "./Card";
 import { ShowType } from "@/types/common";
+import Container from "../ui/Container";
+import Card from "../ui/Card";
 
 const HomeShows = () => {
   const [shows, setShows] = useState([]);

@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import ShowsByGenre from "@/components/ShowsByGenres";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
+import ShowsByGenre from "@/components/shows/ShowsByGenres";
 
 const page = ({ params }: { params: { id: number } }) => {
   return (

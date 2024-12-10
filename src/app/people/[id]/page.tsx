@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import PersonDetail from "@/components/PersonDetail";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
+import PersonDetail from "@/components/people/PersonDetail";
 
 const page = ({ params }: { params: { id: number } }) => {
   return (

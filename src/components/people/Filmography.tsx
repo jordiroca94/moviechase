@@ -1,5 +1,4 @@
-"use client";
-import { PersonTVCastType, PersonTVCreditsType } from "@/types/common";
+import { PersonCastType, PersonCreditsType } from "@/types/common";
 import dayjs from "dayjs";
 import Link from "next/link";
 import {
@@ -7,47 +6,48 @@ import {
   FaSortNumericUp,
   FaSortNumericUpAlt,
 } from "react-icons/fa";
-import RateStar from "./ui/RateStar";
+import RateStar from "../ui/RateStar";
 import { useEffect, useState } from "react";
-import { getPersonTVCredits } from "@/queries/queries";
+import { getPersonCredits } from "@/queries/queries";
 
-const Television = ({ id }: { id: number }) => {
-  const [tvShows, setTvShows] = useState<PersonTVCastType[]>([]);
-  const [credits, setCredits] = useState<PersonTVCreditsType>();
+const Filmography = ({ id }: { id: number }) => {
+  const [filmography, setFilmography] = useState<PersonCastType[]>([]);
+  const [credits, setCredits] = useState<PersonCreditsType>();
 
-  const fetchPersonTVCredits = async () => {
-    const res = await getPersonTVCredits(id);
+  const fetchPersonCredits = async () => {
+    const res = await getPersonCredits(id);
     setCredits(res);
   };
 
   useEffect(() => {
-    fetchPersonTVCredits();
+    fetchPersonCredits();
   }, []);
 
   useEffect(() => {
     if (credits) {
-      setTvShows(
+      setFilmography(
         credits?.cast.sort(
-          (a: PersonTVCastType, b: PersonTVCastType) =>
-            new Date(a.first_air_date).getTime() -
-            new Date(b.first_air_date).getTime()
+          (a: PersonCastType, b: PersonCastType) =>
+            new Date(a.release_date).getTime() -
+            new Date(b.release_date).getTime()
         )
       );
     }
   }, [credits]);
-  if (tvShows.length > 0) {
+
+  if (filmography.length > 0) {
     return (
       <div className="col-span-full">
-        <h2 className="text-2xl py-6">Television</h2>
+        <h2 className="text-2xl py-6">Films</h2>
         <div className="grid grid-cols-12 gap-4 border-b border-white pb-4 mb-4">
           <span className="col-span-2 sm:col-span-1">
             <button
               onClick={() =>
-                setTvShows(
-                  [...(tvShows || [])].sort(
-                    (a: PersonTVCastType, b: PersonTVCastType) =>
-                      new Date(a.first_air_date).getTime() -
-                      new Date(b.first_air_date).getTime()
+                setFilmography(
+                  [...(filmography || [])].sort(
+                    (a: PersonCastType, b: PersonCastType) =>
+                      new Date(a.release_date).getTime() -
+                      new Date(b.release_date).getTime()
                   )
                 )
               }
@@ -60,10 +60,10 @@ const Television = ({ id }: { id: number }) => {
           <span className="col-span-9 sm:col-span-4">
             <button
               onClick={() =>
-                setTvShows(
-                  [...(tvShows || [])].sort(
-                    (a: PersonTVCastType, b: PersonTVCastType) =>
-                      a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+                setFilmography(
+                  [...(filmography || [])].sort(
+                    (a: PersonCastType, b: PersonCastType) =>
+                      a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
                   )
                 )
               }
@@ -76,9 +76,9 @@ const Television = ({ id }: { id: number }) => {
           <span className="col-span-6 hidden sm:block">
             <button
               onClick={() =>
-                setTvShows(
-                  [...(tvShows || [])].sort(
-                    (a: PersonTVCastType, b: PersonTVCastType) =>
+                setFilmography(
+                  [...(filmography || [])].sort(
+                    (a: PersonCastType, b: PersonCastType) =>
                       a.character.toLowerCase() > b.character.toLowerCase()
                         ? 1
                         : -1
@@ -94,9 +94,9 @@ const Television = ({ id }: { id: number }) => {
           <span className="col-span-1 flex justify-end">
             <button
               onClick={() =>
-                setTvShows(
-                  [...(tvShows || [])].sort(
-                    (a: PersonTVCastType, b: PersonTVCastType) =>
+                setFilmography(
+                  [...(filmography || [])].sort(
+                    (a: PersonCastType, b: PersonCastType) =>
                       b.vote_average - a.vote_average
                   )
                 )
@@ -108,24 +108,24 @@ const Television = ({ id }: { id: number }) => {
             </button>
           </span>
         </div>
-        {tvShows.map((item, index) => {
+        {filmography.map((item) => {
           if (
-            !item.first_air_date.length ||
+            !item.release_date.length ||
             item.vote_average === 0 ||
             item.vote_average === 10
           )
             return;
           return (
             <Link
-              href={`/shows/${item.id}`}
-              key={index}
+              href={`/movies/${item.id}`}
+              key={item.id}
               className="gap-4 py-2 grid grid-cols-12 hover:bg-darkGray"
             >
               <p className="col-span-2 sm:col-span-1">
-                {dayjs(item.first_air_date).format("YYYY")}
+                {dayjs(item.release_date).format("YYYY")}
               </p>
               <p className="col-span-9 sm:col-span-4 line-clamp-1 pr-6">
-                {item.name}
+                {item.title}
               </p>
               <p className="col-span-6 line-clamp-1 hidden sm:block">
                 {item.character}
@@ -141,4 +141,4 @@ const Television = ({ id }: { id: number }) => {
   }
 };
 
-export default Television;
+export default Filmography;

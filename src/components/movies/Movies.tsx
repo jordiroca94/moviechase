@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Container from "./ui/Container";
+import Container from "../ui/Container";
 import {
   getPlayingMovies,
   getPopularMovies,
@@ -10,7 +10,7 @@ import {
 } from "@/queries/queries";
 import Slider from "react-slick";
 import { settings } from "@/utils/slider";
-import Card from "./Card";
+import Card from "../ui/Card";
 import { MovieType } from "@/types/common";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

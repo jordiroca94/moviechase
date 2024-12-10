@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import RegisterForm from "@/components/RegisterForm";
 
 export default function page() {

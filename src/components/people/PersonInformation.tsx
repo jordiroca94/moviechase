@@ -4,7 +4,7 @@ import { getAge, getDeathDate } from "@/utils/getAge";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaArrowTrendUp } from "react-icons/fa6";
-import H1Title from "./ui/H1Title";
+import H1Title from "../ui/H1Title";
 
 const PersonInformation = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
