@@ -10,6 +10,7 @@ import MobileMenu from "./MobileMenu";
 import SearchMobile from "./search/SearchMobile";
 import Search from "./search/Search";
 import SearchBar from "./search/SearchBar";
+import { CgProfile } from "react-icons/cg";
 
 const Header = () => {
   const [query, setQuery] = useState("");
@@ -69,11 +70,7 @@ const Header = () => {
             <SearchBar query={query} setOpen={setOpen} setQuery={setQuery} />
             {token ? (
               <Link href="/profile">
-                <Image
-                  className="rounded-full size-8"
-                  src={PersonPlaceholder}
-                  alt="ProfileImage"
-                />
+                <CgProfile className="size-8" />
               </Link>
             ) : (
               <>

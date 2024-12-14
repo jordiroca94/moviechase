@@ -8,17 +8,15 @@ import { RegisterUserType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import Loader from "./ui/Loader";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const refRegisterForm = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
-
-  const router = useRouter();
 
   const registerSchema = z.object({
     first_name: z.string().min(1, { message: "Insert your name" }),
@@ -54,11 +52,11 @@ const RegisterForm = () => {
       });
 
       if (res.ok) {
-        router.replace("/login");
+        setSuccess(true);
       } else {
         setError(true);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error logging in:", error);
       throw error;
@@ -158,6 +156,7 @@ const RegisterForm = () => {
           >
             {loading ? <Loader /> : "Submit"}
           </button>
+          {success && <p className="pt-1">User registered successfully</p>}
           <div className="text-sm mt-3 text-right">
             Already have an account?{" "}
             <Link

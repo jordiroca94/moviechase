@@ -30,14 +30,23 @@ import Images from "../Images";
 import Loader from "../ui/Loader";
 import H1Title from "../ui/H1Title";
 import Related from "../Related";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
+import { UserType } from "@/types/user";
 
 const MovieDetail = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const [movie, setMovie] = useState<MovieDetailType>();
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isWishlist, setIsWishlist] = useState(false);
+  const [profileInfo, setProfileInfo] = useState<UserType>();
 
   const fetchMovie = async () => {
     const res = await getMovie(id);
@@ -65,6 +74,142 @@ const MovieDetail = ({ id }: { id: number }) => {
     fetchImages();
     fetchCredits();
   }, []);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setProfileInfo(JSON.parse(user!));
+    if (profileInfo?.id) {
+      getFavourite();
+      getWished();
+    }
+  }, [profileInfo?.id]);
+
+  const getFavourite = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/favourite?user_id=${profileInfo?.id}&type=movie&id=${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.ok) {
+        setIsFavourite(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeFromFavourites = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "movie",
+        }),
+      });
+
+      if (res.ok) {
+        setIsFavourite(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddToFavourites = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "movie",
+        }),
+      });
+
+      if (res.ok) {
+        setIsFavourite(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getWished = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/wished?user_id=${profileInfo?.id}&type=movie&id=${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.ok) {
+        setIsWishlist(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeFromWishlist = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "movie",
+        }),
+      });
+
+      if (res.ok) {
+        setIsWishlist(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "movie",
+        }),
+      });
+
+      if (res.ok) {
+        setIsWishlist(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (movie && videos && images) {
     const director = credits?.crew.filter(
       (person) => person.job === "Director"
@@ -74,7 +219,7 @@ const MovieDetail = ({ id }: { id: number }) => {
     );
     return (
       <Container>
-        <div className="grid grid-cols-8 lg:grid-cols-12 mt-header">
+        <div className="grid grid-cols-8 lg:grid-cols-12 mt-12 lg:mt-8">
           <div className="col-span-8 sm:col-span-full flex justify-between">
             <div className="flex flex-col">
               <H1Title>{movie.title}</H1Title>
@@ -89,6 +234,30 @@ const MovieDetail = ({ id }: { id: number }) => {
               </div>
             </div>
             <div className="hidden lg:flex gap-8">
+              <div className="flex flex-col justify-center items-center gap-2 ">
+                <div className="uppercase text-lightGray">Wishlist </div>
+                {isWishlist ? (
+                  <button onClick={() => removeFromWishlist()}>
+                    <IoIosRemoveCircleOutline className="size-6 text-secondary" />
+                  </button>
+                ) : (
+                  <button onClick={() => handleAddToWishlist()}>
+                    <IoIosAddCircleOutline className="size-6 text-secondary" />
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col justify-center items-center gap-2">
+                <div className="uppercase text-lightGray">Favourites </div>
+                {isFavourite ? (
+                  <button onClick={() => removeFromFavourites()}>
+                    <FaHeart className="size-6 text-secondary" />
+                  </button>
+                ) : (
+                  <button onClick={() => handleAddToFavourites()}>
+                    <FaRegHeart className="size-6 text-secondary" />
+                  </button>
+                )}
+              </div>
               <div className="flex flex-col justify-center items-center gap-2">
                 <div className="uppercase text-lightGray">Rating</div>
                 <RateStar averageRate={movie.vote_average} outOfTen />
