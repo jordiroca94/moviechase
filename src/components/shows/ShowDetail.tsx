@@ -229,30 +229,34 @@ const ShowDetail = ({ id }: { id: number }) => {
               </div>
             </div>
             <div className="hidden lg:flex gap-8">
-              <div className="flex flex-col justify-center items-center gap-2 ">
-                <div className="uppercase text-lightGray">Wishlist </div>
-                {isWishlist ? (
-                  <button onClick={() => removeFromWishlist()}>
-                    <IoIosRemoveCircleOutline className="size-6 text-secondary" />
-                  </button>
-                ) : (
-                  <button onClick={() => handleAddToWishlist()}>
-                    <IoIosAddCircleOutline className="size-6 text-secondary" />
-                  </button>
-                )}
-              </div>
-              <div className="flex flex-col justify-center items-center gap-2">
-                <div className="uppercase text-lightGray">Favourites </div>
-                {isFavourite ? (
-                  <button onClick={() => removeFromFavourites()}>
-                    <FaHeart className="size-6 text-secondary" />
-                  </button>
-                ) : (
-                  <button onClick={() => handleAddToFavourites()}>
-                    <FaRegHeart className="size-6 text-secondary" />
-                  </button>
-                )}
-              </div>
+              {profileInfo && (
+                <>
+                  <div className="flex flex-col justify-center items-center gap-2 ">
+                    <div className="uppercase text-lightGray">Watchlist </div>
+                    {isWishlist ? (
+                      <button onClick={() => removeFromWishlist()}>
+                        <IoIosRemoveCircleOutline className="size-6 text-secondary" />
+                      </button>
+                    ) : (
+                      <button onClick={() => handleAddToWishlist()}>
+                        <IoIosAddCircleOutline className="size-6 text-secondary" />
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex flex-col justify-center items-center gap-2">
+                    <div className="uppercase text-lightGray">Favourites </div>
+                    {isFavourite ? (
+                      <button onClick={() => removeFromFavourites()}>
+                        <FaHeart className="size-6 text-secondary" />
+                      </button>
+                    ) : (
+                      <button onClick={() => handleAddToFavourites()}>
+                        <FaRegHeart className="size-6 text-secondary" />
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
               <div className="flex flex-col justify-center items-center gap-2">
                 <div className="uppercase text-lightGray">Rating</div>
                 <RateStar averageRate={show.vote_average} outOfTen />

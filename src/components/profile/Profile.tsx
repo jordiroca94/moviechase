@@ -13,21 +13,96 @@ const Profile = () => {
   const router = useRouter();
   const [profileInfo, setProfileInfo] = useState<UserType>();
   const { openModal } = useDeleteModal();
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
+  const [favouriteMovies, setFavouriteMovies] = useState([]);
+  const [favouriteShows, setFavouriteShows] = useState([]);
+  const [favouritePeople, setFavouritePeople] = useState([]);
+
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   useEffect(() => {
+    if (profileInfo?.id) {
+      getFavouriteMovies();
+      getFavouriteShows();
+      getFavouritePeople();
+    }
     if (!token) {
       redirect("/");
     } else {
       const user = localStorage.getItem("user");
       setProfileInfo(JSON.parse(user!));
     }
-  }, []);
+  }, [profileInfo?.id]);
+
+  const getFavouriteMovies = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=movie`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const response = await res.json();
+
+      if (res.ok) {
+        setFavouriteMovies(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getFavouriteShows = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=show`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const response = await res.json();
+
+      if (res.ok) {
+        setFavouriteShows(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getFavouritePeople = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=people`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const response = await res.json();
+
+      if (res.ok) {
+        setFavouritePeople(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log(favouriteMovies, favouriteShows, favouritePeople, "----------->");
 
   return (
     <Container>
-      <div className="w-full flex flex-col justify-center mt-12 md:mt-8 relative ">
+      <div className="w-full flex flex-col justify-center mt-12 lg:mt-8 relative ">
         <div className="w-full flex justify-end mr-10 gap-4">
           <button
             onClick={() => openModal()}
@@ -38,6 +113,7 @@ const Profile = () => {
           <button
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("user");
               router.replace("/");
             }}
             className="bg-secondary py-2 px-4 rounded-lg border text-white border-white hover:bg-primary"

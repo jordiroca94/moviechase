@@ -104,7 +104,7 @@ const EditProfile = () => {
           ref={editProfileForm}
           onSubmit={handleSubmit(handleEditProfile)}
         >
-          <H1Title>Edit Profile</H1Title>
+          <H1Title className="mb-3">Edit Profile</H1Title>
           <div className="flex flex-col gap-4">
             <label htmlFor="first_name">First Name</label>
             <input
