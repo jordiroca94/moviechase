@@ -214,8 +214,32 @@ const ShowDetail = ({ id }: { id: number }) => {
       <Container>
         <div className="grid grid-cols-8 lg:grid-cols-12 mt-12 lg:mt-8">
           <div className="col-span-8 sm:col-span-full flex justify-between">
-            <div className="flex flex-col">
-              <H1Title>{show.name}</H1Title>
+            <div className="flex flex-col w-full">
+              <div className="flex justify-between items-center">
+                <H1Title>{show.name}</H1Title>
+                {profileInfo && (
+                  <div className="gap-2 flex lg:hidden">
+                    {isWishlist ? (
+                      <button onClick={() => removeFromWishlist()}>
+                        <IoIosRemoveCircleOutline className="size-6 text-secondary" />
+                      </button>
+                    ) : (
+                      <button onClick={() => handleAddToWishlist()}>
+                        <IoIosAddCircleOutline className="size-6 text-secondary" />
+                      </button>
+                    )}
+                    {isFavourite ? (
+                      <button onClick={() => removeFromFavourites()}>
+                        <FaHeart className="size-6 text-secondary" />
+                      </button>
+                    ) : (
+                      <button onClick={() => handleAddToFavourites()}>
+                        <FaRegHeart className="size-6 text-secondary" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="text-lightGray text-sm py-3">
                 <div className="flex gap-2">
                   <p>{dayjs(show.first_air_date).format("YYYY")}</p> -{" "}

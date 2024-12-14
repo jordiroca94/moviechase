@@ -102,10 +102,25 @@ const PersonInformation = ({ id }: { id: number }) => {
 
   if (person) {
     return (
-      <div className="grid grid-cols-8 lg:grid-cols-12 mt-header">
+      <div className="grid grid-cols-8 lg:grid-cols-12 mt-12 lg:mt-8">
         <div className="col-span-full flex justify-between">
           <div className="flex flex-col w-full">
-            <H1Title>{person.name}</H1Title>
+            <div className="flex justify-between items-center">
+              <H1Title>{person.name}</H1Title>
+              {profileInfo && (
+                <div className="sm:hidden">
+                  {isFavourite ? (
+                    <button onClick={() => removeFromFavourites()}>
+                      <FaHeart className="size-6 text-secondary" />
+                    </button>
+                  ) : (
+                    <button onClick={() => handleAddToFavourites()}>
+                      <FaRegHeart className="size-6 text-secondary" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
             <div className="flex justify-between text-lightGray text-sm py-3">
               <div className="flex items-center gap-2">
                 <p>{person.known_for_department}</p>{" "}
