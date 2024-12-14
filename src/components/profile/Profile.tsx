@@ -52,7 +52,7 @@ const Profile = () => {
             <IoMdSettings className="size-5 " />
           </Link>
         </div>
-        <Grid className="my-20">
+        <Grid className="my-16">
           <Image
             src={PersonPlaceholder}
             alt="Profile"

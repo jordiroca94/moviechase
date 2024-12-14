@@ -5,13 +5,21 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import H1Title from "../ui/H1Title";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
+import { UserType } from "@/types/user";
 
 const PersonInformation = ({ id }: { id: number }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
+  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const [person, setPerson] = useState<PersonDetailType>();
   const [readMore, setReadMore] = useState(false);
-
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isWishlist, setIsWishlist] = useState(false);
+  const [profileInfo, setProfileInfo] = useState<UserType>();
   const fetchPerson = async () => {
     const res = await getPerson(id);
     setPerson(res);
@@ -19,7 +27,139 @@ const PersonInformation = ({ id }: { id: number }) => {
 
   useEffect(() => {
     fetchPerson();
-  }, []);
+    const user = localStorage.getItem("user");
+    setProfileInfo(JSON.parse(user!));
+    if (profileInfo?.id) {
+      getFavourite();
+      getWished();
+    }
+  }, [profileInfo?.id]);
+
+  const getFavourite = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/favourite?user_id=${profileInfo?.id}&type=movie&id=${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.ok) {
+        setIsFavourite(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeFromFavourites = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "people",
+        }),
+      });
+
+      if (res.ok) {
+        setIsFavourite(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddToFavourites = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "people",
+        }),
+      });
+
+      if (res.ok) {
+        setIsFavourite(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getWished = async () => {
+    try {
+      const res = await fetch(
+        `${movieChaseApiUrl}/api/v1/wished?user_id=${profileInfo?.id}&type=movie&id=${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.ok) {
+        setIsWishlist(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeFromWishlist = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "people",
+        }),
+      });
+
+      if (res.ok) {
+        setIsWishlist(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddToWishlist = async () => {
+    try {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: Number(profileInfo?.id),
+          id: Number(id),
+          type: "people",
+        }),
+      });
+
+      if (res.ok) {
+        setIsWishlist(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const countWords = (str: string) => {
     return str
@@ -53,6 +193,30 @@ const PersonInformation = ({ id }: { id: number }) => {
             </div>
           </div>
           <div className="hidden sm:flex gap-8">
+            <div className="flex flex-col justify-center items-center gap-2 ">
+              <div className="uppercase text-lightGray">Wishlist </div>
+              {isWishlist ? (
+                <button onClick={() => removeFromWishlist()}>
+                  <IoIosRemoveCircleOutline className="size-6 text-secondary" />
+                </button>
+              ) : (
+                <button onClick={() => handleAddToWishlist()}>
+                  <IoIosAddCircleOutline className="size-6 text-secondary" />
+                </button>
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-center gap-2">
+              <div className="uppercase text-lightGray">Favourites </div>
+              {isFavourite ? (
+                <button onClick={() => removeFromFavourites()}>
+                  <FaHeart className="size-6 text-secondary" />
+                </button>
+              ) : (
+                <button onClick={() => handleAddToFavourites()}>
+                  <FaRegHeart className="size-6 text-secondary" />
+                </button>
+              )}
+            </div>
             <div className="flex flex-col justify-center items-center gap-2">
               <div className="uppercase text-lightGray">Popularity</div>
               <div className="flex items-center gap-2">
