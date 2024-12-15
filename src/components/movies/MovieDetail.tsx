@@ -45,7 +45,7 @@ const MovieDetail = ({ id }: { id: number }) => {
   const [images, setImages] = useState<ImageType>();
   const [credits, setCredits] = useState<CreditsType>();
   const [isFavourite, setIsFavourite] = useState(false);
-  const [isWishlist, setIsWishlist] = useState(false);
+  const [isWatchlist, setIsWatchlist] = useState(false);
   const [profileInfo, setProfileInfo] = useState<UserType>();
 
   const fetchMovie = async () => {
@@ -80,7 +80,7 @@ const MovieDetail = ({ id }: { id: number }) => {
     setProfileInfo(JSON.parse(user!));
     if (profileInfo?.id) {
       getFavourite();
-      getWished();
+      getWatched();
     }
   }, [profileInfo?.id]);
 
@@ -147,10 +147,10 @@ const MovieDetail = ({ id }: { id: number }) => {
     }
   };
 
-  const getWished = async () => {
+  const getWatched = async () => {
     try {
       const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/wished?user_id=${profileInfo?.id}&type=movie&id=${id}`,
+        `${movieChaseApiUrl}/api/v1/watched?user_id=${profileInfo?.id}&type=movie&id=${id}`,
         {
           method: "GET",
           headers: {
@@ -159,16 +159,16 @@ const MovieDetail = ({ id }: { id: number }) => {
         }
       );
       if (res.ok) {
-        setIsWishlist(true);
+        setIsWatchlist(true);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const removeFromWishlist = async () => {
+  const removeFromWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/delete`, {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -181,16 +181,16 @@ const MovieDetail = ({ id }: { id: number }) => {
       });
 
       if (res.ok) {
-        setIsWishlist(false);
+        setIsWatchlist(false);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleAddToWishlist = async () => {
+  const handleAddToWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/wishlist/add`, {
+      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -203,7 +203,7 @@ const MovieDetail = ({ id }: { id: number }) => {
       });
 
       if (res.ok) {
-        setIsWishlist(true);
+        setIsWatchlist(true);
       }
     } catch (error) {
       console.error(error);
@@ -227,12 +227,12 @@ const MovieDetail = ({ id }: { id: number }) => {
                 <H1Title>{movie.title}</H1Title>
                 {profileInfo && (
                   <div className="gap-2 flex lg:hidden">
-                    {isWishlist ? (
-                      <button onClick={() => removeFromWishlist()}>
+                    {isWatchlist ? (
+                      <button onClick={() => removeFromWatchlist()}>
                         <IoIosRemoveCircleOutline className="size-6 text-secondary" />
                       </button>
                     ) : (
-                      <button onClick={() => handleAddToWishlist()}>
+                      <button onClick={() => handleAddToWatchlist()}>
                         <IoIosAddCircleOutline className="size-6 text-secondary" />
                       </button>
                     )}
@@ -263,12 +263,12 @@ const MovieDetail = ({ id }: { id: number }) => {
                 <>
                   <div className="flex flex-col justify-center items-center gap-2 ">
                     <div className="uppercase text-lightGray">Watchlist </div>
-                    {isWishlist ? (
-                      <button onClick={() => removeFromWishlist()}>
+                    {isWatchlist ? (
+                      <button onClick={() => removeFromWatchlist()}>
                         <IoIosRemoveCircleOutline className="size-6 text-secondary" />
                       </button>
                     ) : (
-                      <button onClick={() => handleAddToWishlist()}>
+                      <button onClick={() => handleAddToWatchlist()}>
                         <IoIosAddCircleOutline className="size-6 text-secondary" />
                       </button>
                     )}
