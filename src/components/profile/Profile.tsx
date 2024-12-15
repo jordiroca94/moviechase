@@ -98,6 +98,10 @@ const Profile = () => {
     }
   };
 
+  // TODOS: REFACTOR: Movies id typed as number it is a string
+  // Abstract the fav fetch request to be in queries or mutations
+  // Wishlist rename to watchlist
+
   console.log(favouriteMovies, favouriteShows, favouritePeople, "----------->");
 
   return (

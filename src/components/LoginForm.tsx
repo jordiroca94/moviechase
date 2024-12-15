@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Loader from "./ui/Loader";
 import Link from "next/link";
 import { base64UrlDecode } from "@/utils/jwt";
+import { loginUser } from "@/mutations/mutations";
 
 const LoginForm = () => {
   const refForm = useRef<HTMLFormElement>(null);
@@ -17,8 +18,6 @@ const LoginForm = () => {
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const loginSchema = z.object({
     email: z.string().email({ message: "An email is required" }),
@@ -41,14 +40,7 @@ const LoginForm = () => {
     setLoading(true);
     const { email, password } = values;
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
+      const res = await loginUser(email, password);
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", JSON.stringify(data.token));

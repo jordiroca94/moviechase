@@ -8,6 +8,7 @@ import { RegisterUserType } from "@/types/user";
 import { BiHide, BiShow } from "react-icons/bi";
 import Loader from "./ui/Loader";
 import Link from "next/link";
+import { registerUser } from "@/mutations/mutations";
 
 const RegisterForm = () => {
   const refRegisterForm = useRef<HTMLFormElement>(null);
@@ -15,8 +16,6 @@ const RegisterForm = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const registerSchema = z.object({
     first_name: z.string().min(1, { message: "Insert your name" }),
@@ -43,14 +42,7 @@ const RegisterForm = () => {
     setLoading(true);
     const { first_name, last_name, email, password } = values;
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ first_name, last_name, email, password }),
-      });
-
+      const res = await registerUser(first_name, last_name, email, password);
       if (res.ok) {
         setSuccess(true);
       } else {
@@ -58,7 +50,7 @@ const RegisterForm = () => {
       }
       setLoading(false);
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error registering user", error);
       throw error;
     }
   };

@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import Image from "next/image";
-import PersonPlaceholder from "../../../public/images/personPlaceholder.png";
 import BurgerButton from "../ui/BurgerButton";
 import MobileMenu from "./MobileMenu";
 import SearchMobile from "./search/SearchMobile";
