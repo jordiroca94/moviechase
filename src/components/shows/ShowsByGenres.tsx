@@ -11,7 +11,7 @@ import RateStar from "../ui/RateStar";
 import H1Title from "../ui/H1Title";
 import Loader from "../ui/Loader";
 
-const ShowsByGenre = ({ id }: { id: number }) => {
+const ShowsByGenre = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [shows, setShows] = useState<ShowType[]>([]);
@@ -39,7 +39,7 @@ const ShowsByGenre = ({ id }: { id: number }) => {
   }, [page]);
 
   if (shows && genresList) {
-    const genre = genresList.filter((genre) => genre.id == id);
+    const genre = genresList.filter((genre) => genre.id == Number(id));
 
     return (
       <Container>

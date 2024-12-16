@@ -8,7 +8,7 @@ import H1Title from "../ui/H1Title";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { UserType } from "@/types/user";
 
-const PersonInformation = ({ id }: { id: number }) => {
+const PersonInformation = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
   const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 

@@ -6,7 +6,7 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 // MOVIES
 const randomPage = Math.floor(Math.random() * 5) + 1;
 
-export const getMovies = async (id: number, page: number) => {
+export const getMovies = async (id: string, page: number) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/discover/movie`, {
@@ -67,7 +67,7 @@ export const getPlayingMovies = async () => {
   return results;
 };
 
-export const getMovie = async (id: number) => {
+export const getMovie = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/movie/${id}`, {
     params: {
       api_key: API_KEY,
@@ -76,7 +76,7 @@ export const getMovie = async (id: number) => {
   return data;
 };
 
-export const getMovieVideos = async (id: number) => {
+export const getMovieVideos = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/movie/${id}/videos`, {
     params: {
       api_key: API_KEY,
@@ -85,7 +85,7 @@ export const getMovieVideos = async (id: number) => {
   return data.results;
 };
 
-export const getMovieImages = async (id: number) => {
+export const getMovieImages = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/movie/${id}/images`, {
     params: {
       api_key: API_KEY,
@@ -94,7 +94,7 @@ export const getMovieImages = async (id: number) => {
   return data;
 };
 
-export const getMovieCredits = async (id: number) => {
+export const getMovieCredits = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/movie/${id}/credits`, {
     params: {
       api_key: API_KEY,
@@ -114,7 +114,7 @@ export const getMovieGenre = async () => {
   return genres;
 };
 
-export const getRelatedMovies = async (id: number) => {
+export const getRelatedMovies = async (id: string) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/movie/${id}/similar`, {
@@ -128,7 +128,7 @@ export const getRelatedMovies = async (id: number) => {
 
 // SHOWS
 
-export const getShows = async (id: number, page: number) => {
+export const getShows = async (id: string, page: number) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/discover/tv`, {
@@ -189,7 +189,7 @@ export const getAiringShows = async () => {
   return results;
 };
 
-export const getShow = async (id: number) => {
+export const getShow = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/tv/${id}`, {
     params: {
       api_key: API_KEY,
@@ -198,7 +198,7 @@ export const getShow = async (id: number) => {
   return data;
 };
 
-export const getShowVideos = async (id: number) => {
+export const getShowVideos = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/tv/${id}/videos`, {
     params: {
       api_key: API_KEY,
@@ -207,7 +207,7 @@ export const getShowVideos = async (id: number) => {
   return data.results;
 };
 
-export const getShowImages = async (id: number) => {
+export const getShowImages = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/tv/${id}/images`, {
     params: {
       api_key: API_KEY,
@@ -216,7 +216,7 @@ export const getShowImages = async (id: number) => {
   return data;
 };
 
-export const getShowCredits = async (id: number) => {
+export const getShowCredits = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/tv/${id}/credits`, {
     params: {
       api_key: API_KEY,
@@ -236,7 +236,7 @@ export const getShowGenre = async () => {
   return genres;
 };
 
-export const getRelatedtShows = async (id: number) => {
+export const getRelatedtShows = async (id: string) => {
   const {
     data: { results },
   } = await axios.get(`${API_URL}/tv/${id}/similar`, {
@@ -262,7 +262,7 @@ export const getSearch = async (query: string) => {
 
 // PEOPLE
 
-export const getPerson = async (id: number) => {
+export const getPerson = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/person/${id}`, {
     params: {
       api_key: API_KEY,
@@ -271,7 +271,7 @@ export const getPerson = async (id: number) => {
   return data;
 };
 
-export const getPersonImages = async (id: number) => {
+export const getPersonImages = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/person/${id}/images`, {
     params: {
       api_key: API_KEY,
@@ -280,7 +280,7 @@ export const getPersonImages = async (id: number) => {
   return data;
 };
 
-export const getPersonCredits = async (id: number) => {
+export const getPersonCredits = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/person/${id}/movie_credits`, {
     params: {
       api_key: API_KEY,
@@ -289,7 +289,7 @@ export const getPersonCredits = async (id: number) => {
   return data;
 };
 
-export const getPersonTVCredits = async (id: number) => {
+export const getPersonTVCredits = async (id: string) => {
   const { data } = await axios.get(`${API_URL}/person/${id}/tv_credits`, {
     params: {
       api_key: API_KEY,

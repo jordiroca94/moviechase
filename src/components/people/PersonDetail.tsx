@@ -13,7 +13,7 @@ import Loader from "../ui/Loader";
 import Filmography from "./Filmography";
 import Television from "./Television";
 
-const PersonDetail = ({ id }: { id: number }) => {
+const PersonDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [images, setImages] = useState<PersonImagesType>();

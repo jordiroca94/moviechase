@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import RateStar from "./ui/RateStar";
 
 type Props = {
-  id: number;
+  id: string;
   type: "movie" | "show";
 };
 

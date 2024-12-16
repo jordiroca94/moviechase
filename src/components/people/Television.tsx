@@ -11,7 +11,7 @@ import RateStar from "../ui/RateStar";
 import { useEffect, useState } from "react";
 import { getPersonTVCredits } from "@/queries/queries";
 
-const Television = ({ id }: { id: number }) => {
+const Television = ({ id }: { id: string }) => {
   const [tvShows, setTvShows] = useState<PersonTVCastType[]>([]);
   const [credits, setCredits] = useState<PersonTVCreditsType>();
 

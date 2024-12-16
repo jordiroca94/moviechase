@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import Card from "./ui/Card";
 
 type Props = {
-  id: number;
+  id: string;
   type: "movie" | "show";
 };
 

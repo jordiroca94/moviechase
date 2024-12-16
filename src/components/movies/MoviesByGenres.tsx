@@ -11,7 +11,7 @@ import Grid from "../ui/Grid";
 import RateStar from "../ui/RateStar";
 import Loader from "../ui/Loader";
 
-const MoviesByGenres = ({ id }: { id: number }) => {
+const MoviesByGenres = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
 
   const [movies, setMovies] = useState<MovieType[]>([]);
@@ -40,7 +40,7 @@ const MoviesByGenres = ({ id }: { id: number }) => {
   }, [page]);
 
   if (movies && genresList) {
-    const genre = genresList.filter((genre) => genre.id == id);
+    const genre = genresList.filter((genre) => genre.id == Number(id));
     return (
       <Container>
         <H1Title className="pb-6 mt-header">{genre[0].name}</H1Title>

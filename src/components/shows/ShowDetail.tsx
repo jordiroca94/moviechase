@@ -36,7 +36,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { UserType } from "@/types/user";
 
-const ShowDetail = ({ id }: { id: number }) => {
+const ShowDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
   const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 

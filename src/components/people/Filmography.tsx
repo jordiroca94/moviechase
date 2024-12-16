@@ -10,7 +10,7 @@ import RateStar from "../ui/RateStar";
 import { useEffect, useState } from "react";
 import { getPersonCredits } from "@/queries/queries";
 
-const Filmography = ({ id }: { id: number }) => {
+const Filmography = ({ id }: { id: string }) => {
   const [filmography, setFilmography] = useState<PersonCastType[]>([]);
   const [credits, setCredits] = useState<PersonCreditsType>();
 
