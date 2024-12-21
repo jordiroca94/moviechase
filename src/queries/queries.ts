@@ -353,3 +353,16 @@ export const getWatchedQuery = async (
   );
   return res;
 };
+
+export const getWatchlistQuery = async (id: string) => {
+  const res = await fetch(
+    `${MOVIECHASE_API_KEY}/api/v1/watchlist?user_id=${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
+};

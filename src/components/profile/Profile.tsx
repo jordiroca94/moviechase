@@ -14,8 +14,10 @@ import {
   getMovie,
   getPerson,
   getShow,
+  getWatchlistQuery,
 } from "@/queries/queries";
 import {
+  ListItemType,
   MovieDetailType,
   PersonDetailType,
   ShowDetailType,
@@ -28,19 +30,21 @@ const Profile = () => {
   const router = useRouter();
   const [profileInfo, setProfileInfo] = useState<UserType>();
   const { openModal } = useDeleteModal();
-  const [favouriteMovies, setFavouriteMovies] = useState<MovieDetailType[]>([]);
+  const [favouriteMovies, setFavouriteMovies] = useState<ListItemType[]>([]);
   const [favouriteMoviesData, setFavouriteMoviesData] = useState<
     MovieDetailType[]
   >([]);
-  const [favouriteShows, setFavouriteShows] = useState<ShowDetailType[]>([]);
+  const [favouriteShows, setFavouriteShows] = useState<ListItemType[]>([]);
   const [favouriteShowsData, setFavouriteShowsData] = useState<
     ShowDetailType[]
   >([]);
-  const [favouritePeople, setFavouritePeople] = useState<PersonDetailType[]>(
-    []
-  );
+  const [favouritePeople, setFavouritePeople] = useState<ListItemType[]>([]);
   const [favouritePeopleData, setFavouritePeopleData] = useState<
     PersonDetailType[]
+  >([]);
+  const [watchlist, setWatchlist] = useState<ListItemType[]>([]);
+  const [watchlistData, setWatchlistData] = useState<
+    MovieDetailType[] | ShowDetailType[]
   >([]);
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -50,6 +54,7 @@ const Profile = () => {
       getFavouriteMovies();
       getFavouriteShows();
       getFavouritePeople();
+      getWatchlist();
     }
     if (!token) {
       redirect("/");
@@ -97,12 +102,26 @@ const Profile = () => {
     }
   };
 
+  const getWatchlist = async () => {
+    try {
+      const res = await getWatchlistQuery(profileInfo?.id!);
+      const response = await res.json();
+
+      if (res.ok) {
+        setWatchlist(response);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const fetchShow = async (id: string) => {
     const res = await getShow(id);
     setFavouriteShowsData((prev) => [...prev, res]);
   };
 
   const getFavouriteShowsData = async () => {
+    if (!favouriteShows) return;
     favouriteShows.map((show) => {
       fetchShow(show.id.toString());
     });
@@ -114,6 +133,7 @@ const Profile = () => {
   };
 
   const getFavouriteMoviesData = async () => {
+    if (!favouriteMovies) return;
     favouriteMovies.map((movie) => {
       fetchMovie(movie.id.toString());
     });
@@ -125,8 +145,26 @@ const Profile = () => {
   };
 
   const getFavouritePeopleData = async () => {
+    if (!favouritePeople) return;
     favouritePeople.map((person) => {
       fetchPerson(person.id.toString());
+    });
+  };
+
+  const fetchWatchlistItem = async (id: string, type: string) => {
+    if (type === "movie") {
+      const res = await getMovie(id);
+      setWatchlistData((prev) => [...prev, res]);
+    } else {
+      const res = await getShow(id);
+      setWatchlistData((prev) => [...prev, res]);
+    }
+  };
+
+  const getWatchlistData = async () => {
+    if (!watchlist) return;
+    watchlist.map((element) => {
+      fetchWatchlistItem(element.id.toString(), element.type);
     });
   };
 
@@ -142,13 +180,17 @@ const Profile = () => {
     getFavouritePeopleData();
   }, [favouritePeople]);
 
+  useEffect(() => {
+    getWatchlistData();
+  }, [watchlist]);
+
   return (
     <Container>
       <div className="w-full flex flex-col justify-center mt-12 lg:mt-8 relative ">
-        <div className="w-full flex justify-end mr-10 gap-4">
+        <div className="w-full flex flex-col sm:flex-row justify-end mr-10 gap-4">
           <button
             onClick={() => openModal()}
-            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex gap-2 items-center"
+            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center gap-2 items-center"
           >
             Delete
           </button>
@@ -164,10 +206,12 @@ const Profile = () => {
           </button>
           <Link
             href="/profile/edit"
-            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex gap-2 items-center"
+            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center items-center"
           >
-            <span>Edit profile</span>
-            <IoMdSettings className="size-5 " />
+            <div className="flex gap-2">
+              <span>Edit profile</span>
+              <IoMdSettings className="size-5 hidden sm:block" />
+            </div>
           </Link>
         </div>
         <Grid className="my-16">
@@ -205,6 +249,21 @@ const Profile = () => {
             </div>
           </div>
         </Grid>
+        {watchlistData.length > 0 && (
+          <Grid className="my-4">
+            <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">Watchlist</h2>
+            {watchlistData.map((el) => (
+              <Card
+                className="col-span-2"
+                type={"title" in el ? "movies" : "shows"}
+                key={el.id}
+                id={el.id}
+                poster_path={el.poster_path}
+                title={"title" in el ? el.title : el.name}
+              />
+            ))}
+          </Grid>
+        )}
         {favouriteMoviesData.length > 0 && (
           <Grid className="my-4">
             <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">

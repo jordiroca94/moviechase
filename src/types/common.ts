@@ -303,3 +303,9 @@ export type PersonTVCastType = {
 >;
 
 export type FavouritesType = "movie" | "show" | "people";
+
+export type ListItemType = {
+  id: number;
+  user_id: number;
+  type: FavouritesType;
+};
