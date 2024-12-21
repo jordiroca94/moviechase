@@ -1,9 +1,11 @@
 "use client";
 import {
+  getFavouriteQuery,
   getShow,
   getShowCredits,
   getShowImages,
   getShowVideos,
+  getWatchedQuery,
 } from "@/queries/queries";
 import { useEffect, useState } from "react";
 import {
@@ -35,10 +37,13 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { UserType } from "@/types/user";
+import {
+  addToListMutation,
+  removeFromListMutation,
+} from "@/mutations/mutations";
 
 const ShowDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const [show, setShow] = useState<ShowDetailType>();
   const [videos, setVideos] = useState<VideoType[]>([]);
@@ -85,15 +90,8 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const getFavourite = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourite?user_id=${profileInfo?.id}&type=movie&id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getFavouriteQuery(profileInfo?.id!, "show", id);
+
       if (res.ok) {
         setIsFavourite(true);
       }
@@ -104,18 +102,12 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const removeFromFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "show",
-        }),
-      });
-
+      const res = await removeFromListMutation(
+        profileInfo?.id!,
+        id,
+        "show",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(false);
       }
@@ -126,18 +118,12 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const handleAddToFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "show",
-        }),
-      });
-
+      const res = await addToListMutation(
+        profileInfo?.id!,
+        id,
+        "show",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(true);
       }
@@ -148,15 +134,7 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const getWatched = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/watched?user_id=${profileInfo?.id}&type=movie&id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getWatchedQuery(profileInfo?.id!, "show", id);
       if (res.ok) {
         setIsWatchlist(true);
       }
@@ -167,18 +145,12 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const removeFromWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "show",
-        }),
-      });
-
+      const res = await removeFromListMutation(
+        profileInfo?.id!,
+        id,
+        "show",
+        "watchlist"
+      );
       if (res.ok) {
         setIsWatchlist(false);
       }
@@ -189,18 +161,12 @@ const ShowDetail = ({ id }: { id: string }) => {
 
   const handleAddToWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "show",
-        }),
-      });
-
+      const res = await addToListMutation(
+        profileInfo?.id!,
+        id,
+        "show",
+        "watchlist"
+      );
       if (res.ok) {
         setIsWatchlist(true);
       }

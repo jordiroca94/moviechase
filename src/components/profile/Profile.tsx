@@ -9,15 +9,39 @@ import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 import PersonPlaceholder from "../../../public/images/profilePlaceholder.png";
 import { useDeleteModal } from "@/context/DeleteUserModalContext";
+import {
+  getAllFavouritesQuery,
+  getMovie,
+  getPerson,
+  getShow,
+} from "@/queries/queries";
+import {
+  MovieDetailType,
+  PersonDetailType,
+  ShowDetailType,
+} from "@/types/common";
+import Card from "../ui/Card";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const Profile = () => {
   const router = useRouter();
   const [profileInfo, setProfileInfo] = useState<UserType>();
   const { openModal } = useDeleteModal();
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
-  const [favouriteMovies, setFavouriteMovies] = useState([]);
-  const [favouriteShows, setFavouriteShows] = useState([]);
-  const [favouritePeople, setFavouritePeople] = useState([]);
-
+  const [favouriteMovies, setFavouriteMovies] = useState<MovieDetailType[]>([]);
+  const [favouriteMoviesData, setFavouriteMoviesData] = useState<
+    MovieDetailType[]
+  >([]);
+  const [favouriteShows, setFavouriteShows] = useState<ShowDetailType[]>([]);
+  const [favouriteShowsData, setFavouriteShowsData] = useState<
+    ShowDetailType[]
+  >([]);
+  const [favouritePeople, setFavouritePeople] = useState<PersonDetailType[]>(
+    []
+  );
+  const [favouritePeopleData, setFavouritePeopleData] = useState<
+    PersonDetailType[]
+  >([]);
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -37,17 +61,8 @@ const Profile = () => {
 
   const getFavouriteMovies = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=movie`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getAllFavouritesQuery(profileInfo?.id!, "movie");
       const response = await res.json();
-
       if (res.ok) {
         setFavouriteMovies(response);
       }
@@ -58,15 +73,7 @@ const Profile = () => {
 
   const getFavouriteShows = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=show`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getAllFavouritesQuery(profileInfo?.id!, "show");
       const response = await res.json();
 
       if (res.ok) {
@@ -79,15 +86,7 @@ const Profile = () => {
 
   const getFavouritePeople = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourites?user_id=${profileInfo?.id}&type=people`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getAllFavouritesQuery(profileInfo?.id!, "people");
       const response = await res.json();
 
       if (res.ok) {
@@ -98,9 +97,50 @@ const Profile = () => {
     }
   };
 
-  // Abstract the fav fetch request to be in queries or mutations
+  const fetchShow = async (id: string) => {
+    const res = await getShow(id);
+    setFavouriteShowsData((prev) => [...prev, res]);
+  };
 
-  console.log(favouriteMovies, favouriteShows, favouritePeople, "------->");
+  const getFavouriteShowsData = async () => {
+    favouriteShows.map((show) => {
+      fetchShow(show.id.toString());
+    });
+  };
+
+  const fetchMovie = async (id: string) => {
+    const res = await getMovie(id);
+    setFavouriteMoviesData((prev) => [...prev, res]);
+  };
+
+  const getFavouriteMoviesData = async () => {
+    favouriteMovies.map((movie) => {
+      fetchMovie(movie.id.toString());
+    });
+  };
+
+  const fetchPerson = async (id: string) => {
+    const res = await getPerson(id);
+    setFavouritePeopleData((prev) => [...prev, res]);
+  };
+
+  const getFavouritePeopleData = async () => {
+    favouritePeople.map((person) => {
+      fetchPerson(person.id.toString());
+    });
+  };
+
+  useEffect(() => {
+    getFavouriteMoviesData();
+  }, [favouriteMovies]);
+
+  useEffect(() => {
+    getFavouriteShowsData();
+  }, [favouriteShows]);
+
+  useEffect(() => {
+    getFavouritePeopleData();
+  }, [favouritePeople]);
 
   return (
     <Container>
@@ -165,6 +205,57 @@ const Profile = () => {
             </div>
           </div>
         </Grid>
+        {favouriteMoviesData.length > 0 && (
+          <Grid className="my-4">
+            <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">
+              Favourite movies
+            </h2>
+            {favouriteMoviesData.map((movie) => (
+              <Card
+                className="col-span-2"
+                type="movies"
+                key={movie.id}
+                id={movie.id}
+                poster_path={movie.poster_path}
+                title={movie.title}
+              />
+            ))}
+          </Grid>
+        )}
+        {favouriteShowsData.length > 0 && (
+          <Grid className="my-4">
+            <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">
+              Favourite shows
+            </h2>
+            {favouriteShowsData.map((show) => (
+              <Card
+                className="col-span-2"
+                type="shows"
+                key={show.id}
+                id={show.id}
+                poster_path={show.poster_path}
+                title={show.name}
+              />
+            ))}
+          </Grid>
+        )}
+        {favouritePeopleData.length > 0 && (
+          <Grid className="my-4">
+            <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">
+              Favourite people
+            </h2>
+            {favouritePeopleData.map((person) => (
+              <Card
+                className="col-span-2"
+                type="people"
+                key={person.id}
+                id={person.id}
+                poster_path={person.profile_path}
+                title={person.name}
+              />
+            ))}
+          </Grid>
+        )}
       </div>
     </Container>
   );

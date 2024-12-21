@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import Container from "../ui/Container";
 import {
+  getFavouriteQuery,
   getMovie,
   getMovieCredits,
   getMovieImages,
   getMovieVideos,
+  getWatchedQuery,
 } from "@/queries/queries";
 import dayjs from "dayjs";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -35,10 +37,13 @@ import { FaHeart } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { UserType } from "@/types/user";
+import {
+  addToListMutation,
+  removeFromListMutation,
+} from "@/mutations/mutations";
 
 const MovieDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const [movie, setMovie] = useState<MovieDetailType>();
   const [videos, setVideos] = useState<VideoType[]>([]);
@@ -86,15 +91,7 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const getFavourite = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourite?user_id=${profileInfo?.id}&type=movie&id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getFavouriteQuery(profileInfo?.id!, "movie", id);
       if (res.ok) {
         setIsFavourite(true);
       }
@@ -105,18 +102,12 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const removeFromFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "movie",
-        }),
-      });
-
+      const res = await removeFromListMutation(
+        profileInfo?.id!,
+        id,
+        "movie",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(false);
       }
@@ -127,18 +118,12 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const handleAddToFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "movie",
-        }),
-      });
-
+      const res = await addToListMutation(
+        profileInfo?.id!,
+        id,
+        "movie",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(true);
       }
@@ -149,15 +134,7 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const getWatched = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/watched?user_id=${profileInfo?.id}&type=movie&id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getWatchedQuery(profileInfo?.id!, "movie", id);
       if (res.ok) {
         setIsWatchlist(true);
       }
@@ -168,18 +145,12 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const removeFromWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "movie",
-        }),
-      });
-
+      const res = await removeFromListMutation(
+        profileInfo?.id!,
+        id,
+        "movie",
+        "watchlist"
+      );
       if (res.ok) {
         setIsWatchlist(false);
       }
@@ -190,18 +161,12 @@ const MovieDetail = ({ id }: { id: string }) => {
 
   const handleAddToWatchlist = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/watchlist/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "movie",
-        }),
-      });
-
+      const res = await addToListMutation(
+        profileInfo?.id!,
+        id,
+        "movie",
+        "watchlist"
+      );
       if (res.ok) {
         setIsWatchlist(true);
       }

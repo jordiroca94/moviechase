@@ -37,7 +37,7 @@ const Related = ({ id, type }: Props) => {
           if (!item.poster_path) return null;
           return (
             <Card
-              type="movie"
+              type="movies"
               key={item.id}
               id={item.id}
               poster_path={item.poster_path}

@@ -55,7 +55,7 @@ const Movies = () => {
         {popularMovies.map((movie: MovieType) => {
           return (
             <Card
-              type="movie"
+              type="movies"
               key={movie.id}
               id={movie.id}
               poster_path={movie.poster_path}
@@ -69,7 +69,7 @@ const Movies = () => {
         {topRatedMovies.map((movie: MovieType) => {
           return (
             <Card
-              type="movie"
+              type="movies"
               key={movie.id}
               id={movie.id}
               poster_path={movie.poster_path}
@@ -83,7 +83,7 @@ const Movies = () => {
         {upcomingMovies.map((movie: MovieType) => {
           return (
             <Card
-              type="movie"
+              type="movies"
               key={movie.id}
               id={movie.id}
               poster_path={movie.poster_path}
@@ -97,7 +97,7 @@ const Movies = () => {
         {playingMovies.map((movie: MovieType) => {
           return (
             <Card
-              type="movie"
+              type="movies"
               key={movie.id}
               id={movie.id}
               poster_path={movie.poster_path}

@@ -301,3 +301,5 @@ export type PersonTVCastType = {
   CastType,
   "adult" | "character" | "credit_id" | "id" | "order" | "popularity"
 >;
+
+export type FavouritesType = "movie" | "show" | "people";

@@ -1,7 +1,9 @@
+import { FavouritesType } from "@/types/common";
 import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const MOVIECHASE_API_KEY = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
 // MOVIES
 const randomPage = Math.floor(Math.random() * 5) + 1;
@@ -296,4 +298,58 @@ export const getPersonTVCredits = async (id: string) => {
     },
   });
   return data;
+};
+
+// FAVOURITES
+
+export const getFavouriteQuery = async (
+  userId: string,
+  type: FavouritesType,
+  id: string
+) => {
+  const res = await fetch(
+    `${MOVIECHASE_API_KEY}/api/v1/favourite?user_id=${userId}&type=${type}&id=${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
+};
+
+export const getAllFavouritesQuery = async (
+  id: string,
+  type: FavouritesType
+) => {
+  const res = await fetch(
+    `${MOVIECHASE_API_KEY}/api/v1/favourites?user_id=${id}&type=${type}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
+};
+
+//WATCHLIST
+
+export const getWatchedQuery = async (
+  userId: string,
+  type: FavouritesType,
+  id: string
+) => {
+  const res = await fetch(
+    `${MOVIECHASE_API_KEY}/api/v1/watched?user_id=${userId}&type=${type}&id=${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res;
 };

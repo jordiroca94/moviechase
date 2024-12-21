@@ -1,4 +1,4 @@
-import { getPerson } from "@/queries/queries";
+import { getFavouriteQuery, getPerson } from "@/queries/queries";
 import { PersonDetailType } from "@/types/common";
 import { getAge, getDeathDate } from "@/utils/getAge";
 import dayjs from "dayjs";
@@ -7,10 +7,13 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import H1Title from "../ui/H1Title";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { UserType } from "@/types/user";
+import {
+  addToListMutation,
+  removeFromListMutation,
+} from "@/mutations/mutations";
 
 const PersonInformation = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
 
   const [person, setPerson] = useState<PersonDetailType>();
   const [readMore, setReadMore] = useState(false);
@@ -32,15 +35,8 @@ const PersonInformation = ({ id }: { id: string }) => {
 
   const getFavourite = async () => {
     try {
-      const res = await fetch(
-        `${movieChaseApiUrl}/api/v1/favourite?user_id=${profileInfo?.id}&type=movie&id=${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await getFavouriteQuery(profileInfo?.id!, "people", id);
+
       if (res.ok) {
         setIsFavourite(true);
       }
@@ -51,18 +47,12 @@ const PersonInformation = ({ id }: { id: string }) => {
 
   const removeFromFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/delete`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "people",
-        }),
-      });
-
+      const res = await removeFromListMutation(
+        profileInfo?.id!,
+        id,
+        "people",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(false);
       }
@@ -73,18 +63,12 @@ const PersonInformation = ({ id }: { id: string }) => {
 
   const handleAddToFavourites = async () => {
     try {
-      const res = await fetch(`${movieChaseApiUrl}/api/v1/favourites/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: Number(profileInfo?.id),
-          id: Number(id),
-          type: "people",
-        }),
-      });
-
+      const res = await addToListMutation(
+        profileInfo?.id!,
+        id,
+        "people",
+        "favourites"
+      );
       if (res.ok) {
         setIsFavourite(true);
       }

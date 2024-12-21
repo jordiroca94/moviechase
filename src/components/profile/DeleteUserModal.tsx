@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Loader from "../ui/Loader";
 import { useDeleteModal } from "@/context/DeleteUserModalContext";
+import { deleteUser } from "@/mutations/mutations";
 
 type Props = {};
 
@@ -12,7 +13,6 @@ const DeleteUserModal = ({}: Props) => {
   const [profileInfo, setProfileInfo] = useState<UserType>();
   const [loading, setLoading] = useState<boolean>(false);
   const [deleteValue, setDeleteValue] = useState<string>("");
-  const movieChaseApiUrl = process.env.NEXT_PUBLIC_MOVIECHASE_API_URL;
   const { isModalOpen, closeModal } = useDeleteModal();
 
   useEffect(() => {
@@ -23,12 +23,7 @@ const DeleteUserModal = ({}: Props) => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await fetch(`${movieChaseApiUrl}/api/v1/user/delete/${profileInfo?.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await deleteUser(profileInfo?.id!);
       setLoading(false);
       localStorage.removeItem("token");
       localStorage.removeItem("user");

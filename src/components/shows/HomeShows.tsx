@@ -28,7 +28,7 @@ const HomeShows = () => {
           if (!show.poster_path) return null;
           return (
             <Card
-              type="show"
+              type="shows"
               key={show.id}
               id={show.id}
               poster_path={show.poster_path}
