@@ -190,7 +190,7 @@ const Profile = () => {
         <div className="w-full flex flex-col sm:flex-row justify-end mr-10 gap-4">
           <button
             onClick={() => openModal()}
-            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center gap-2 items-center"
+            className="bg-primary py-2.5 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center gap-2 items-center"
           >
             Delete
           </button>
@@ -206,7 +206,7 @@ const Profile = () => {
           </button>
           <Link
             href="/profile/edit"
-            className="bg-primary py-2 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center items-center"
+            className="bg-primary py-2.5 px-3 lg:px-4 rounded-lg border text-white border-white text-sm lg:text-base hover:bg-secondary flex justify-center items-center"
           >
             <div className="flex gap-2">
               <span>Edit profile</span>
