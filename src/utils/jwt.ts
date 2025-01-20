@@ -1,4 +1,4 @@
-export function base64UrlDecode(token: any) {
+export function base64UrlDecode(token: string) {
   const base64Url = token.split(".")[1];
   const base64 = base64Url!.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(
