@@ -252,14 +252,15 @@ const Profile = () => {
         {watchlistData.length > 0 && (
           <Grid className="my-4">
             <h2 className="text-3xl pb-3 lg:pb-6 col-span-full">Watchlist</h2>
-            {watchlistData.map((el) => (
+            {watchlistData.map((item) => (
               <Card
                 className="col-span-2"
-                type={"title" in el ? "movies" : "shows"}
-                key={el.id}
-                id={el.id}
-                poster_path={el.poster_path}
-                title={"title" in el ? el.title : el.name}
+                type={"title" in item ? "movies" : "shows"}
+                key={item.id}
+                id={item.id}
+                poster_path={item.poster_path}
+                title={"title" in item ? item.title : item.name}
+                vote_average={item.vote_average}
               />
             ))}
           </Grid>
@@ -277,6 +278,7 @@ const Profile = () => {
                 id={movie.id}
                 poster_path={movie.poster_path}
                 title={movie.title}
+                vote_average={movie.vote_average}
               />
             ))}
           </Grid>
@@ -294,6 +296,7 @@ const Profile = () => {
                 id={show.id}
                 poster_path={show.poster_path}
                 title={show.name}
+                vote_average={show.vote_average}
               />
             ))}
           </Grid>

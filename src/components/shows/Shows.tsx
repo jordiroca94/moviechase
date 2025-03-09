@@ -60,6 +60,7 @@ const Shows = () => {
               id={show.id}
               poster_path={show.poster_path}
               title={show.name}
+              vote_average={show.vote_average}
             />
           );
         })}
@@ -74,6 +75,7 @@ const Shows = () => {
               id={show.id}
               poster_path={show.poster_path}
               title={show.name}
+              vote_average={show.vote_average}
             />
           );
         })}
@@ -89,6 +91,7 @@ const Shows = () => {
               id={show.id}
               poster_path={show.poster_path}
               title={show.name}
+              vote_average={show.vote_average}
             />
           );
         })}
@@ -105,6 +108,7 @@ const Shows = () => {
               id={show.id}
               poster_path={show.poster_path}
               title={show.name}
+              vote_average={show.vote_average}
             />
           );
         })}

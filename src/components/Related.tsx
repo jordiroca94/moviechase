@@ -46,6 +46,7 @@ const Related = ({ id, type }: Props) => {
                   ? (item as MovieType).title
                   : (item as ShowType).name
               }
+              vote_average={item.vote_average}
             />
           );
         })}

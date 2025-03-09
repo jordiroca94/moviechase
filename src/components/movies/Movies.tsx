@@ -60,6 +60,7 @@ const Movies = () => {
               id={movie.id}
               poster_path={movie.poster_path}
               title={movie.title}
+              vote_average={movie.vote_average}
             />
           );
         })}
@@ -74,6 +75,7 @@ const Movies = () => {
               id={movie.id}
               poster_path={movie.poster_path}
               title={movie.title}
+              vote_average={movie.vote_average}
             />
           );
         })}
@@ -88,6 +90,7 @@ const Movies = () => {
               id={movie.id}
               poster_path={movie.poster_path}
               title={movie.title}
+              vote_average={movie.vote_average}
             />
           );
         })}
@@ -102,6 +105,7 @@ const Movies = () => {
               id={movie.id}
               poster_path={movie.poster_path}
               title={movie.title}
+              vote_average={movie.vote_average}
             />
           );
         })}
