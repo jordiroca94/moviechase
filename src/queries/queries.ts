@@ -128,6 +128,15 @@ export const getRelatedMovies = async (id: string) => {
   return results;
 };
 
+export const getMovieProviders = async (id: string) => {
+  const { data } = await axios.get(`${API_URL}/movie/${id}/watch/providers`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+  return data.results;
+};
+
 // SHOWS
 
 export const getShows = async (id: string, page: number) => {

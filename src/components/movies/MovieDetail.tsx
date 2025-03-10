@@ -6,6 +6,7 @@ import {
   getMovie,
   getMovieCredits,
   getMovieImages,
+  getMovieProviders,
   getMovieVideos,
   getWatchedQuery,
 } from "@/queries/queries";
@@ -52,6 +53,15 @@ const MovieDetail = ({ id }: { id: string }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
   const [profileInfo, setProfileInfo] = useState<UserType>();
+  const [providers, setProviders] = useState<any>();
+  const [country, setCountry] = useState("");
+
+  useEffect(() => {
+    fetch("/api/geolocation")
+      .then((res) => res.json())
+      .then((data) => setCountry(data.country))
+      .catch(console.error);
+  }, []);
 
   const fetchMovie = async () => {
     const res = await getMovie(id);
@@ -78,6 +88,7 @@ const MovieDetail = ({ id }: { id: string }) => {
     fetchVideos();
     fetchImages();
     fetchCredits();
+    fetchMovieProviders();
   }, []);
 
   useEffect(() => {
@@ -175,6 +186,11 @@ const MovieDetail = ({ id }: { id: string }) => {
     }
   };
 
+  const fetchMovieProviders = async () => {
+    const res = await getMovieProviders(id);
+    setProviders(res);
+  };
+
   if (movie && videos && images) {
     const director = credits?.crew.filter(
       (person) => person.job === "Director"
@@ -182,7 +198,8 @@ const MovieDetail = ({ id }: { id: string }) => {
     const writer = credits?.crew.filter(
       (person) => person.department === "Writing"
     );
-
+    console.log(providers, "providers--->");
+    console.log(country, "COUNTRY PROVIDED BY GEOLOCATION VERCEL--->");
     return (
       <Container>
         <div className="grid grid-cols-8 lg:grid-cols-12 mt-12 lg:mt-8">
@@ -350,6 +367,9 @@ const MovieDetail = ({ id }: { id: string }) => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <p className="font-bold">Providers</p>
             </div>
             <Cast credits={credits!} imageAlt={movie.title} />
           </div>
