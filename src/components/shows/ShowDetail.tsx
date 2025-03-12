@@ -41,6 +41,7 @@ import {
   addToListMutation,
   removeFromListMutation,
 } from "@/mutations/mutations";
+import Providers from "../Providers";
 
 const ShowDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -330,6 +331,7 @@ const ShowDetail = ({ id }: { id: string }) => {
                 </div>
               </div>
             )}
+            <Providers id={id} type="show" />
             <Cast credits={credits!} imageAlt={show.name} />
           </div>
           <Videos videos={videos} />

@@ -128,8 +128,8 @@ export const getRelatedMovies = async (id: string) => {
   return results;
 };
 
-export const getMovieProviders = async (id: string) => {
-  const { data } = await axios.get(`${API_URL}/movie/${id}/watch/providers`, {
+export const getProviders = async (id: string, type: FavouritesType) => {
+  const { data } = await axios.get(`${API_URL}/${type}/${id}/watch/providers`, {
     params: {
       api_key: API_KEY,
     },

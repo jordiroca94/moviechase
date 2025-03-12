@@ -309,3 +309,19 @@ export type ListItemType = {
   user_id: number;
   type: FavouritesType;
 };
+
+interface ProviderType {
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+  display_priority: number;
+}
+
+interface ProviderInfoType {
+  link: string;
+  buy?: ProviderType[];
+  flatrate?: ProviderType[];
+  rent?: ProviderType[];
+}
+
+export type ProvidersType = Record<string, ProviderInfoType>;

@@ -6,7 +6,6 @@ import {
   getMovie,
   getMovieCredits,
   getMovieImages,
-  getMovieProviders,
   getMovieVideos,
   getWatchedQuery,
 } from "@/queries/queries";
@@ -42,6 +41,7 @@ import {
   addToListMutation,
   removeFromListMutation,
 } from "@/mutations/mutations";
+import Providers from "../Providers";
 
 const MovieDetail = ({ id }: { id: string }) => {
   const URL_IMAGE = process.env.NEXT_PUBLIC_URL_IMAGE;
@@ -53,15 +53,6 @@ const MovieDetail = ({ id }: { id: string }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [isWatchlist, setIsWatchlist] = useState(false);
   const [profileInfo, setProfileInfo] = useState<UserType>();
-  const [providers, setProviders] = useState<any>();
-  const [country, setCountry] = useState("");
-
-  useEffect(() => {
-    fetch("/api/geolocation")
-      .then((res) => res.json())
-      .then((data) => setCountry(data.country))
-      .catch(console.error);
-  }, []);
 
   const fetchMovie = async () => {
     const res = await getMovie(id);
@@ -88,7 +79,6 @@ const MovieDetail = ({ id }: { id: string }) => {
     fetchVideos();
     fetchImages();
     fetchCredits();
-    fetchMovieProviders();
   }, []);
 
   useEffect(() => {
@@ -186,11 +176,6 @@ const MovieDetail = ({ id }: { id: string }) => {
     }
   };
 
-  const fetchMovieProviders = async () => {
-    const res = await getMovieProviders(id);
-    setProviders(res);
-  };
-
   if (movie && videos && images) {
     const director = credits?.crew.filter(
       (person) => person.job === "Director"
@@ -198,8 +183,7 @@ const MovieDetail = ({ id }: { id: string }) => {
     const writer = credits?.crew.filter(
       (person) => person.department === "Writing"
     );
-    console.log(providers, "providers--->");
-    console.log(country, "COUNTRY PROVIDED BY GEOLOCATION VERCEL--->");
+
     return (
       <Container>
         <div className="grid grid-cols-8 lg:grid-cols-12 mt-12 lg:mt-8">
@@ -346,7 +330,10 @@ const MovieDetail = ({ id }: { id: string }) => {
               <div className="col-span-8 border-b border-lightGray py-3">
                 <div className="flex gap-2">
                   <p className="font-bold">Director</p>
-                  <Link href={`/people/${director[0].id}`}>
+                  <Link
+                    className="hover:underline"
+                    href={`/people/${director[0].id}`}
+                  >
                     {director[0].name}
                   </Link>
                 </div>
@@ -359,7 +346,10 @@ const MovieDetail = ({ id }: { id: string }) => {
                   <div>
                     {writer?.slice(0, 2).map((person) => (
                       <span key={person.id}>
-                        <Link href={`/people/${person.id}`}>
+                        <Link
+                          className="hover:underline"
+                          href={`/people/${person.id}`}
+                        >
                           {person.name}{" "}
                         </Link>
                       </span>
@@ -368,9 +358,7 @@ const MovieDetail = ({ id }: { id: string }) => {
                 </div>
               </div>
             </div>
-            <div>
-              <p className="font-bold">Providers</p>
-            </div>
+            <Providers id={id} type="movie" />
             <Cast credits={credits!} imageAlt={movie.title} />
           </div>
           <Videos videos={videos} />
