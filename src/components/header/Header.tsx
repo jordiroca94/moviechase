@@ -45,7 +45,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header ref={loginModalRef} className="absolute top-0 w-full z-50">
+    <header ref={loginModalRef} className="fixed lg:absolute top-0 w-full z-50">
       <div className="py-5 md:py-4 px-4 lg:px-8 bg-primary h-header">
         <div className="flex items-center justify-between relative z-40">
           <Link href="/">

@@ -40,7 +40,7 @@ const Providers = ({ id, type }: { id: string; type: FavouritesType }) => {
           filteredProviders?.[1].buy.length > 0 && (
             <div className="py-2">Buy</div>
           )}
-        <div className="flex gap-2 flex-w rap">
+        <div className="flex gap-2 flex-wrap">
           {filteredProviders?.[1].buy &&
             filteredProviders?.[1].buy.map((item) => (
               <img
