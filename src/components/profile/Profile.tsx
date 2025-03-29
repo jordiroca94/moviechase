@@ -7,13 +7,13 @@ import Grid from "../ui/Grid";
 import { UserType } from "@/types/user";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
-import PersonPlaceholder from "../../../public/images/profilePlaceholder.png";
 import { useDeleteModal } from "@/context/DeleteUserModalContext";
 import {
   getAllFavouritesQuery,
   getMovie,
   getPerson,
   getShow,
+  getUserQuery,
   getWatchlistQuery,
 } from "@/queries/queries";
 import {
@@ -23,8 +23,7 @@ import {
   ShowDetailType,
 } from "@/types/common";
 import Card from "../ui/Card";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { FieldUpload } from "./FieldUpload";
 
 const Profile = () => {
   const router = useRouter();
@@ -46,6 +45,7 @@ const Profile = () => {
   const [watchlistData, setWatchlistData] = useState<
     MovieDetailType[] | ShowDetailType[]
   >([]);
+  const [userImage, setUserImage] = useState("");
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -55,6 +55,7 @@ const Profile = () => {
       getFavouriteShows();
       getFavouritePeople();
       getWatchlist();
+      getUserData();
     }
     if (!token) {
       redirect("/");
@@ -168,6 +169,18 @@ const Profile = () => {
     });
   };
 
+  const getUserData = async () => {
+    try {
+      const res = await getUserQuery(profileInfo?.id!);
+      const response = await res.json();
+      if (res.ok) {
+        setUserImage(response.image);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getFavouriteMoviesData();
   }, [favouriteMovies]);
@@ -215,39 +228,52 @@ const Profile = () => {
           </Link>
         </div>
         <Grid className="my-16">
-          <Image
-            src={PersonPlaceholder}
-            alt="Profile"
-            className="rounded-full lg:col-span-2 lg:col-start-5 col-span-2 col-start-2  sm:col-start-4 aspect-square "
-          />
-          <div className="hidden lg:block lg:col-span-2">
-            <div className="flex text-lg capitalize">
-              <span className="font-semibold">Name:&nbsp;</span>
-              <p>{profileInfo?.firstName}</p>
-            </div>
-            <div className="flex text-lg capitalize">
-              <span className="font-semibold">Surname:&nbsp;</span>
-              <p>{profileInfo?.lastName}</p>
-            </div>
-            <div className="flex text-lg">
-              <span className="font-semibold">Email:&nbsp;</span>
-              <p>{profileInfo?.email}</p>
-            </div>
+          <div className="relative lg:col-span-2 lg:col-start-5 col-span-2 col-start-2 sm:col-start-4">
+            <Image
+              src={userImage}
+              width={200}
+              height={200}
+              alt="Profile"
+              className="rounded-full aspect-square object-cover "
+            />
+            {profileInfo?.id && (
+              <div className="absolute bottom-0 right-0">
+                <FieldUpload id={profileInfo.id} />
+              </div>
+            )}
           </div>
-          <div className="lg:hidden sm:col-span-8 col-span-4 w-full flex flex-col justify-center items-center">
-            <div className="flex text-lg capitalize">
-              <span className="font-semibold">Name:&nbsp;</span>
-              <p>{profileInfo?.firstName}</p>
-            </div>
-            <div className="flex text-lg capitalize">
-              <span className="font-semibold">Surname:&nbsp;</span>
-              <p>{profileInfo?.lastName}</p>
-            </div>
-            <div className="flex text-lg">
-              <span className="font-semibold">Email:&nbsp;</span>
-              <p>{profileInfo?.email}</p>
-            </div>
-          </div>
+          {profileInfo && (
+            <>
+              <div className="hidden lg:block lg:col-span-2">
+                <div className="flex text-lg capitalize">
+                  <span className="font-semibold">Name:&nbsp;</span>
+                  <p>{profileInfo.firstName}</p>
+                </div>
+                <div className="flex text-lg capitalize">
+                  <span className="font-semibold">Surname:&nbsp;</span>
+                  <p>{profileInfo.lastName}</p>
+                </div>
+                <div className="flex text-lg">
+                  <span className="font-semibold">Email:&nbsp;</span>
+                  <p>{profileInfo.email}</p>
+                </div>
+              </div>
+              <div className="lg:hidden sm:col-span-8 col-span-4 w-full flex flex-col justify-center items-center">
+                <div className="flex text-lg capitalize">
+                  <span className="font-semibold">Name:&nbsp;</span>
+                  <p>{profileInfo.firstName}</p>
+                </div>
+                <div className="flex text-lg capitalize">
+                  <span className="font-semibold">Surname:&nbsp;</span>
+                  <p>{profileInfo.lastName}</p>
+                </div>
+                <div className="flex text-lg">
+                  <span className="font-semibold">Email:&nbsp;</span>
+                  <p>{profileInfo.email}</p>
+                </div>
+              </div>
+            </>
+          )}
         </Grid>
         {watchlistData.length > 0 && (
           <Grid className="my-4">

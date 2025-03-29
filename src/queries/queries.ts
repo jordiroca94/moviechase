@@ -375,3 +375,15 @@ export const getWatchlistQuery = async (id: string) => {
   );
   return res;
 };
+
+// USER
+
+export const getUserQuery = async (id: string) => {
+  const res = await fetch(`${MOVIECHASE_API_KEY}/api/v1/user/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res;
+};

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
-import BurgerButton from "../ui/BurgerButton";
+import BurgerButton from "./BurgerButton";
 import MobileMenu from "./MobileMenu";
 import SearchMobile from "./search/SearchMobile";
 import Search from "./search/Search";
