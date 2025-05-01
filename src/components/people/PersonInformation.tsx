@@ -144,7 +144,7 @@ const PersonInformation = ({ id }: { id: string }) => {
                 <div className="border border-secondary rounded-full p-1">
                   <FaArrowTrendUp className="text-secondary size-4" />
                 </div>
-                <div>{person.popularity}</div>
+                <div>{Math.round(person.popularity)}</div>
               </div>
             </div>
           </div>

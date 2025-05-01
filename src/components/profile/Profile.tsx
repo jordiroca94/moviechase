@@ -24,6 +24,7 @@ import {
 } from "@/types/common";
 import Card from "../ui/Card";
 import { FieldUpload } from "./FieldUpload";
+import Loader from "../ui/Loader";
 
 const Profile = () => {
   const router = useRouter();
@@ -197,6 +198,14 @@ const Profile = () => {
     getWatchlistData();
   }, [watchlist]);
 
+  if (!profileInfo) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loader big />
+      </div>
+    );
+  }
+
   return (
     <Container>
       <div className="w-full flex flex-col justify-center mt-12 lg:mt-8 relative ">
@@ -229,13 +238,17 @@ const Profile = () => {
         </div>
         <Grid className="my-16">
           <div className="relative lg:col-span-2 lg:col-start-5 col-span-2 col-start-2 sm:col-start-4">
-            <Image
-              src={userImage}
-              width={200}
-              height={200}
-              alt="Profile"
-              className="rounded-full aspect-square object-cover "
-            />
+            {userImage ? (
+              <Image
+                src={userImage}
+                width={200}
+                height={200}
+                alt="Profile"
+                className="rounded-full aspect-square object-cover "
+              />
+            ) : (
+              <div className="rounded-full aspect-square object-cover bg-lightGray animate-pulse" />
+            )}
             {profileInfo?.id && (
               <div className="absolute bottom-0 right-0">
                 <FieldUpload id={profileInfo.id} />

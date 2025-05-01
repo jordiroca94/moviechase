@@ -258,7 +258,7 @@ const ShowDetail = ({ id }: { id: string }) => {
                   <div className="border border-secondary rounded-full p-1">
                     <FaArrowTrendUp className="text-secondary size-4" />
                   </div>
-                  <div>{show.popularity}</div>
+                  <div>{Math.round(show.popularity)}</div>
                 </div>
               </div>
             </div>
@@ -318,7 +318,7 @@ const ShowDetail = ({ id }: { id: string }) => {
               <RateStar averageRate={show.vote_average} outOfTen />
               <div className="flex items-center gap-2">
                 <FaArrowTrendUp className="text-secondary size-4" />
-                <div>{show.popularity}</div>
+                <div>{Math.round(show.popularity)}</div>
               </div>
             </div>
             {show.created_by[0]?.id && (
@@ -334,7 +334,7 @@ const ShowDetail = ({ id }: { id: string }) => {
             <Providers id={id} type="show" />
             <Cast credits={credits!} imageAlt={show.name} />
           </div>
-          <Videos videos={videos} />
+          <Videos videos={videos} id="show-videos" />
         </div>
         <Images id="show-images" images={images} alt={show.name} />
         <Related type="show" id={id} />

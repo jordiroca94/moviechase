@@ -2,14 +2,20 @@
 import { VideoType } from "@/types/common";
 import { useState } from "react";
 
-const Videos = ({ videos }: { videos: VideoType[] }) => {
+const Videos = ({
+  videos,
+  id,
+}: {
+  videos: VideoType[];
+  id: "movie-videos" | "show-videos";
+}) => {
   const [moreVideos, setMoreVideos] = useState(2);
 
   return (
     <>
       {videos.length > 0 && (
         <>
-          <h2 id="movie-videos" className="text-2xl col-span-full py-10">
+          <h2 id={id} className="text-2xl col-span-full py-10">
             Videos
           </h2>
           <div className="col-span-full grid grid-cols-12 gap-4 lg:gap-10">

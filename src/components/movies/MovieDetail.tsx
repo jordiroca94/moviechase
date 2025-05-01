@@ -263,7 +263,7 @@ const MovieDetail = ({ id }: { id: string }) => {
                   <div className="border border-secondary rounded-full p-1">
                     <FaArrowTrendUp className="text-secondary size-4" />
                   </div>
-                  <div>{movie.popularity}</div>
+                  <div>{Math.round(movie.popularity)}</div>
                 </div>
               </div>
             </div>
@@ -323,7 +323,7 @@ const MovieDetail = ({ id }: { id: string }) => {
               <RateStar averageRate={movie.vote_average} outOfTen />
               <div className="flex items-center gap-2">
                 <FaArrowTrendUp className="text-secondary size-4" />
-                <div>{movie.popularity}</div>
+                <div>{Math.round(movie.popularity)}</div>
               </div>
             </div>
             {director && (
@@ -361,7 +361,7 @@ const MovieDetail = ({ id }: { id: string }) => {
             <Providers id={id} type="movie" />
             <Cast credits={credits!} imageAlt={movie.title} />
           </div>
-          <Videos videos={videos} />
+          <Videos videos={videos} id="movie-videos" />
         </div>
         <Images id="movie-images" images={images} alt={movie.title} />
         <Related type="movie" id={id} />
