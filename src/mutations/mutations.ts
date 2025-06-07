@@ -82,3 +82,16 @@ export const addToListMutation = async (
   });
   return res;
 };
+
+export const recommendMutation = async (movieName: string) => {
+  const res = await fetch(`${MOVIECHASE_API_KEY}/api/v1/recommend`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      movie_name: movieName,
+    }),
+  });
+  return res;
+};

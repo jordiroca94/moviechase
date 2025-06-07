@@ -4,13 +4,13 @@ import HomeMovies from "@/components/movies/HomeMovies";
 import HomeShows from "@/components/shows/HomeShows";
 
 import Tmdb from "@/components/Tmdb";
-import VideoHero from "@/components/VideoHero";
+import Recommendation from "@/components/Recommendation";
 
 export default function Home() {
   return (
     <main>
       <Header />
-      <VideoHero />
+      <Recommendation />
       <HomeMovies />
       <HomeShows />
       <Tmdb />
