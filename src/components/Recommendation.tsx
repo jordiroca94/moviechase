@@ -45,6 +45,7 @@ const Recommendation = () => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleRecommend();
+                (e.target as HTMLInputElement).blur();
               }
             }}
             placeholder="Enter a movie or TV show"
